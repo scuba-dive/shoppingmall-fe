@@ -1,4 +1,3 @@
-const js = require('@eslint/js')
 const globals = require('globals')
 const path = require('path')
 const reactPlugin = require('eslint-plugin-react')
@@ -52,7 +51,7 @@ module.exports = defineConfig([
       },
     },
     extends: [
-      js.configs.recommended,
+      'eslint:recommended',
       airbnb,
       airbnbHooks,
       reactRecommended,
