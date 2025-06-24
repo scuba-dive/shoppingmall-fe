@@ -1,21 +1,21 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import path from 'path'
-import reactPlugin from 'eslint-plugin-react'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import jsxA11y from 'eslint-plugin-jsx-a11y'
-import prettier from 'eslint-plugin-prettier'
-import importPlugin from 'eslint-plugin-import'
-import simpleImportSort from 'eslint-plugin-simple-import-sort'
-import airbnb from 'eslint-config-airbnb'
-import airbnbHooks from 'eslint-config-airbnb/hooks'
-import reactRecommended from 'eslint-plugin-react/configs/recommended.js'
-import jsxA11yRecommended from 'eslint-plugin-jsx-a11y/configs/recommended.js'
-import prettierRecommended from 'eslint-plugin-prettier/recommended.js'
-import { defineConfig, globalIgnores } from 'eslint/config'
+const js = require('@eslint/js')
+const globals = require('globals')
+const path = require('path')
+const reactPlugin = require('eslint-plugin-react')
+const reactHooks = require('eslint-plugin-react-hooks')
+const reactRefresh = require('eslint-plugin-react-refresh')
+const jsxA11y = require('eslint-plugin-jsx-a11y')
+const prettier = require('eslint-plugin-prettier')
+const importPlugin = require('eslint-plugin-import')
+const simpleImportSort = require('eslint-plugin-simple-import-sort')
+const airbnb = require('eslint-config-airbnb')
+const airbnbHooks = require('eslint-config-airbnb/hooks')
+const reactRecommended = require('eslint-plugin-react/configs/recommended')
+const jsxA11yRecommended = require('eslint-plugin-jsx-a11y/configs/recommended')
+const prettierRecommended = require('eslint-plugin-prettier/recommended')
+const { defineConfig, globalIgnores } = require('eslint/config')
 
-export default defineConfig([
+module.exports = defineConfig([
   globalIgnores(['dist', 'node_modules']),
   {
     files: ['**/*.{js,jsx}'],
@@ -61,14 +61,11 @@ export default defineConfig([
       reactRefresh.configs.vite,
     ],
     rules: {
-      // 기본 규칙
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
       'react/react-in-jsx-scope': 'off',
       'react/jsx-filename-extension': ['warn', { extensions: ['.js', '.jsx'] }],
       'import/prefer-default-export': 'off',
       'prettier/prettier': 'error',
-
-      // 정렬 규칙
       'simple-import-sort/imports': 'warn',
       'simple-import-sort/exports': 'warn',
       'import/order': [
