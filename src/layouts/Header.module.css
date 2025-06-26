@@ -1,4 +1,3 @@
-/* Header 전체 영역 */
 .header {
   width: 100%;
   height: 70px;
@@ -39,4 +38,14 @@
   padding: 9px 23px;
   color: #000;
   cursor: pointer;
+}
+
+@media (max-width: 750px) {
+  .loginBtn {
+    display: none;
+  }
+
+  .signupBtn {
+    display: none;
+  }
 }
