@@ -1,0 +1,42 @@
+/* Header 전체 영역 */
+.header {
+  width: 100%;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  justify-content: space-between;
+  padding: 0 30px;
+  box-sizing: border-box;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+}
+
+.headerLogo {
+  height: 40px;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.loginBtn {
+  font-size: 20px;
+  color: #000;
+  cursor: pointer;
+}
+
+.signupBtn {
+  font-size: 20px;
+  background: #fff;
+  border: 1px solid #858585;
+  border-radius: 10px;
+  padding: 9px 23px;
+  color: #000;
+  cursor: pointer;
+}
