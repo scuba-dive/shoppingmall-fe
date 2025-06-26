@@ -18,6 +18,10 @@
   height: 40px;
 }
 
+.headerIcon {
+  height: 40px;
+}
+
 .headerRight {
   display: flex;
   align-items: center;
@@ -33,19 +37,21 @@
 .signupBtn {
   font-size: 20px;
   background: #fff;
-  border: 1px solid #858585;
+  border: 1px solid #887d7d;
   border-radius: 10px;
   padding: 9px 23px;
   color: #000;
   cursor: pointer;
 }
 
-@media (max-width: 750px) {
-  .loginBtn {
+@media (max-width: 700px) {
+  .headerLogo {
     display: none;
   }
+}
 
-  .signupBtn {
+@media (min-width: 700px) {
+  .headerIcon {
     display: none;
   }
 }

@@ -1,3 +1,4 @@
+import icon from '@/../public/favicon.svg';
 import logo from '@/../public/logo.svg';
 import style from './Header.module.css';
 
@@ -5,6 +6,7 @@ function Header() {
   return (
     <header className={style.header}>
       <div className={style.headerLeft}>
+        <img src={icon} alt="icon" className={style.headerIcon} />
         <img src={logo} alt="logo" className={style.headerLogo} />
       </div>
       <div className={style.headerRight}>
