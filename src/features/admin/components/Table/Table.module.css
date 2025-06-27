@@ -1,0 +1,32 @@
+.table {
+  min-width: 900px;
+  text-align: center;
+  border-collapse: separate;
+  border: 0.5px solid #c4c4c4;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th {
+  background-color: #f1f1f1;
+  font-weight: bold;
+  padding: 12px 8px;
+  border-bottom: 1px solid #c4c4c4;
+}
+
+td {
+  padding: 10px 8px;
+  border-top: 1px solid #c4c4c4;
+}
+
+td:first-child,
+th:first-child {
+  text-align: left;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+}
