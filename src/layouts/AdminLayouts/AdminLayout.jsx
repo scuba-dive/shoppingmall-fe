@@ -9,8 +9,10 @@ function AdminLayout({ children }) {
   return (
     <div className={styles.container}>
       <Header />
-      <Sidebar />
-      <main className={styles.main}>{children}</main>
+      <div className={styles.contentArea}>
+        <Sidebar />
+        <main className={styles.main}>{children}</main>
+      </div>
     </div>
   );
 }
