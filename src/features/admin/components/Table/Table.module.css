@@ -1,22 +1,23 @@
 .table {
-  min-width: 900px;
+  width: 100%;
   text-align: center;
+  table-layout: fixed;
   border-collapse: separate;
   border: 0.5px solid #c4c4c4;
   border-radius: 5px;
   overflow: hidden;
 }
-
+th,
+td {
+  padding: 12px 8px;
+  border-bottom: 1px solid #c4c4c4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 th {
   background-color: #f1f1f1;
   font-weight: bold;
-  padding: 12px 8px;
-  border-bottom: 1px solid #c4c4c4;
-}
-
-td {
-  padding: 10px 8px;
-  border-top: 1px solid #c4c4c4;
 }
 
 button {
