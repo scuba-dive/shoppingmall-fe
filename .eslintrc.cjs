@@ -11,22 +11,14 @@ module.exports = {
       jsx: true,
     },
   },
-  extends: [
-    'airbnb',
-    'airbnb/hooks',
-    'plugin:react/recommended',
-    'plugin:jsx-a11y/recommended',
-    'plugin:prettier/recommended',
-  ],
-  plugins: [
-    'react',
-    'react-hooks',
-    'jsx-a11y',
-    'prettier',
-  ],
+  extends: ['airbnb', 'airbnb/hooks', 'plugin:react/recommended', 'plugin:jsx-a11y/recommended'],
+  plugins: ['react', 'react-hooks', 'jsx-a11y', 'simple-import-sort'],
   rules: {
-    'prettier/prettier': 'error',
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error',
+    'import/order': 'off',
 
+    // 기존 규칙들
     'no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
     'no-shadow': 'off',
 
@@ -60,14 +52,14 @@ module.exports = {
     react: {
       version: 'detect',
     },
-'import/resolver': {
-    alias: {
-      map: [['@', './src']],
-      extensions: ['.js', '.jsx'],
+    'import/resolver': {
+      alias: {
+        map: [['@', './src']],
+        extensions: ['.js', '.jsx'],
+      },
+      node: {
+        extensions: ['.js', '.jsx'],
+      },
     },
-    node: {
-      extensions: ['.js', '.jsx'],
-    },
-  },
   },
 };
