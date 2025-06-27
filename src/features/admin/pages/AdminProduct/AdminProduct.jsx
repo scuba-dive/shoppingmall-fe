@@ -14,43 +14,60 @@ const columns = [
 ];
 const sampleData = [
   {
-    id: 1,
-    name: '머찐의자',
+    product_id: 1,
+    product_name: '머찐의자',
+    category: {
+      id: 1,
+      name: '의자',
+    },
+    option_id: 1001,
     color: '빨간색',
-    category: '의자',
-    price: '29,000',
+    sku: 'CHAIR-101-RED',
+    price: 29000,
     stock: 12,
+    status: 'ACTIVE',
   },
   {
-    id: 2,
-    name: '머찐의자',
+    product_id: 1,
+    product_name: '머찐의자',
+    category: {
+      id: 1,
+      name: '의자',
+    },
+    option_id: 1002,
     color: '노란색',
-    category: '의자',
-    price: '29,000',
+    sku: 'CHAIR-101-YEL',
+    price: 29000,
     stock: 3,
+    status: 'ACTIVE',
   },
   {
-    id: 3,
-    name: '머찐의자',
+    product_id: 1,
+    product_name: '머찐의자',
+    category: {
+      id: 1,
+      name: '의자',
+    },
+    option_id: 1003,
     color: '파란색',
-    category: '의자',
-    price: '29,000',
+    sku: 'CHAIR-101-BLU',
+    price: 29000,
     stock: 0,
+    status: 'SOLD_OUT',
   },
 ];
 
 function renderProductRow(row) {
   return (
-    <tr key={row.id}>
-      <td>{row.name}</td>
+    <tr key={row.option_id}>
+      <td>{row.product_name}</td>
       <td>{row.color}</td>
-      <td>{row.category}</td>
+      <td>{row.category.name}</td>
       <td>{row.price.toLocaleString()}</td>
       <td>{row.stock}</td>
-      <td>{row.stock === 0 ? '○' : 'X'}</td>
+      <td>{row.status === 'SOLD_OUT' ? '○' : 'X'}</td>
       <td>
-        <button type="button">↑</button>
-        <button type="button">↓</button>
+        <button type="button">↑↓</button>
       </td>
       <td>
         <button type="button">{row.stock === 0 ? '⊕' : '⊖'}</button>
