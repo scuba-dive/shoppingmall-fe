@@ -35,18 +35,14 @@ const sampleData = [
     paidAt: null,
   },
 ];
-function formatDateTime(dateString) {
+function formatDate(dateString) {
   const date = new Date(dateString);
-  return date.toLocaleString('ko-KR', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  });
+  return date.toISOString().slice(0, 10).replace(/-/g, '.');
 }
 function renderOrderRow(row) {
   return (
     <tr key={row.orderId}>
-      <td>{formatDateTime(row.orderedAt)}</td>
+      <td>{formatDate(row.orderedAt)}</td>
       <td>{row.orderNumber}</td>
       <td>{row.totalCount}</td>
       <td>{row.totalAmount}</td>
