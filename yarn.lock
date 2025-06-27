@@ -4134,6 +4134,7 @@ __metadata:
     lucide-react: "npm:^0.523.0"
     numeral: "npm:^2.0.6"
     prettier: "npm:^3.6.0"
+    prop-types: "npm:^15.8.1"
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
     react-hook-form: "npm:^7.58.1"
