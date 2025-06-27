@@ -12,3 +12,8 @@
 .main {
   padding: 2rem;
 }
+
+h1 {
+  font-size: 20px;
+  padding: 30px 15px;
+}
