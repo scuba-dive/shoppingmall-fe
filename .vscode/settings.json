@@ -5,6 +5,15 @@
     "source.fixAll": "explicit",
     "source.fixAll.eslint": "explicit"
   },
-  "eslint.validate": ["javascript", "javascriptreact"],
-  "prettier.enableDebugLogs": true
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact"
+  ],
+  "prettier.enableDebugLogs": true,
+  "search.exclude": {
+    "**/.yarn": true,
+    "**/.pnp.*": true
+  },
+  "eslint.nodePath": ".yarn/sdks",
+  "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs"
 }
