@@ -1,3 +1,6 @@
+import { useState } from 'react';
+
+import Pagination from '@/components/Pagination/Pagination';
 import AdminLayout from '@/layouts/AdminLayouts/AdminLayout';
 
 import Table from '../../components/Table/Table';
@@ -55,6 +58,34 @@ const sampleData = [
     stock: 0,
     status: 'SOLD_OUT',
   },
+  {
+    product_id: 2,
+    product_name: '센스있는 쇼파',
+    category: {
+      id: 1,
+      name: '의자',
+    },
+    option_id: 2001,
+    color: '빨간색',
+    sku: 'CHAIR-102-RED',
+    price: 84000,
+    stock: 5,
+    status: 'ACTIVE',
+  },
+  {
+    product_id: 2,
+    product_name: '센스있는 쇼파',
+    category: {
+      id: 1,
+      name: '의자',
+    },
+    option_id: 2002,
+    color: '노란색',
+    sku: 'CHAIR-102-YEL',
+    price: 84000,
+    stock: 9,
+    status: 'ACTIVE',
+  },
 ];
 
 function renderProductRow(row) {
@@ -77,10 +108,14 @@ function renderProductRow(row) {
 }
 
 function AdminProduct() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = 10; // 임시 설정
   return (
     <AdminLayout>
       <h1> 상품 관리 </h1>
       <Table columns={columns} data={sampleData} renderRow={renderProductRow} />
+
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
     </AdminLayout>
   );
 }
