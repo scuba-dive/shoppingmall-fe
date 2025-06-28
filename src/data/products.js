@@ -1,75 +1,88 @@
+import bed from '@/assets/product-bed.png';
+import bed2 from '@/assets/product-bed2.png';
+import chair from '@/assets/product-chair.png';
+import chair2 from '@/assets/product-chair2.png';
+import chair3 from '@/assets/product-chair3.png';
+import desk from '@/assets/product-desk.png';
+import desk2 from '@/assets/product-desk2.png';
+import pot from '@/assets/product-pot.png';
+import sofa from '@/assets/product-sofa.png';
+import sofa2 from '@/assets/product-sofa2.png';
+import table from '@/assets/product-table.png';
+import vase from '@/assets/product-vase.png';
+
 const products = [
   {
     id: 1,
     name: '머찐 의자',
     price: 32000,
-    image: '/assets/product-chair.jpg',
+    image: chair,
   },
   {
     id: 2,
     name: '센스있는 쇼파',
     price: 82000,
-    image: '/assets/product-sofa.jpg',
+    image: sofa,
   },
   {
     id: 3,
     name: '빤딱 꽃병',
     price: 14000,
-    image: '/assets/product-vase.jpg',
+    image: vase,
   },
   {
     id: 4,
     name: '반들반들 책상',
     price: 41000,
-    image: '/assets/product-desk.jpg',
+    image: desk,
   },
   {
     id: 5,
-    name: '고급 침대',
+    name: '언제 잤니 침대',
     price: 99000,
-    image: '/assets/product-bed.jpg',
+    image: bed,
   },
   {
     id: 6,
-    name: '다용도 수납장',
+    name: '눞고 싶어 침대',
     price: 55000,
-    image: '/assets/product-cabinet.jpg',
+    image: bed2,
   },
   {
     id: 7,
-    name: '귀여운 쿠션',
+    name: '쿠션말고 의자',
     price: 12000,
-    image: '/assets/product-cushion.jpg',
+    image: chair3,
   },
   {
     id: 8,
     name: '모던 테이블',
     price: 76000,
-    image: '/assets/product-table.jpg',
+    image: table,
   },
   {
     id: 9,
-    name: '미니 화분',
+    name: '꽃병인척 화분',
     price: 9000,
-    image: '/assets/product-pot.jpg',
+    image: pot,
   },
   {
     id: 10,
-    name: '감성 조명',
+    name: '조명말고 소파',
     price: 27000,
-    image: '/assets/product-light.jpg',
+    image: sofa2,
   },
   {
     id: 11,
     name: '깔끔한 서랍장',
     price: 62000,
-    image: '/assets/product-drawer.jpg',
+    image: desk2,
   },
   {
     id: 12,
     name: '심플 의자',
     price: 34000,
-    image: '/assets/product-chair2.jpg',
+    image: chair2,
   },
 ];
 

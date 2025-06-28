@@ -1,0 +1,45 @@
+.productSection {
+  padding: 2rem;
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 1rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.card {
+  all: unset;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid #eee;
+  padding: 1rem;
+  border-radius: 8px;
+  transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.name {
+  margin-top: 0.5rem;
+  font-size: 16px;
+}
+
+.price {
+  font-size: 15px;
+  color: #555;
+}

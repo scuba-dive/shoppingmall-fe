@@ -2,37 +2,25 @@ import { useNavigate } from 'react-router-dom';
 
 import products from '@/data/products';
 
+import styles from './ProductGrid.module.css';
+
 function ProductGrid() {
   const navigate = useNavigate();
 
   return (
-    <section style={{ padding: '2rem' }}>
-      <h2>전체 상품</h2>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: '1.5rem',
-        }}
-      >
+    <section className={styles.productSection}>
+      <h2 className={styles.title}>전체 상품</h2>
+      <div className={styles.grid}>
         {products.slice(0, 12).map((product) => (
           <button
             key={product.id}
             type="button"
             onClick={() => navigate(`/product/${product.id}`)}
-            style={{
-              all: 'unset',
-              cursor: 'pointer',
-              textAlign: 'center',
-            }}
+            className={styles.card}
           >
-            <img
-              src={product.image}
-              alt={product.name}
-              style={{ width: '100%', height: 150, objectFit: 'cover' }}
-            />
-            <p>{product.name}</p>
-            <p>{`${product.price.toLocaleString()}원`}</p>
+            <img src={product.image} alt={product.name} className={styles.image} />
+            <p className={styles.name}>{product.name}</p>
+            <p className={styles.price}>{`${product.price.toLocaleString()}원`}</p>
           </button>
         ))}
       </div>
