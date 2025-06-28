@@ -1,12 +1,7 @@
-import CategorySection from '@/features/main/CategorySection';
-import ProductGrid from '@/features/main/ProductGrid';
-import UserLayout from '@/layouts/UserLayouts/UserLayout';
+import MainRouter from '@/routes/MainRouter';
 
-export default function MainPage() {
-  return (
-    <UserLayout>
-      <CategorySection />
-      <ProductGrid />
-    </UserLayout>
-  );
+function MainPage() {
+  return <MainRouter />;
 }
+
+export default MainPage;
