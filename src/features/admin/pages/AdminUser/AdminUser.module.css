@@ -1,0 +1,24 @@
+.badge {
+  display: inline-block;
+  padding: 4px 7px;
+  border-radius: 4px;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.gold {
+  background-color: gold;
+}
+
+.vip {
+  background-color: purple;
+}
+
+.silver {
+  background-color: gray;
+}
+
+.bronze {
+  background-color: #cd7f32;
+}

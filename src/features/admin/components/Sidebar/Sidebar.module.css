@@ -1,0 +1,20 @@
+.sidebar {
+  width: 150px;
+  height: 100vh;
+  background-color: wheat;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.menuItem {
+  display: block;
+  margin-top: 5rem;
+  text-decoration: none;
+  text-align: center;
+  color: black;
+}
+
+.menuItem:hover {
+  font-weight: bold;
+}

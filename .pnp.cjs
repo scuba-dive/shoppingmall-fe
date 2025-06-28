@@ -49,6 +49,7 @@ const RAW_RUNTIME_STATE =
           ["lucide-react", "virtual:6c4e0f1fbf706ec6b0526f80683ff25683b4d65635ecbf8d92624cf30239d7ee7a1a9587feee817ba22bd3630a7a6f0b17ecc2dffcf895b8881a499c7f837e45#npm:0.523.0"],\
           ["numeral", "npm:2.0.6"],\
           ["prettier", "npm:3.6.2"],\
+          ["prop-types", "npm:15.8.1"],\
           ["react", "npm:19.1.0"],\
           ["react-dom", "virtual:6c4e0f1fbf706ec6b0526f80683ff25683b4d65635ecbf8d92624cf30239d7ee7a1a9587feee817ba22bd3630a7a6f0b17ecc2dffcf895b8881a499c7f837e45#npm:19.1.0"],\
           ["react-hook-form", "virtual:6c4e0f1fbf706ec6b0526f80683ff25683b4d65635ecbf8d92624cf30239d7ee7a1a9587feee817ba22bd3630a7a6f0b17ecc2dffcf895b8881a499c7f837e45#npm:7.58.1"],\
@@ -4929,6 +4930,7 @@ const RAW_RUNTIME_STATE =
           ["lucide-react", "virtual:6c4e0f1fbf706ec6b0526f80683ff25683b4d65635ecbf8d92624cf30239d7ee7a1a9587feee817ba22bd3630a7a6f0b17ecc2dffcf895b8881a499c7f837e45#npm:0.523.0"],\
           ["numeral", "npm:2.0.6"],\
           ["prettier", "npm:3.6.2"],\
+          ["prop-types", "npm:15.8.1"],\
           ["react", "npm:19.1.0"],\
           ["react-dom", "virtual:6c4e0f1fbf706ec6b0526f80683ff25683b4d65635ecbf8d92624cf30239d7ee7a1a9587feee817ba22bd3630a7a6f0b17ecc2dffcf895b8881a499c7f837e45#npm:19.1.0"],\
           ["react-hook-form", "virtual:6c4e0f1fbf706ec6b0526f80683ff25683b4d65635ecbf8d92624cf30239d7ee7a1a9587feee817ba22bd3630a7a6f0b17ecc2dffcf895b8881a499c7f837e45#npm:7.58.1"],\
