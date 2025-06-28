@@ -1,0 +1,25 @@
+.container {
+  border: 1px solid #c3c3c3;
+  border-radius: 5px;
+  padding: 30px 50px;
+}
+
+.section {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 5rem;
+}
+.section2 {
+  padding-bottom: 5rem;
+}
+
+h2 {
+  font-size: 16px;
+  font-weight: bold;
+  padding-bottom: 5px;
+}
+
+.box {
+  border: 1px solid black;
+  padding: 100px 5px;
+}
