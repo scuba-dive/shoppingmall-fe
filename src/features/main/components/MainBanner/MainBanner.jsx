@@ -1,4 +1,4 @@
-import bannerImage from '@/../public/banner.svg';
+import bannerImage from '@/assets/banner.svg';
 
 import styles from './MainBanner.module.css';
 
