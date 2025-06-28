@@ -15,12 +15,12 @@ function ProductGrid() {
           <button
             key={product.id}
             type="button"
-            onClick={() => navigate(`/product/${product.id}`)}
             className={styles.card}
+            onClick={() => navigate(`/product/${product.id}`)}
           >
             <img src={product.image} alt={product.name} className={styles.image} />
             <p className={styles.name}>{product.name}</p>
-            <p className={styles.price}>{`${product.price.toLocaleString()}`}</p>
+            <p className={styles.price}>{product.price.toLocaleString()}</p>
           </button>
         ))}
       </div>
