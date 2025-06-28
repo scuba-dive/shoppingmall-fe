@@ -11,7 +11,7 @@ const columns = [
   { key: 'category', label: '카테고리' },
   { key: 'price', label: '금액' },
   { key: 'stock', label: '재고' },
-  { key: 'soldout', label: '품절여부' },
+  { key: 'soldOut', label: '품절여부' },
   { key: 'quantity', label: '수량 변경' },
   { key: 'status', label: '상태 변경' },
 ];
