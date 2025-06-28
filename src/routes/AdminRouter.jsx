@@ -9,9 +9,9 @@ function AdminRouter() {
   return (
     <Routes>
       <Route path="/" element={<AdminProduct />} />
-      <Route path="/adminOrder" element={<AdminOrder />} />
-      <Route path="/adminUser" element={<AdminUser />} />
-      <Route path="/adminStats" element={<AdminStats />} />
+      <Route path="/orders" element={<AdminOrder />} />
+      <Route path="/users" element={<AdminUser />} />
+      <Route path="/stats" element={<AdminStats />} />
     </Routes>
   );
 }

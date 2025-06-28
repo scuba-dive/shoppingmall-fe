@@ -13,17 +13,17 @@ function Sidebar() {
             </Link>
           </li>
           <li>
-            <Link to="/admin/adminOrder" className={styles.menuItem}>
+            <Link to="/admin/orders" className={styles.menuItem}>
               주문 관리
             </Link>
           </li>
           <li>
-            <Link to="/admin/adminUser" className={styles.menuItem}>
+            <Link to="/admin/users" className={styles.menuItem}>
               사용자 관리
             </Link>
           </li>
           <li>
-            <Link to="/admin/adminStats" className={styles.menuItem}>
+            <Link to="/admin/stats" className={styles.menuItem}>
               통계
             </Link>
           </li>
