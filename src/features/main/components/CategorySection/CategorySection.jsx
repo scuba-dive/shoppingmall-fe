@@ -9,7 +9,9 @@ function CategorySection() {
 
   return (
     <section className={styles.section}>
-      <h2 className={styles.title}>카테고리</h2>
+      <button type="button" onClick={() => navigate('/category')} className={styles.titleButton}>
+        카테고리
+      </button>
       <div className={styles.categoryList}>
         {categories.map((cat) => (
           <button

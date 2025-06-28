@@ -4,10 +4,12 @@
   padding-bottom: 0;
 }
 
-.title {
+.titleButton {
+  all: unset;
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
+  cursor: pointer;
 }
 
 .categoryList {
