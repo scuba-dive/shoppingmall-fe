@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import Pagination from '@/components/Pagination/Pagination';
-import AdminLayout from '@/layouts/AdminLayouts/AdminLayout';
 
 import Table from '../../components/Table/Table';
 import styles from './AdminOrder.module.css';
@@ -60,11 +59,11 @@ function AdminOrder() {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 10; // 임시 설정
   return (
-    <AdminLayout>
+    <>
       <h1> 주문 관리 </h1>
       <Table columns={columns} data={sampleData} renderRow={renderOrderRow} />
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
-    </AdminLayout>
+    </>
   );
 }
 

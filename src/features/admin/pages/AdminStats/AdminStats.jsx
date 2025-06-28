@@ -1,10 +1,8 @@
-import AdminLayout from '@/layouts/AdminLayouts/AdminLayout';
-
 import styles from './AdminStats.module.css';
 
 function AdminStats() {
   return (
-    <AdminLayout>
+    <>
       <h1> 통계 </h1>
       <div className={styles.container}>
         <section className={styles.section}>
@@ -26,7 +24,7 @@ function AdminStats() {
           <div className={styles.box}>순위</div>
         </section>
       </div>
-    </AdminLayout>
+    </>
   );
 }
 

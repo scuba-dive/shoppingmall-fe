@@ -8,22 +8,22 @@ function Sidebar() {
       <nav>
         <ul>
           <li>
-            <Link to="/" className={styles.menuItem}>
+            <Link to="/admin" className={styles.menuItem}>
               상품 관리
             </Link>
           </li>
           <li>
-            <Link to="/" className={styles.menuItem}>
+            <Link to="/admin/adminOrder" className={styles.menuItem}>
               주문 관리
             </Link>
           </li>
           <li>
-            <Link to="/" className={styles.menuItem}>
+            <Link to="/admin/adminUser" className={styles.menuItem}>
               사용자 관리
             </Link>
           </li>
           <li>
-            <Link to="/" className={styles.menuItem}>
+            <Link to="/admin/adminStats" className={styles.menuItem}>
               통계
             </Link>
           </li>
