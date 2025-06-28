@@ -44,7 +44,7 @@ const products = [
   },
   {
     id: 6,
-    name: '눞고 싶어 침대',
+    name: '눕고 싶어 침대',
     price: 55000,
     image: bed2,
   },
