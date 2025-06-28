@@ -10,7 +10,7 @@ const columns = [
   { key: 'date', label: '주문일자' },
   { key: 'number', label: '주문번호' },
   { key: 'quantity', label: '상품수량' },
-  { key: 'price', label: '금액' },
+  { key: 'price', label: '결제금액' },
   { key: 'status', label: '주문상태' },
   { key: 'check', label: '조회' },
 ];
@@ -45,7 +45,7 @@ function renderOrderRow(row) {
       <td>{formatDate(row.orderedAt)}</td>
       <td>{row.orderNumber}</td>
       <td>{row.totalCount}</td>
-      <td>{row.totalAmount}</td>
+      <td>{row.totalAmount.toLocaleString()}</td>
       <td>{row.orderStatus}</td>
       <td>
         <button type="button" className={styles.button}>
