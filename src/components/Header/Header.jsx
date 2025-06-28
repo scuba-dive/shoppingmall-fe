@@ -1,5 +1,6 @@
 import icon from '@/../public/favicon.svg';
 import logo from '@/../public/logo.svg';
+
 import style from './Header.module.css';
 
 function Header() {

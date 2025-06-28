@@ -1,0 +1,11 @@
+.mainBanner {
+  width: 100%;
+  overflow: hidden;
+  margin: 0;
+}
+
+.mainBanner img {
+  display: block;
+  width: 100%;
+  height: auto;
+}

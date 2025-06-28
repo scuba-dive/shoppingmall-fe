@@ -1,7 +1,9 @@
 import './App.css';
 
+import Router from '@/routes/Router';
+
 function App() {
-  return <div>DeepDive Studios 쇼핑몰 서비스</div>;
+  return <Router />;
 }
 
 export default App;
