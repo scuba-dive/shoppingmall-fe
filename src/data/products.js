@@ -74,7 +74,7 @@ const products = [
   },
   {
     id: 11,
-    name: '깔끔한 서랍장',
+    name: '서랍장인척 책상',
     price: 62000,
     image: desk2,
   },
