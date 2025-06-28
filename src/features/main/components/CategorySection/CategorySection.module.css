@@ -3,15 +3,15 @@
 }
 
 .title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
 }
 
 .categoryList {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
 }
 
 .categoryItem {
@@ -21,17 +21,29 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100px;
+  background-color: #fafafa;
+  border-radius: 12px;
+  padding: 1rem;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.categoryItem:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
 }
 
 .categoryItem img {
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  aspect-ratio: 3 / 4;
   object-fit: cover;
   border-radius: 8px;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .categoryItem p {
-  font-size: 0.9rem;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
 }

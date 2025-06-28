@@ -3,10 +3,10 @@ import ProductGrid from '@/features/main/components/ProductGrid/ProductGrid';
 
 function HomePage() {
   return (
-    <>
+    <div>
       <CategorySection />
       <ProductGrid />
-    </>
+    </div>
   );
 }
 

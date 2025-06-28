@@ -20,7 +20,7 @@ function ProductGrid() {
           >
             <img src={product.image} alt={product.name} className={styles.image} />
             <p className={styles.name}>{product.name}</p>
-            <p className={styles.price}>{`${product.price.toLocaleString()}원`}</p>
+            <p className={styles.price}>{`${product.price.toLocaleString()}`}</p>
           </button>
         ))}
       </div>
