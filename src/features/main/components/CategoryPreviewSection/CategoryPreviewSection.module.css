@@ -14,21 +14,10 @@
   margin-bottom: 1rem;
 }
 
-.scrollContainer {
-  display: flex;
-  overflow-x: auto;
-  gap: 1rem;
-  scroll-snap-type: x mandatory;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+.swiper {
+  padding-bottom: 1rem;
 }
 
-.scrollContainer::-webkit-scrollbar {
-  display: none;
-}
-
-.cardWrapper {
-  flex: 0 0 auto;
-  width: 200px;
-  scroll-snap-align: start;
+.slide {
+  width: auto;
 }

@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router-dom';
+import { Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import ProductCard from '@/components/Card/ProductCard';
 import categories from '@/data/categories';
@@ -23,13 +25,20 @@ function CategoryPreviewSection() {
             >
               {category.name}
             </button>
-            <div className={styles.scrollContainer}>
+
+            <Swiper
+              modules={[Navigation]}
+              spaceBetween={16}
+              slidesPerView={4}
+              navigation
+              className={styles.swiper}
+            >
               {filtered.map((p) => (
-                <div key={p.id} className={styles.cardWrapper}>
+                <SwiperSlide key={p.id} className={styles.slide}>
                   <ProductCard id={p.id} name={p.name} price={p.price} image={p.image} />
-                </div>
+                </SwiperSlide>
               ))}
-            </div>
+            </Swiper>
           </section>
         );
       })}
