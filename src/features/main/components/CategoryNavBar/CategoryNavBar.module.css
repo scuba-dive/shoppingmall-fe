@@ -6,7 +6,7 @@
 
 .list {
   display: flex;
-  gap: 2rem;
+  gap: 8rem;
   justify-content: center;
   list-style: none;
   margin: 0;
