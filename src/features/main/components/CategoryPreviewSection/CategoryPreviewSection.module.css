@@ -8,8 +8,8 @@
 
 .titleButton {
   all: unset;
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 1.25rem;
+  font-weight: 600;
   cursor: pointer;
   margin-bottom: 1rem;
 }
