@@ -110,3 +110,8 @@
 .signupTermsRow {
   margin: 0;
 }
+
+.signupError {
+  color: red;
+  margin-top: 10px;
+}

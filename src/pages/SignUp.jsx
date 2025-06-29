@@ -268,16 +268,11 @@ function SignUp() {
                 <div style={{ color: 'red', fontSize: 14 }}>{errors.agreeTerms.message}</div>
               )}
             </div>
+            {errors.root && <div className={styles.signupError}>{errors.root.message}</div>}
             <button type="submit" className={styles.signupBtn}>
               회원가입
             </button>
           </form>
-          {errors.root && (
-            <div style={{ color: 'red', marginTop: '10px' }}>{errors.root.message}</div>
-          )}
-          {errors?.root?.message && !errors.root && (
-            <div style={{ color: 'red', marginTop: '10px' }}>{errors.root.message}</div>
-          )}
           <div className={styles.signupLinks}>
             <Link to="/signin" className={styles.signupLinkBtn}>
               회원이신가요? 로그인
