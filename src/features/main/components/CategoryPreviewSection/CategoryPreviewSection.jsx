@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
+import ProductCard from '@/components/Card/ProductCard';
 import categories from '@/data/categories';
 import products from '@/data/products';
 
@@ -24,10 +25,8 @@ function CategoryPreviewSection() {
             </button>
             <div className={styles.scrollContainer}>
               {filtered.map((p) => (
-                <div key={p.id} className={styles.card}>
-                  <img src={p.image} alt={p.name} />
-                  <p className={styles.name}>{p.name}</p>
-                  <p className={styles.price}>{p.price.toLocaleString()}</p>
+                <div key={p.id} className={styles.cardWrapper}>
+                  <ProductCard id={p.id} name={p.name} price={p.price} image={p.image} />
                 </div>
               ))}
             </div>
