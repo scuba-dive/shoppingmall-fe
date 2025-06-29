@@ -1,0 +1,47 @@
+.section {
+  padding: 2rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.categoryBlock {
+  margin-bottom: 3rem;
+}
+
+.categoryName {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.card {
+  text-align: left;
+}
+
+.image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+.price {
+  font-size: 0.9rem;
+  color: #555;
+}
