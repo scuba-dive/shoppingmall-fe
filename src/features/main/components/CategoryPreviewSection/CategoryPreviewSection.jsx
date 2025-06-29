@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import ProductCard from '@/components/Card/ProductCard';
@@ -26,13 +25,7 @@ function CategoryPreviewSection() {
               {category.name}
             </button>
 
-            <Swiper
-              modules={[Navigation]}
-              spaceBetween={16}
-              slidesPerView={4}
-              navigation
-              className={styles.swiper}
-            >
+            <Swiper spaceBetween={16} slidesPerView={4} className={styles.swiper}>
               {filtered.map((p) => (
                 <SwiperSlide key={p.id} className={styles.slide}>
                   <ProductCard id={p.id} name={p.name} price={p.price} image={p.image} />
