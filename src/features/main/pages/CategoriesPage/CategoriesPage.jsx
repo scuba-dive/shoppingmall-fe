@@ -8,7 +8,7 @@ import styles from './CategoriesPage.module.css';
 function CategoriesPage() {
   const navigate = useNavigate();
   return (
-    <>
+    <div>
       <CategoryNavBar />
       <div className={styles.breadcrumb}>
         <button type="button" className={styles.link} onClick={() => navigate('/')}>
@@ -18,7 +18,7 @@ function CategoriesPage() {
         <span>카테고리</span>
       </div>
       <CategoryPreviewSection />
-    </>
+    </div>
   );
 }
 
