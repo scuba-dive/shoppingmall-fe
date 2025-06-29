@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import styles from './Sidebar.module.css';
 
@@ -16,9 +16,13 @@ function Sidebar() {
         <ul>
           {menuItem.map((item) => (
             <li key={item.to}>
-              <Link to={item.to} className={styles.menuItem}>
+              <NavLink
+                to={item.to}
+                end={item.to === '/admin'}
+                className={({ isActive }) => `${styles.menuItem} ${isActive ? styles.active : ''}`}
+              >
                 {item.label}
-              </Link>
+              </NavLink>
             </li>
           ))}
         </ul>

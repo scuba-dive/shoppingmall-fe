@@ -1,7 +1,8 @@
 .sidebar {
-  width: 150px;
+  width: 165px;
   height: 100vh;
-  background-color: wheat;
+  background-color: white;
+  border-right: 1px solid #cecece;
   display: flex;
   justify-content: center;
   flex-shrink: 0;
@@ -19,4 +20,9 @@
 
 .menuItem:hover {
   font-weight: bold;
+}
+
+.active {
+  font-weight: bold;
+  text-decoration: underline;
 }
