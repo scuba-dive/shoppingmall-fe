@@ -154,8 +154,13 @@ function SignUp() {
                   required
                   style={{ flex: 1 }}
                 />
-                <button type="button" className={styles.signupTestBtn} onClick={handleCheckEmail}>
-                  중복 확인
+                <button
+                  type="button"
+                  className={styles.signupTestBtn}
+                  onClick={handleCheckEmail}
+                  disabled={emailChecked}
+                >
+                  {emailChecked ? '중복 확인 완료' : '중복 확인'}
                 </button>
               </div>
               {emailCheckMsg && (
