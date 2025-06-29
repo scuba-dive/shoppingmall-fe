@@ -473,3 +473,7 @@ FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,macos,windows,react
 .yarn/install-state.gz
+.yarn/unplugged/
+.yarn/build-state.yml
+
+.pnp.*
