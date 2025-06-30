@@ -24,11 +24,9 @@ Table.propTypes = {
       label: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-    }),
-  ).isRequired,
+  /* eslint-disable react/forbid-prop-types */
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  /* eslint-enable react/forbid-prop-types */
   renderRow: PropTypes.func.isRequired,
 };
 

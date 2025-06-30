@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import Pagination from '@/components/Pagination/Pagination';
-import AdminLayout from '@/layouts/AdminLayouts/AdminLayout';
 
 import Table from '../../components/Table/Table';
 
@@ -11,7 +10,7 @@ const columns = [
   { key: 'category', label: '카테고리' },
   { key: 'price', label: '금액' },
   { key: 'stock', label: '재고' },
-  { key: 'soldout', label: '품절여부' },
+  { key: 'soldOut', label: '품절여부' },
   { key: 'quantity', label: '수량 변경' },
   { key: 'status', label: '상태 변경' },
 ];
@@ -111,12 +110,12 @@ function AdminProduct() {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 10; // 임시 설정
   return (
-    <AdminLayout>
+    <>
       <h1> 상품 관리 </h1>
       <Table columns={columns} data={sampleData} renderRow={renderProductRow} />
 
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
-    </AdminLayout>
+    </>
   );
 }
 

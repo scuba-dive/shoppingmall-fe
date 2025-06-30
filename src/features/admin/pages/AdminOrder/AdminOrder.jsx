@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import Pagination from '@/components/Pagination/Pagination';
-import AdminLayout from '@/layouts/AdminLayouts/AdminLayout';
 
 import Table from '../../components/Table/Table';
 import styles from './AdminOrder.module.css';
@@ -10,7 +9,7 @@ const columns = [
   { key: 'date', label: '주문일자' },
   { key: 'number', label: '주문번호' },
   { key: 'quantity', label: '상품수량' },
-  { key: 'price', label: '금액' },
+  { key: 'price', label: '결제금액' },
   { key: 'status', label: '주문상태' },
   { key: 'check', label: '조회' },
 ];
@@ -45,7 +44,7 @@ function renderOrderRow(row) {
       <td>{formatDate(row.orderedAt)}</td>
       <td>{row.orderNumber}</td>
       <td>{row.totalCount}</td>
-      <td>{row.totalAmount}</td>
+      <td>{row.totalAmount.toLocaleString()}</td>
       <td>{row.orderStatus}</td>
       <td>
         <button type="button" className={styles.button}>
@@ -60,11 +59,11 @@ function AdminOrder() {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 10; // 임시 설정
   return (
-    <AdminLayout>
+    <>
       <h1> 주문 관리 </h1>
       <Table columns={columns} data={sampleData} renderRow={renderOrderRow} />
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
-    </AdminLayout>
+    </>
   );
 }
 

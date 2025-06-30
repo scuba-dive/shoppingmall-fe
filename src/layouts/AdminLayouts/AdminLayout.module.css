@@ -4,14 +4,20 @@
   min-height: 100vh;
 }
 
+.container > header {
+  position: fixed;
+}
+
 .contentArea {
   flex: 1;
   display: flex;
+  padding-top: 70px;
 }
 
 .main {
   padding: 2rem;
   width: 100%;
+  margin-left: 165px;
 }
 
 h1 {
