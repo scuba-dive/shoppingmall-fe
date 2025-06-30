@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
-import MyPage from '@/features/main/pages/MyPage/MyPage';
+import MyPage from '@/features/my/pages/MyPage/MyPage';
 import DefaultLayout from '@/layouts/DefaultLayouts/DefaultLayout';
 
 function MyRouter() {

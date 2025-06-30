@@ -1,0 +1,39 @@
+.cartSection {
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.viewAll {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.cartTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.cartTable th,
+.cartTable td {
+  padding: 0.75rem;
+  text-align: left;
+  border-top: 1px solid #eee;
+}
+
+.emptyText {
+  color: #999;
+  text-align: center;
+  padding: 1rem 0;
+}

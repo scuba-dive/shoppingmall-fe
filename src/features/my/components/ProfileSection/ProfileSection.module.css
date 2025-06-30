@@ -1,0 +1,50 @@
+.profileSection {
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.profileContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin-right: 1rem;
+}
+
+.info {
+  flex: 1;
+}
+
+.badge {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 2px 8px;
+  background-color: #cd7f32; /* bronze color */
+  color: #fff;
+  font-size: 12px;
+  border-radius: 4px;
+}
+
+.amount {
+  /* display: block; */
+  font-size: 14px;
+  color: #666;
+  margin-top: 4px;
+  margin-left: 5px;
+}
+
+.editButton {
+  padding: 0.5rem 1rem;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+}
