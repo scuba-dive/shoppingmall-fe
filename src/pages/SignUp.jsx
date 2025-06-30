@@ -254,13 +254,13 @@ function SignUp() {
             )}
             {/* 이용약관 동의 체크박스 */}
             <div className={styles.signupTermsRow}>
-              <label htmlFor="agree-terms" style={{ fontWeight: 500, fontSize: 16 }}>
+              <label htmlFor="agree-terms" className={styles.agreeTerms}>
                 <input
                   id="agree-terms"
                   type="checkbox"
                   {...register('agreeTerms')} // eslint-disable-line react/jsx-props-no-spreading
                   required
-                  style={{ marginRight: 8 }}
+                  className={styles.agreeTermsCheckbox}
                 />
                 이용약관에 동의합니다(필수)
               </label>
