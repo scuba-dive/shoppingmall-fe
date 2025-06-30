@@ -1,16 +1,16 @@
 import { Route, Routes } from 'react-router-dom';
 
-import MyPage from '@/features/my/pages/MyPage/MyPage';
+import CartPage from '@/features/cart/pages/CartPage';
 import DefaultLayout from '@/layouts/DefaultLayouts/DefaultLayout';
 
-function MyRouter() {
+function CartRouter() {
   return (
     <Routes>
       <Route element={<DefaultLayout />}>
-        <Route path="/" element={<MyPage />} />
+        <Route path="/" element={<CartPage />} />
       </Route>
     </Routes>
   );
 }
 
-export default MyRouter;
+export default CartRouter;
