@@ -36,10 +36,10 @@ function Header() {
           <LogoutButton />
         ) : (
           <>
-            <Link to="/signin" className={style.loginBtn}>
+            <Link to="/auth/signin" className={style.loginBtn}>
               로그인
             </Link>
-            <Link to="/signup" className={style.signupBtn}>
+            <Link to="/auth/signup" className={style.signupBtn}>
               회원가입
             </Link>
           </>
