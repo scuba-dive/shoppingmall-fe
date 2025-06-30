@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
-import Header from '@/components/Header/Header';
 import useAuthStore from '@/states/authStore';
 
 import styles from './SignUp.module.css';
@@ -119,168 +118,165 @@ function SignUp() {
   };
 
   return (
-    <>
-      <Header />
-      <main className={styles.signupMain}>
-        <section className={styles.signupSection}>
-          <h1 className={styles.signupTitle}>회원가입</h1>
-          <p className={styles.signupDesc}>쇼핑몰 회원가입을 위해 정보를 입력해 주세요!</p>
-          <form className={styles.signupForm} onSubmit={handleSubmit(onSubmit)}>
-            {/* 실명 입력 */}
-            <label htmlFor="signup-nickname" className={styles.signupLabel}>
-              이름
-              <input
-                id="signup-nickname"
-                type="text"
-                placeholder="사용자 찾기에 사용됩니다."
-                className={styles.signupInput}
-                {...register('nickname')} // eslint-disable-line react/jsx-props-no-spreading
-                required
-              />
-              {errors.nickname && (
-                <div style={{ color: 'red', fontSize: 14 }}>{errors.nickname.message}</div>
-              )}
-            </label>
-            {/* 이메일 및 중복 확인 */}
-            <label htmlFor="signup-email" className={styles.signupLabel}>
-              이메일
-              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                <input
-                  id="signup-email"
-                  type="email"
-                  placeholder="user@user.com"
-                  className={styles.signupInput}
-                  {...register('email')} // eslint-disable-line react/jsx-props-no-spreading
-                  required
-                  style={{ flex: 1 }}
-                />
-                <button
-                  type="button"
-                  className={styles.signupTestBtn}
-                  onClick={handleCheckEmail}
-                  disabled={emailChecked}
-                >
-                  {emailChecked ? '중복 확인 완료' : '중복 확인'}
-                </button>
-              </div>
-              {emailCheckMsg && (
-                <div style={{ color: emailChecked ? 'green' : 'red', fontSize: 14, marginTop: 4 }}>
-                  {emailCheckMsg}
-                </div>
-              )}
-              {errors.email && (
-                <div style={{ color: 'red', fontSize: 14 }}>{errors.email.message}</div>
-              )}
-            </label>
-            {/* 비밀번호 */}
-            <label htmlFor="signup-password" className={styles.signupLabel}>
-              비밀번호
-              <input
-                id="signup-password"
-                type="password"
-                placeholder="****"
-                className={styles.signupInput}
-                {...register('password')} // eslint-disable-line react/jsx-props-no-spreading
-                required
-              />
-              {errors.password && (
-                <div style={{ color: 'red', fontSize: 14 }}>{errors.password.message}</div>
-              )}
-            </label>
-            {/* 비밀번호 확인 */}
-            <label htmlFor="signup-password-check" className={styles.signupLabel}>
-              비밀번호 확인
-              <input
-                id="signup-password-check"
-                type="password"
-                placeholder="****"
-                className={styles.signupInput}
-                {...register('passwordCheck')} // eslint-disable-line react/jsx-props-no-spreading
-                required
-              />
-              {errors.passwordCheck && (
-                <div style={{ color: 'red', fontSize: 14 }}>{errors.passwordCheck.message}</div>
-              )}
-            </label>
-            {/* 휴대폰 번호 입력 및 인증 */}
-            <label htmlFor="signup-phone" className={styles.signupLabel}>
-              휴대폰 번호
-              <div className={styles.signupPhoneRow}>
-                <input
-                  id="signup-phone"
-                  type="tel"
-                  placeholder="01012345678"
-                  className={styles.signupInput}
-                  {...register('phone')} // eslint-disable-line react/jsx-props-no-spreading
-                  required
-                  style={{ flex: 1 }}
-                  disabled={isAuthVerified}
-                />
-                <button
-                  type="button"
-                  onClick={handleSendAuth}
-                  disabled={isAuthSent || isAuthVerified}
-                  className={styles.signupTestBtn}
-                >
-                  {isAuthVerified && '인증 완료'}
-                  {!isAuthVerified && isAuthSent && '인증 대기중'}
-                  {!isAuthVerified && !isAuthSent && '인증번호 발송'}
-                </button>
-              </div>
-              {errors.phone && (
-                <div style={{ color: 'red', fontSize: 14 }}>{errors.phone.message}</div>
-              )}
-            </label>
-            {/* 인증번호 입력 */}
-            {isAuthSent && !isAuthVerified && (
-              <label htmlFor="signup-authcode" className={styles.signupLabel}>
-                인증번호 입력
-                <div className={styles.signupAuthRow}>
-                  <input
-                    id="signup-authcode"
-                    type="text"
-                    placeholder="인증번호 6자리"
-                    className={styles.signupInput}
-                    value={authCode}
-                    onChange={(e) => setAuthCode(e.target.value)}
-                    required
-                    style={{ flex: 1 }}
-                  />
-                  <button type="button" className={styles.signupTestBtn} onClick={handleVerifyAuth}>
-                    인증 확인
-                  </button>
-                </div>
-              </label>
+    <main className={styles.signupMain}>
+      <section className={styles.signupSection}>
+        <h1 className={styles.signupTitle}>회원가입</h1>
+        <p className={styles.signupDesc}>쇼핑몰 회원가입을 위해 정보를 입력해 주세요!</p>
+        <form className={styles.signupForm} onSubmit={handleSubmit(onSubmit)}>
+          {/* 실명 입력 */}
+          <label htmlFor="signup-nickname" className={styles.signupLabel}>
+            이름
+            <input
+              id="signup-nickname"
+              type="text"
+              placeholder="사용자 찾기에 사용됩니다."
+              className={styles.signupInput}
+              {...register('nickname')} // eslint-disable-line react/jsx-props-no-spreading
+              required
+            />
+            {errors.nickname && (
+              <div style={{ color: 'red', fontSize: 14 }}>{errors.nickname.message}</div>
             )}
-            {/* 이용약관 동의 체크박스 */}
-            <div className={styles.signupTermsRow}>
-              <label htmlFor="agree-terms" className={styles.agreeTerms}>
-                <input
-                  id="agree-terms"
-                  type="checkbox"
-                  {...register('agreeTerms')} // eslint-disable-line react/jsx-props-no-spreading
-                  required
-                  className={styles.agreeTermsCheckbox}
-                />
-                이용약관에 동의합니다(필수)
-              </label>
-              {errors.agreeTerms && (
-                <div style={{ color: 'red', fontSize: 14 }}>{errors.agreeTerms.message}</div>
-              )}
+          </label>
+          {/* 이메일 및 중복 확인 */}
+          <label htmlFor="signup-email" className={styles.signupLabel}>
+            이메일
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              <input
+                id="signup-email"
+                type="email"
+                placeholder="user@user.com"
+                className={styles.signupInput}
+                {...register('email')} // eslint-disable-line react/jsx-props-no-spreading
+                required
+                style={{ flex: 1 }}
+              />
+              <button
+                type="button"
+                className={styles.signupTestBtn}
+                onClick={handleCheckEmail}
+                disabled={emailChecked}
+              >
+                {emailChecked ? '중복 확인 완료' : '중복 확인'}
+              </button>
             </div>
-            {errors.root && <div className={styles.signupError}>{errors.root.message}</div>}
-            <button type="submit" className={styles.signupBtn}>
-              회원가입
-            </button>
-          </form>
-          <div className={styles.signupLinks}>
-            <Link to="/signin" className={styles.signupLinkBtn}>
-              회원이신가요? 로그인
-            </Link>
+            {emailCheckMsg && (
+              <div style={{ color: emailChecked ? 'green' : 'red', fontSize: 14, marginTop: 4 }}>
+                {emailCheckMsg}
+              </div>
+            )}
+            {errors.email && (
+              <div style={{ color: 'red', fontSize: 14 }}>{errors.email.message}</div>
+            )}
+          </label>
+          {/* 비밀번호 */}
+          <label htmlFor="signup-password" className={styles.signupLabel}>
+            비밀번호
+            <input
+              id="signup-password"
+              type="password"
+              placeholder="****"
+              className={styles.signupInput}
+              {...register('password')} // eslint-disable-line react/jsx-props-no-spreading
+              required
+            />
+            {errors.password && (
+              <div style={{ color: 'red', fontSize: 14 }}>{errors.password.message}</div>
+            )}
+          </label>
+          {/* 비밀번호 확인 */}
+          <label htmlFor="signup-password-check" className={styles.signupLabel}>
+            비밀번호 확인
+            <input
+              id="signup-password-check"
+              type="password"
+              placeholder="****"
+              className={styles.signupInput}
+              {...register('passwordCheck')} // eslint-disable-line react/jsx-props-no-spreading
+              required
+            />
+            {errors.passwordCheck && (
+              <div style={{ color: 'red', fontSize: 14 }}>{errors.passwordCheck.message}</div>
+            )}
+          </label>
+          {/* 휴대폰 번호 입력 및 인증 */}
+          <label htmlFor="signup-phone" className={styles.signupLabel}>
+            휴대폰 번호
+            <div className={styles.signupPhoneRow}>
+              <input
+                id="signup-phone"
+                type="tel"
+                placeholder="01012345678"
+                className={styles.signupInput}
+                {...register('phone')} // eslint-disable-line react/jsx-props-no-spreading
+                required
+                style={{ flex: 1 }}
+                disabled={isAuthVerified}
+              />
+              <button
+                type="button"
+                onClick={handleSendAuth}
+                disabled={isAuthSent || isAuthVerified}
+                className={styles.signupTestBtn}
+              >
+                {isAuthVerified && '인증 완료'}
+                {!isAuthVerified && isAuthSent && '인증 대기중'}
+                {!isAuthVerified && !isAuthSent && '인증번호 발송'}
+              </button>
+            </div>
+            {errors.phone && (
+              <div style={{ color: 'red', fontSize: 14 }}>{errors.phone.message}</div>
+            )}
+          </label>
+          {/* 인증번호 입력 */}
+          {isAuthSent && !isAuthVerified && (
+            <label htmlFor="signup-authcode" className={styles.signupLabel}>
+              인증번호 입력
+              <div className={styles.signupAuthRow}>
+                <input
+                  id="signup-authcode"
+                  type="text"
+                  placeholder="인증번호 6자리"
+                  className={styles.signupInput}
+                  value={authCode}
+                  onChange={(e) => setAuthCode(e.target.value)}
+                  required
+                  style={{ flex: 1 }}
+                />
+                <button type="button" className={styles.signupTestBtn} onClick={handleVerifyAuth}>
+                  인증 확인
+                </button>
+              </div>
+            </label>
+          )}
+          {/* 이용약관 동의 체크박스 */}
+          <div className={styles.signupTermsRow}>
+            <label htmlFor="agree-terms" className={styles.agreeTerms}>
+              <input
+                id="agree-terms"
+                type="checkbox"
+                {...register('agreeTerms')} // eslint-disable-line react/jsx-props-no-spreading
+                required
+                className={styles.agreeTermsCheckbox}
+              />
+              이용약관에 동의합니다(필수)
+            </label>
+            {errors.agreeTerms && (
+              <div style={{ color: 'red', fontSize: 14 }}>{errors.agreeTerms.message}</div>
+            )}
           </div>
-        </section>
-      </main>
-    </>
+          {errors.root && <div className={styles.signupError}>{errors.root.message}</div>}
+          <button type="submit" className={styles.signupBtn}>
+            회원가입
+          </button>
+        </form>
+        <div className={styles.signupLinks}>
+          <Link to="/signin" className={styles.signupLinkBtn}>
+            회원이신가요? 로그인
+          </Link>
+        </div>
+      </section>
+    </main>
   );
 }
 
