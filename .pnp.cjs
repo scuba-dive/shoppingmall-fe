@@ -5689,7 +5689,7 @@ const RAW_RUNTIME_STATE =
     ]],\
     ["swiper", [\
       ["npm:11.2.10", {\
-        "packageLocation": "../../../../.yarn/berry/cache/swiper-npm-11.2.10-2bf88a66cf-10c0.zip/node_modules/swiper/",\
+        "packageLocation": "../../../.yarn/berry/cache/swiper-npm-11.2.10-2bf88a66cf-10c0.zip/node_modules/swiper/",\
         "packageDependencies": [\
           ["swiper", "npm:11.2.10"]\
         ],\

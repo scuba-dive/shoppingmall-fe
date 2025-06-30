@@ -1,16 +1,25 @@
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './OrderSection.module.css';
 
-export default function OrderSection({ orders }) {
-  const displayedOrders = orders.slice(0, 2);
+export default function OrderSection({ orders, isPreview = true }) {
+  const displayedOrders = isPreview ? orders.slice(0, 2) : orders;
+  const navigate = useNavigate();
+
+  const handlePreviewAll = () => {
+    navigate('/order');
+  };
+
   return (
     <section className={styles.orderSection}>
       <div className={styles.header}>
         <h2>내 주문 내역</h2>
-        <button type="button" className={styles.viewAll}>
-          전체 보기
-        </button>
+        {isPreview && (
+          <button type="button" className={styles.viewAll} onClick={handlePreviewAll}>
+            전체 보기
+          </button>
+        )}
       </div>
       {orders.length === 0 ? (
         <p className={styles.emptyText}>주문 내역이 없습니다.</p>
@@ -44,10 +53,30 @@ export default function OrderSection({ orders }) {
           </tbody>
         </table>
       )}
+      {!isPreview && (
+        <div className={styles.pagination}>
+          <button type="button" className={styles.page}>
+            1
+          </button>
+          <button type="button" className={styles.page}>
+            2
+          </button>
+          <button type="button" className={styles.page}>
+            3
+          </button>
+          <button type="button" className={styles.page}>
+            4
+          </button>
+          <button type="button" className={styles.page}>
+            5
+          </button>
+        </div>
+      )}
     </section>
   );
 }
 
 OrderSection.propTypes = {
   orders: PropTypes.arrayOf(PropTypes.string).isRequired,
+  isPreview: PropTypes.bool.isRequired,
 };
