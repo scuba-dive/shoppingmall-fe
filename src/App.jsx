@@ -7,6 +7,7 @@ import MainPage from '@/pages/MainPage';
 import SignIn from '@/pages/SignIn';
 import SignUp from '@/pages/SignUp';
 
+import CartPage from './pages/CartPage';
 import MyPage from './pages/MyPage';
 
 function App() {
@@ -20,6 +21,8 @@ function App() {
         <Route path="admin/*" element={<AdminPage />} />
 
         <Route path="mypage/*" element={<MyPage />} />
+
+        <Route path="cart/*" element={<CartPage />} />
       </Routes>
     </Router>
   );

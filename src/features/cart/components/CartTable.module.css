@@ -1,0 +1,13 @@
+.cartTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+  font-size: 14px;
+}
+
+.cartTable th,
+.cartTable td {
+  padding: 1rem;
+  border-top: 1px solid #eee;
+  text-align: center;
+}

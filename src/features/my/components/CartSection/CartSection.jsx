@@ -1,15 +1,21 @@
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './CartSection.module.css';
 
 function CartSection({ cartItems }) {
   const displayedItems = cartItems.slice(0, 2);
+  const navigate = useNavigate();
+
+  const handleAllView = () => {
+    navigate('/cart');
+  };
 
   return (
     <section className={styles.cartSection}>
       <div className={styles.header}>
         <h2>장바구니</h2>
-        <button type="button" className={styles.viewAll}>
+        <button type="button" className={styles.viewAll} onClick={handleAllView}>
           전체 보기
         </button>
       </div>
