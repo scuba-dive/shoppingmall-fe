@@ -1,0 +1,23 @@
+.wrapper {
+  padding: 2rem;
+}
+
+.section {
+  margin-bottom: 3rem;
+}
+
+.titleButton {
+  all: unset;
+  font-size: 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.swiper {
+  padding-bottom: 1rem;
+}
+
+.slide {
+  width: auto;
+}

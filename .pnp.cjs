@@ -57,6 +57,7 @@ const RAW_RUNTIME_STATE =
           ["react-router-dom", "virtual:6c4e0f1fbf706ec6b0526f80683ff25683b4d65635ecbf8d92624cf30239d7ee7a1a9587feee817ba22bd3630a7a6f0b17ecc2dffcf895b8881a499c7f837e45#npm:7.6.2"],\
           ["recharts", "virtual:6c4e0f1fbf706ec6b0526f80683ff25683b4d65635ecbf8d92624cf30239d7ee7a1a9587feee817ba22bd3630a7a6f0b17ecc2dffcf895b8881a499c7f837e45#npm:3.0.2"],\
           ["shoppingmall-fe", "workspace:."],\
+          ["swiper", "npm:11.2.10"],\
           ["vite", "virtual:6c4e0f1fbf706ec6b0526f80683ff25683b4d65635ecbf8d92624cf30239d7ee7a1a9587feee817ba22bd3630a7a6f0b17ecc2dffcf895b8881a499c7f837e45#npm:7.0.0"],\
           ["zod", "npm:3.25.67"],\
           ["zustand", "virtual:6c4e0f1fbf706ec6b0526f80683ff25683b4d65635ecbf8d92624cf30239d7ee7a1a9587feee817ba22bd3630a7a6f0b17ecc2dffcf895b8881a499c7f837e45#npm:5.0.6"]\
@@ -5344,6 +5345,7 @@ const RAW_RUNTIME_STATE =
           ["react-router-dom", "virtual:6c4e0f1fbf706ec6b0526f80683ff25683b4d65635ecbf8d92624cf30239d7ee7a1a9587feee817ba22bd3630a7a6f0b17ecc2dffcf895b8881a499c7f837e45#npm:7.6.2"],\
           ["recharts", "virtual:6c4e0f1fbf706ec6b0526f80683ff25683b4d65635ecbf8d92624cf30239d7ee7a1a9587feee817ba22bd3630a7a6f0b17ecc2dffcf895b8881a499c7f837e45#npm:3.0.2"],\
           ["shoppingmall-fe", "workspace:."],\
+          ["swiper", "npm:11.2.10"],\
           ["vite", "virtual:6c4e0f1fbf706ec6b0526f80683ff25683b4d65635ecbf8d92624cf30239d7ee7a1a9587feee817ba22bd3630a7a6f0b17ecc2dffcf895b8881a499c7f837e45#npm:7.0.0"],\
           ["zod", "npm:3.25.67"],\
           ["zustand", "virtual:6c4e0f1fbf706ec6b0526f80683ff25683b4d65635ecbf8d92624cf30239d7ee7a1a9587feee817ba22bd3630a7a6f0b17ecc2dffcf895b8881a499c7f837e45#npm:5.0.6"]\
@@ -5681,6 +5683,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../.yarn/berry/cache/supports-preserve-symlinks-flag-npm-1.0.0-f17c4d0028-10c0.zip/node_modules/supports-preserve-symlinks-flag/",\
         "packageDependencies": [\
           ["supports-preserve-symlinks-flag", "npm:1.0.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["swiper", [\
+      ["npm:11.2.10", {\
+        "packageLocation": "../../../../.yarn/berry/cache/swiper-npm-11.2.10-2bf88a66cf-10c0.zip/node_modules/swiper/",\
+        "packageDependencies": [\
+          ["swiper", "npm:11.2.10"]\
         ],\
         "linkType": "HARD"\
       }]\
