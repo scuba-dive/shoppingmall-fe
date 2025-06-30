@@ -19,7 +19,7 @@ function App() {
         <Route path="/*" element={<MainPage />} />
         <Route path="admin/*" element={<AdminPage />} />
 
-        <Route path="my/*" element={<MyPage />} />
+        <Route path="mypage/*" element={<MyPage />} />
       </Routes>
     </Router>
   );
