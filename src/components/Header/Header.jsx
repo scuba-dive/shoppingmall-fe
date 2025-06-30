@@ -21,7 +21,8 @@ function Header() {
         </Link>
       </div>
       <div className={style.headerRight}>
-        {user ? (
+        {user && user.role === 'ADMIN' && <span className={style.adminBadge}>관리자</span>}
+        {user && user.role === 'USER' && (
           <>
             <Link to="/cart" className={style.cartBtn}>
               장바구니
@@ -29,8 +30,10 @@ function Header() {
             <Link to="/mypage" className={style.myPageBtn}>
               마이페이지
             </Link>
-            <LogoutButton />
           </>
+        )}
+        {user ? (
+          <LogoutButton />
         ) : (
           <>
             <Link to="/signin" className={style.loginBtn}>
