@@ -47,6 +47,8 @@ module.exports = {
     'react/jsx-filename-extension': ['warn', { extensions: ['.js', '.jsx'] }],
 
     'no-underscore-dangle': ['error', { allow: ['__dirname', '__filename'] }],
+
+    'react/jsx-one-expression-per-line': 'off',
   },
   settings: {
     react: {
