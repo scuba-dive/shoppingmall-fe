@@ -1,27 +1,21 @@
-import { useNavigate } from 'react-router-dom';
-
+import ProductCard from '@/components/Card/ProductCard';
 import products from '@/data/products';
 
 import styles from './ProductGrid.module.css';
 
 function ProductGrid() {
-  const navigate = useNavigate();
-
   return (
     <section className={styles.productSection}>
       <h2 className={styles.title}>전체 상품</h2>
       <div className={styles.grid}>
         {products.slice(0, 12).map((product) => (
-          <button
+          <ProductCard
             key={product.id}
-            type="button"
-            className={styles.card}
-            onClick={() => navigate(`/product/${product.id}`)}
-          >
-            <img src={product.image} alt={product.name} className={styles.image} />
-            <p className={styles.name}>{product.name}</p>
-            <p className={styles.price}>{product.price.toLocaleString()}</p>
-          </button>
+            id={product.id}
+            name={product.name}
+            price={product.price}
+            image={product.image}
+          />
         ))}
       </div>
     </section>
