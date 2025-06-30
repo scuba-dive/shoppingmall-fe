@@ -1,6 +1,6 @@
 .signupMain {
   width: 100vw;
-  min-height: calc(100vh - 120px);
+  min-height: 100vh;
   background: #fafafa;
   display: flex;
   justify-content: center;
@@ -15,39 +15,39 @@
   padding: 48px 56px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 }
 
 .signupTitle {
   font-weight: 700;
-  font-size: 32px;
+  font-size: 22px;
   margin: 0;
 }
 
 .signupDesc {
   font-weight: 400;
-  font-size: 20px;
+  font-size: 15px;
   color: #858585;
-  margin-bottom: 20px;
+  margin: 5px 0 20px 0;
 }
 
 .signupForm {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
 }
 
 .signupLabel {
   font-weight: 500;
-  font-size: 23px;
+  font-size: 18px;
 }
 
 .signupInput {
   width: 100%;
   box-sizing: border-box;
   margin: 8px 0;
-  padding: 18px 24px;
-  font-size: 18px;
+  padding: 15px 20px;
+  font-size: 15px;
   border: 1px solid #858585;
   border-radius: 10px;
   outline: none;
@@ -66,7 +66,7 @@
   width: 100%;
   margin-top: 8px;
   padding: 18px 0;
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 500;
   color: #fff;
   background: #ffa948;
@@ -75,30 +75,12 @@
   cursor: pointer;
 }
 
-.signupLinks {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-}
-
 .signupTestBtn {
-  width: 120px;
-  padding: 15px;
+  width: 150px;
+  padding: 17px;
   background: #e5e5e5;
   border: none;
   border-radius: 10px;
-}
-
-.signupLinkBtn {
-  font-weight: 400;
-  font-size: 15px;
-  color: #000;
-  text-decoration: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
 }
 
 .signupAuthRow {
@@ -114,4 +96,22 @@
 .signupError {
   color: red;
   margin-top: 10px;
+}
+
+.signupLinks {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.signupLinkBtn {
+  font-weight: 400;
+  font-size: 13px;
+  color: #000;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }
