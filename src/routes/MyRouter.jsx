@@ -8,8 +8,6 @@ function MyRouter() {
     <Routes>
       <Route element={<DefaultLayout />}>
         <Route path="/" element={<MyPage />} />
-        <Route path="/cart" />
-        <Route path="/order" />
       </Route>
     </Routes>
   );
