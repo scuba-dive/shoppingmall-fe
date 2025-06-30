@@ -1,0 +1,117 @@
+.signupMain {
+  width: 100vw;
+  min-height: 100vh;
+  background: #fafafa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signupSection {
+  width: 600px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  padding: 48px 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.signupTitle {
+  font-weight: 700;
+  font-size: 22px;
+  margin: 0;
+}
+
+.signupDesc {
+  font-weight: 400;
+  font-size: 15px;
+  color: #858585;
+  margin: 5px 0 20px 0;
+}
+
+.signupForm {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.signupLabel {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.signupInput {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 8px 0;
+  padding: 15px 20px;
+  font-size: 15px;
+  border: 1px solid #858585;
+  border-radius: 10px;
+  outline: none;
+  font-weight: 500;
+  color: #858585;
+  background: #fff;
+}
+
+.signupPhoneRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.signupBtn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 18px 0;
+  font-size: 17px;
+  font-weight: 500;
+  color: #fff;
+  background: #ffa948;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.signupTestBtn {
+  width: 150px;
+  padding: 17px;
+  background: #e5e5e5;
+  border: none;
+  border-radius: 10px;
+}
+
+.signupAuthRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.signupTermsRow {
+  margin: 0;
+}
+
+.signupError {
+  color: red;
+  margin-top: 10px;
+}
+
+.signupLinks {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.signupLinkBtn {
+  font-weight: 400;
+  font-size: 13px;
+  color: #000;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}

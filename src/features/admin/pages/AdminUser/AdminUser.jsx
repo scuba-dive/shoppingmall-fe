@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import Pagination from '@/components/Pagination/Pagination';
-import AdminLayout from '@/layouts/AdminLayouts/AdminLayout';
 
 import Table from '../../components/Table/Table';
 import styles from './AdminUser.module.css';
@@ -72,11 +71,11 @@ function AdminUser() {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 10;
   return (
-    <AdminLayout>
+    <>
       <h1> 사용자 관리 </h1>
       <Table columns={columns} data={sampleData} renderRow={renderUserRow} />
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
-    </AdminLayout>
+    </>
   );
 }
 
