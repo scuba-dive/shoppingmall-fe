@@ -1,7 +1,17 @@
 import './App.css';
 
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+import AdminPage from '@/pages/AdminPage';
+
 function App() {
-  return <div>DeepDive Studios 쇼핑몰 서비스</div>;
+  return (
+    <Router>
+      <Routes>
+        <Route path="admin/*" element={<AdminPage />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
