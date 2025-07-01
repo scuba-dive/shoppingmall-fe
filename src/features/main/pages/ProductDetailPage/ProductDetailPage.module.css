@@ -1,9 +1,15 @@
 .productContent {
   display: flex;
-  flex-wrap: wrap;
-  gap: 3rem;
+  justify-content: center;
+  align-items: flex-start;
   margin-top: 2rem;
   padding: 2rem;
+  gap: 8rem;
+  flex-wrap: nowrap;
+}
+
+.productImage {
+  flex-shrink: 0; /* 이미지 크기 고정 */
 }
 
 .productImage img {
@@ -18,10 +24,12 @@
   gap: 1rem;
   flex: 1;
   max-width: 400px;
+  margin: 0; /* 가운데 정렬 제거 */
 }
 
-.productInfo h1 {
+.title {
   font-size: 2rem;
+  font-weight: 400;
   margin: 0;
 }
 

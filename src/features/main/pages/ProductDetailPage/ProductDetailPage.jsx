@@ -57,13 +57,11 @@ function ProductDetailPage() {
           <img src={product.image} alt={product.name} />
         </div>
         <div className={styles.productInfo}>
-          <h1>{product.name}</h1>
+          <p className={styles.title}>{product.name}</p>
           <p className={styles.price}>{product.price.toLocaleString()}</p>
-
           {product.rating && (
             <StarRating rating={product.rating} reviewCount={product.reviewCount} />
           )}
-
           <p className={styles.description}>{product.description}</p>
 
           <fieldset className={styles.option}>
