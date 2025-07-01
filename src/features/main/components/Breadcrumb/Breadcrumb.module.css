@@ -1,0 +1,30 @@
+.breadcrumb {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-left: 2.1rem;
+  padding-top: 1rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.link {
+  all: unset;
+  color: #333;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.link:hover {
+  text-decoration: none;
+}
+
+.separator {
+  color: #999;
+  margin: 0 0.5rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
