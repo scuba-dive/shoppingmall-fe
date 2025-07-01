@@ -28,15 +28,14 @@ function QuantitySelector({
       setInputValue(1);
       onChange(1);
     } else {
-      setInputValue(numericValue);
       onChange(numericValue);
     }
   };
 
   return (
-    <div className={styles.quantity}>
+    <div className={styles.quantityWrapper}>
       <button type="button" onClick={onDecrease} disabled={value <= 1}>
-        -
+        −
       </button>
       <input
         type="text"
