@@ -21,6 +21,8 @@ const products = [
     description: "카테고리 '침대'의 인기 상품 '언제 잤니 침대'입니다. 탁월한 선택이 될 것입니다.",
     sku: '침001',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 2,
@@ -31,6 +33,8 @@ const products = [
     description: "카테고리 '침대'의 인기 상품 '눕고 싶어 침대'입니다. 탁월한 선택이 될 것입니다.",
     sku: '침002',
     colors: ['blue', 'red', 'black'],
+    rating: 4,
+    reviewCount: 18,
   },
   {
     id: 3,
@@ -41,6 +45,8 @@ const products = [
     description: "카테고리 '침대'의 인기 상품 '포근한 침대'입니다. 탁월한 선택이 될 것입니다.",
     sku: '침003',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 4,
@@ -51,6 +57,8 @@ const products = [
     description: "카테고리 '침대'의 인기 상품 '숙면 침대'입니다. 탁월한 선택이 될 것입니다.",
     sku: '침004',
     colors: ['blue', 'red', 'black'],
+    rating: 2.5,
+    reviewCount: 18,
   },
   {
     id: 5,
@@ -61,6 +69,8 @@ const products = [
     description: "카테고리 '침대'의 인기 상품 '미니멀 침대'입니다. 탁월한 선택이 될 것입니다.",
     sku: '침005',
     colors: ['blue', 'red', 'black'],
+    rating: 3.5,
+    reviewCount: 20,
   },
   {
     id: 6,
@@ -71,6 +81,8 @@ const products = [
     description: "카테고리 '침대'의 인기 상품 '아늑한 침대'입니다. 탁월한 선택이 될 것입니다.",
     sku: '침006',
     colors: ['blue', 'red', 'black'],
+    rating: 1,
+    reviewCount: 5,
   },
   {
     id: 7,
@@ -81,6 +93,8 @@ const products = [
     description: "카테고리 '침대'의 인기 상품 '편안한 침대'입니다. 탁월한 선택이 될 것입니다.",
     sku: '침007',
     colors: ['blue', 'red', 'black'],
+    rating: 1.5,
+    reviewCount: 18,
   },
   {
     id: 8,
@@ -91,6 +105,8 @@ const products = [
     description: "카테고리 '침대'의 인기 상품 '심플 침대'입니다. 탁월한 선택이 될 것입니다.",
     sku: '침008',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 9,
@@ -101,6 +117,8 @@ const products = [
     description: "카테고리 '의자'의 인기 상품 '머찐 의자'입니다. 탁월한 선택이 될 것입니다.",
     sku: '의009',
     colors: ['blue', 'red', 'black'],
+    rating: 2.5,
+    reviewCount: 18,
   },
   {
     id: 10,
@@ -111,6 +129,8 @@ const products = [
     description: "카테고리 '의자'의 인기 상품 '쿠션말고 의자'입니다. 탁월한 선택이 될 것입니다.",
     sku: '의010',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 11,
@@ -121,6 +141,8 @@ const products = [
     description: "카테고리 '의자'의 인기 상품 '심플 의자'입니다. 탁월한 선택이 될 것입니다.",
     sku: '의011',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 12,
@@ -131,6 +153,8 @@ const products = [
     description: "카테고리 '의자'의 인기 상품 '디자인 의자'입니다. 탁월한 선택이 될 것입니다.",
     sku: '의012',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 13,
@@ -141,6 +165,8 @@ const products = [
     description: "카테고리 '의자'의 인기 상품 '컬러풀 의자'입니다. 탁월한 선택이 될 것입니다.",
     sku: '의013',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 14,
@@ -151,6 +177,8 @@ const products = [
     description: "카테고리 '의자'의 인기 상품 '목재 의자'입니다. 탁월한 선택이 될 것입니다.",
     sku: '의014',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 15,
@@ -161,6 +189,8 @@ const products = [
     description: "카테고리 '의자'의 인기 상품 '편한 의자'입니다. 탁월한 선택이 될 것입니다.",
     sku: '의015',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 16,
@@ -171,6 +201,8 @@ const products = [
     description: "카테고리 '의자'의 인기 상품 '현대 의자'입니다. 탁월한 선택이 될 것입니다.",
     sku: '의016',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 17,
@@ -181,6 +213,8 @@ const products = [
     description: "카테고리 '테이블'의 인기 상품 '반들반들 책상'입니다. 탁월한 선택이 될 것입니다.",
     sku: '테017',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 18,
@@ -191,6 +225,8 @@ const products = [
     description: "카테고리 '테이블'의 인기 상품 '모던 테이블'입니다. 탁월한 선택이 될 것입니다.",
     sku: '테018',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 19,
@@ -201,6 +237,8 @@ const products = [
     description: "카테고리 '테이블'의 인기 상품 '슬림 테이블'입니다. 탁월한 선택이 될 것입니다.",
     sku: '테019',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 20,
@@ -211,6 +249,8 @@ const products = [
     description: "카테고리 '테이블'의 인기 상품 '원형 테이블'입니다. 탁월한 선택이 될 것입니다.",
     sku: '테020',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 21,
@@ -221,6 +261,8 @@ const products = [
     description: "카테고리 '테이블'의 인기 상품 '고급 테이블'입니다. 탁월한 선택이 될 것입니다.",
     sku: '테021',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 22,
@@ -231,6 +273,8 @@ const products = [
     description: "카테고리 '테이블'의 인기 상품 '컴팩트 테이블'입니다. 탁월한 선택이 될 것입니다.",
     sku: '테022',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 23,
@@ -241,6 +285,8 @@ const products = [
     description: "카테고리 '테이블'의 인기 상품 '화이트 테이블'입니다. 탁월한 선택이 될 것입니다.",
     sku: '테023',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 24,
@@ -251,6 +297,8 @@ const products = [
     description: "카테고리 '테이블'의 인기 상품 '심플 테이블'입니다. 탁월한 선택이 될 것입니다.",
     sku: '테024',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 25,
@@ -262,6 +310,8 @@ const products = [
       "카테고리 '수납장'의 인기 상품 '서랍장인척 책상'입니다. 탁월한 선택이 될 것입니다.",
     sku: '수025',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 26,
@@ -272,6 +322,8 @@ const products = [
     description: "카테고리 '수납장'의 인기 상품 '미니 수납장'입니다. 탁월한 선택이 될 것입니다.",
     sku: '수026',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 27,
@@ -282,6 +334,8 @@ const products = [
     description: "카테고리 '수납장'의 인기 상품 '화이트 수납장'입니다. 탁월한 선택이 될 것입니다.",
     sku: '수027',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 28,
@@ -292,6 +346,8 @@ const products = [
     description: "카테고리 '수납장'의 인기 상품 '4단 수납장'입니다. 탁월한 선택이 될 것입니다.",
     sku: '수028',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 29,
@@ -302,6 +358,8 @@ const products = [
     description: "카테고리 '수납장'의 인기 상품 '심플 수납장'입니다. 탁월한 선택이 될 것입니다.",
     sku: '수029',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 30,
@@ -312,6 +370,8 @@ const products = [
     description: "카테고리 '수납장'의 인기 상품 '모던 수납장'입니다. 탁월한 선택이 될 것입니다.",
     sku: '수030',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 31,
@@ -322,6 +382,8 @@ const products = [
     description: "카테고리 '수납장'의 인기 상품 '투톤 수납장'입니다. 탁월한 선택이 될 것입니다.",
     sku: '수031',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 32,
@@ -332,6 +394,8 @@ const products = [
     description: "카테고리 '수납장'의 인기 상품 '목재 수납장'입니다. 탁월한 선택이 될 것입니다.",
     sku: '수032',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 33,
@@ -342,6 +406,8 @@ const products = [
     description: "카테고리 '소품'의 인기 상품 '센스있는 쇼파'입니다. 탁월한 선택이 될 것입니다.",
     sku: '소033',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 34,
@@ -352,6 +418,8 @@ const products = [
     description: "카테고리 '소품'의 인기 상품 '빤딱 꽃병'입니다. 탁월한 선택이 될 것입니다.",
     sku: '소034',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 35,
@@ -362,6 +430,8 @@ const products = [
     description: "카테고리 '소품'의 인기 상품 '꽃병인척 화분'입니다. 탁월한 선택이 될 것입니다.",
     sku: '소035',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 36,
@@ -372,6 +442,8 @@ const products = [
     description: "카테고리 '소품'의 인기 상품 '조명말고 소파'입니다. 탁월한 선택이 될 것입니다.",
     sku: '소036',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 37,
@@ -382,6 +454,8 @@ const products = [
     description: "카테고리 '소품'의 인기 상품 '미니 조명'입니다. 탁월한 선택이 될 것입니다.",
     sku: '소037',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 38,
@@ -392,6 +466,8 @@ const products = [
     description: "카테고리 '소품'의 인기 상품 '빈티지 장식'입니다. 탁월한 선택이 될 것입니다.",
     sku: '소038',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 39,
@@ -402,6 +478,8 @@ const products = [
     description: "카테고리 '소품'의 인기 상품 '벽걸이 소품'입니다. 탁월한 선택이 될 것입니다.",
     sku: '소039',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
   {
     id: 40,
@@ -412,6 +490,8 @@ const products = [
     description: "카테고리 '소품'의 인기 상품 '쿠션'입니다. 탁월한 선택이 될 것입니다.",
     sku: '소040',
     colors: ['blue', 'red', 'black'],
+    rating: 4.5,
+    reviewCount: 18,
   },
 ];
 
