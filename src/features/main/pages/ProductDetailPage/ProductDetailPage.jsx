@@ -91,7 +91,7 @@ function ProductDetailPage() {
           />
 
           <AddToCartButton onClick={handleAddToCart} />
-
+          <hr className={styles.divider} />
           <div className={styles.meta}>
             <p>SKU : {product.sku}</p>
             <p>Category : {product.category}</p>

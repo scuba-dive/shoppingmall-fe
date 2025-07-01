@@ -94,11 +94,15 @@
 }
 
 .meta {
-  margin-top: 2rem;
   font-size: 0.9rem;
   color: #777;
 }
 
 .meta p {
   margin: 4px 0;
+}
+
+.divider {
+  margin: 1rem 0 1rem;
+  border-top: 1px solid #ccc;
 }
