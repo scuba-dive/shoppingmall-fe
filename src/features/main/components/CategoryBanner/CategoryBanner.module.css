@@ -1,0 +1,22 @@
+.banner {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+.bannerImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.7);
+}
+
+.bannerTitle {
+  position: absolute;
+  left: 2rem;
+  bottom: 1.5rem;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+}
