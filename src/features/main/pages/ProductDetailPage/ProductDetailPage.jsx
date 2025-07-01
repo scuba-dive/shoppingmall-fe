@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import products from '@/data/products';
 import Breadcrumb from '@/features/main/components/Breadcrumb/Breadcrumb';
 import CategoryNavBar from '@/features/main/components/CategoryNavBar/CategoryNavBar';
+import QuantitySelector from '@/features/main/components/QuantitySelector/QuantitySelector';
 import StarRating from '@/features/main/components/StarRating/StarRating';
 
 import styles from './ProductDetailPage.module.css';
@@ -81,15 +82,12 @@ function ProductDetailPage() {
             </div>
           </fieldset>
 
-          <div className={styles.quantity}>
-            <button type="button" onClick={handleDecrease}>
-              -
-            </button>
-            <input type="text" value={quantity} readOnly />
-            <button type="button" onClick={handleIncrease}>
-              +
-            </button>
-          </div>
+          <QuantitySelector
+            value={quantity}
+            onIncrease={handleIncrease}
+            onDecrease={handleDecrease}
+            onChange={setQuantity}
+          />
 
           <button type="button" className={styles.addToCart} onClick={handleAddToCart}>
             장바구니 담기
