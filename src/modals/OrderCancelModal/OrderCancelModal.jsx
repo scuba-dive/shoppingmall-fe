@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import styles from './OrderCancelModal.module.css';
 
-function OrderCancleModal({ isOpen, onClose }) {
+function OrderCancelModal({ isOpen, onClose }) {
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape') {
@@ -69,9 +69,9 @@ function OrderCancleModal({ isOpen, onClose }) {
   );
 }
 
-OrderCancleModal.propTypes = {
+OrderCancelModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
-export default OrderCancleModal;
+export default OrderCancelModal;
