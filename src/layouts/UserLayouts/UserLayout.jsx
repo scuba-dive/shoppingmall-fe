@@ -10,13 +10,14 @@ import styles from './UserLayout.module.css';
 function UserLayout() {
   const location = useLocation();
 
-  const isCategoriesPage = location.pathname === '/category';
-  const isProductListPage = location.pathname.startsWith('/category/');
+  const { pathname } = location;
+
+  const isCategoryListPage = pathname === '/category';
+  const isCategoryDetailPage = pathname.startsWith('/category/');
+  const isProductDetailPage = pathname.startsWith('/product/');
 
   let banner = null;
-  if (isCategoriesPage) {
-    banner = <CategoryBanner />;
-  } else if (isProductListPage) {
+  if (isCategoryListPage || isCategoryDetailPage || isProductDetailPage) {
     banner = <CategoryBanner />;
   } else {
     banner = <MainBanner />;
