@@ -2,11 +2,25 @@
   padding: 2rem;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
 .title {
   font-size: 1.25rem;
   font-weight: 600;
-  margin-bottom: 1.5rem;
-  text-align: left;
+}
+
+.sortWrapper {
+  text-align: right;
+}
+
+.sortSelect {
+  font-size: 1rem;
+  padding: 0.25rem 0.5rem;
 }
 
 .grid {
