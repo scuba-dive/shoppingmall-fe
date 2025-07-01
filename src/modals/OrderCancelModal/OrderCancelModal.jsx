@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import styles from './OrderCancleModal.module.css';
+import styles from './OrderCancelModal.module.css';
 
 function OrderCancleModal({ isOpen, onClose }) {
   useEffect(() => {
