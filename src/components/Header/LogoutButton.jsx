@@ -15,16 +15,16 @@ function LogoutButton() {
       // 200
       if (res.data?.status === 200) {
         logout();
-        navigate('/signin');
+        navigate('/');
       } else {
         // 401
         logout(); // 실패하더라도 상태는 초기화
-        navigate('/signin');
+        navigate('/');
       }
     } catch (error) {
       // 기타 오류
       logout();
-      navigate('/signin');
+      navigate('/');
     }
   };
 
