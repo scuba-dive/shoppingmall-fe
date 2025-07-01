@@ -29,13 +29,20 @@ function OrderCancelModal({ isOpen, onClose }) {
   };
 
   return (
-    <button
+    <div
       type="button"
       className={styles.overlay}
       onClick={handleOverlayClick}
       aria-label="모달 닫기"
+      role="presentation"
     >
-      <div className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div
+        className={styles.modal}
+        role="dialog"
+        id="order-cancel-modal"
+        aria-modal="true"
+        aria-labelledby="order-cancel-modal-title"
+      >
         <button
           type="button"
           className={styles.closeButton}
@@ -65,7 +72,7 @@ function OrderCancelModal({ isOpen, onClose }) {
           </Link>
         </div>
       </div>
-    </button>
+    </div>
   );
 }
 
