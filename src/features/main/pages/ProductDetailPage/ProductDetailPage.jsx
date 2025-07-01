@@ -1,16 +1,45 @@
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import products from '@/data/products';
 import Breadcrumb from '@/features/main/components/Breadcrumb/Breadcrumb';
 import CategoryNavBar from '@/features/main/components/CategoryNavBar/CategoryNavBar';
+import StarRating from '@/features/main/components/StarRating/StarRating';
+
+import styles from './ProductDetailPage.module.css';
 
 function ProductDetailPage() {
   const { id } = useParams();
   const product = products.find((p) => String(p.id) === id);
 
+  const [quantity, setQuantity] = useState(1);
+  const [selectedColor, setSelectedColor] = useState(product?.colors[0] || 'blue');
+
   if (!product) {
     return <div>상품을 찾을 수 없습니다.</div>;
   }
+
+  const handleDecrease = () => {
+    if (quantity > 1) setQuantity((prev) => prev - 1);
+  };
+
+  const handleIncrease = () => {
+    setQuantity((prev) => prev + 1);
+  };
+
+  const handleColorSelect = (color) => {
+    setSelectedColor(color);
+  };
+
+  const handleAddToCart = () => {
+    // console.log({
+    //   id: product.id,
+    //   name: product.name,
+    //   price: product.price,
+    //   color: selectedColor,
+    //   quantity,
+    // });
+  };
 
   return (
     <div className="product-detail">
@@ -23,11 +52,56 @@ function ProductDetailPage() {
           { name: product.name },
         ]}
       />
-      <div className="product-content">
-        <img src={product.image} alt={product.name} className="product-image" />
-        <h2>{product.name}</h2>
-        <p>{product.price.toLocaleString()}원</p>
-        <p>{product.description}</p>
+      <div className={styles.productContent}>
+        <div className={styles.productImage}>
+          <img src={product.image} alt={product.name} />
+        </div>
+        <div className={styles.productInfo}>
+          <h1>{product.name}</h1>
+          <p className={styles.price}>{product.price.toLocaleString()}</p>
+
+          {product.rating && (
+            <StarRating rating={product.rating} reviewCount={product.reviewCount} />
+          )}
+
+          <p className={styles.description}>{product.description}</p>
+
+          <fieldset className={styles.option}>
+            <legend>Color</legend>
+            <div className={styles.colorOptions}>
+              {product.colors.map((color) => (
+                <button
+                  key={color}
+                  type="button"
+                  className={`${styles.colorCircle} ${styles[color]} ${
+                    selectedColor === color ? styles.selected : ''
+                  }`}
+                  onClick={() => handleColorSelect(color)}
+                  aria-label={`${color} color`}
+                />
+              ))}
+            </div>
+          </fieldset>
+
+          <div className={styles.quantity}>
+            <button type="button" onClick={handleDecrease}>
+              -
+            </button>
+            <input type="text" value={quantity} readOnly />
+            <button type="button" onClick={handleIncrease}>
+              +
+            </button>
+          </div>
+
+          <button type="button" className={styles.addToCart} onClick={handleAddToCart}>
+            장바구니 담기
+          </button>
+
+          <div className={styles.meta}>
+            <p>SKU : {product.sku}</p>
+            <p>Category : {product.category}</p>
+          </div>
+        </div>
       </div>
     </div>
   );

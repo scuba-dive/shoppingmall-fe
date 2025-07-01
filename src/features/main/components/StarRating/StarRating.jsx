@@ -26,8 +26,9 @@ function StarRating({ rating, reviewCount }) {
   return (
     <div className={styles.starRating}>
       {stars}
+      <div>|</div>
       {reviewCount !== undefined && (
-        <span className={styles.reviewCount}>{reviewCount}개 리뷰</span>
+        <span className={styles.reviewCount}>{reviewCount} Customer Review</span>
       )}
     </div>
   );
