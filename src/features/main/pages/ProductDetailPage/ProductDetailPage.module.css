@@ -93,22 +93,6 @@
   box-shadow: 0 0 0 2px #fff inset;
 }
 
-.addToCart {
-  margin-top: 0.5rem;
-  padding: 12px;
-  font-weight: bold;
-  background: #000;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-.addToCart:hover {
-  background: #222;
-}
-
 .meta {
   margin-top: 2rem;
   font-size: 0.9rem;

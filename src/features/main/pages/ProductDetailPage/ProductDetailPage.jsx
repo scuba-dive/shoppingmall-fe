@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import products from '@/data/products';
+import AddToCartButton from '@/features/main/components/AddToCartButton/AddToCartButton';
 import Breadcrumb from '@/features/main/components/Breadcrumb/Breadcrumb';
 import CategoryNavBar from '@/features/main/components/CategoryNavBar/CategoryNavBar';
 import QuantitySelector from '@/features/main/components/QuantitySelector/QuantitySelector';
@@ -89,9 +90,7 @@ function ProductDetailPage() {
             onChange={setQuantity}
           />
 
-          <button type="button" className={styles.addToCart} onClick={handleAddToCart}>
-            장바구니 담기
-          </button>
+          <AddToCartButton onClick={handleAddToCart} />
 
           <div className={styles.meta}>
             <p>SKU : {product.sku}</p>
