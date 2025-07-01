@@ -99,13 +99,14 @@ function OrderInfoModal({ isOpen, onClose, orderId }) {
   };
 
   return (
-    <button
-      type="button"
-      className={styles.overlay}
-      onClick={handleOverlayClick}
-      aria-label="모달 닫기"
-    >
-      <div className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div className={styles.overlay} onClick={handleOverlayClick} role="presentation">
+      <div
+        className={styles.modal}
+        role="dialog"
+        id="order-info-modal"
+        aria-modal="true"
+        aria-labelledby="order-info-modal-title"
+      >
         {/* 닫기 버튼 */}
         <button
           type="button"
@@ -213,7 +214,7 @@ function OrderInfoModal({ isOpen, onClose, orderId }) {
           )}
         </div>
       </div>
-    </button>
+    </div>
   );
 }
 
