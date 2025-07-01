@@ -1,12 +1,10 @@
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import styles from './CartModal.module.css';
 
 function CartModal({ isOpen, onClose }) {
-  const navigate = useNavigate();
-
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape') {
@@ -28,12 +26,6 @@ function CartModal({ isOpen, onClose }) {
     if (e.target === e.currentTarget) {
       onClose();
     }
-  };
-
-  const handleContinueShopping = () => {
-    onClose();
-    // 현재 페이지 새로고침
-    navigate(0);
   };
 
   return (
@@ -68,7 +60,7 @@ function CartModal({ isOpen, onClose }) {
           <Link to="/cart" className={styles.cartButton} onClick={onClose}>
             장바구니로 이동
           </Link>
-          <button type="button" className={styles.continueButton} onClick={handleContinueShopping}>
+          <button type="button" className={styles.continueButton} onClick={onClose}>
             계속 쇼핑하기
           </button>
         </div>
