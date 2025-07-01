@@ -1,18 +1,24 @@
-.productSection {
-  padding: 2rem;
+.categoryTitle {
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
-.title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-  text-align: left;
+.sortWrapper {
+  padding: 0 2rem 1.5rem;
+  text-align: right;
+}
+
+.sortSelect {
+  font-size: 1rem;
+  padding: 0.25rem 0.5rem;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
+  gap: 2rem;
+  padding: 0 2rem 4rem;
 }
 
 @media (max-width: 1024px) {
