@@ -9,7 +9,7 @@
 }
 
 .productImage {
-  flex-shrink: 0; /* 이미지 크기 고정 */
+  flex-shrink: 0;
 }
 
 .productImage img {
@@ -24,7 +24,7 @@
   gap: 1rem;
   flex: 1;
   max-width: 400px;
-  margin: 0; /* 가운데 정렬 제거 */
+  margin: 0;
 }
 
 .title {
