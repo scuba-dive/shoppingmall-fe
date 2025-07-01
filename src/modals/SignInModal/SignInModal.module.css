@@ -1,0 +1,125 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(250, 250, 250, 0.854);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  border: none;
+  padding: 0;
+  cursor: default;
+}
+
+.modal {
+  position: relative;
+  width: 420px;
+  height: 200px;
+  background-color: #f2f2f2;
+  border: rgb(211, 211, 211) solid 1px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.closeButton {
+  position: absolute;
+  top: 23px;
+  right: 35px;
+  width: 15px;
+  height: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.closeIcon {
+  width: 15px;
+  height: 15px;
+  stroke: #1e1e1e;
+  stroke-width: 4px;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 17px;
+  color: #000000;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 35px;
+  align-items: center;
+}
+
+.loginButton {
+  width: 100px;
+  height: 40px;
+  background-color: #ffffff;
+  border: 1px solid #a5a5a5;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.5em;
+  color: #000000;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.loginButton:hover {
+  background-color: #f4f4f4;
+}
+
+.signupButton {
+  width: 100px;
+  height: 40px;
+  background-color: #3e3e3e;
+  border: none;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.5em;
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.signupButton:hover {
+  background-color: #696969;
+}
+
+@media (max-width: 712px) {
+  .modal {
+    width: 90%;
+    max-width: 420px;
+    height: auto;
+    padding: 30px 20px;
+  }
+
+  .buttonContainer {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+}
