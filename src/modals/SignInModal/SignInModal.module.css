@@ -109,7 +109,6 @@
   background-color: #696969;
 }
 
-/* 반응형 */
 @media (max-width: 712px) {
   .modal {
     width: 90%;
