@@ -1,0 +1,15 @@
+.starRating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.icon {
+  color: #ffc107;
+  font-size: 1.25rem;
+}
+
+.reviewCount {
+  font-size: 0.85rem;
+  color: #555;
+}
