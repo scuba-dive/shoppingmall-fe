@@ -10,7 +10,7 @@ function CategoryBanner() {
 
   const isCategoryPage = location.pathname === '/category';
 
-  const bannerName = isCategoryPage ? 'category' : category;
+  const bannerName = isCategoryPage ? '카테고리' : category;
   const currentBanner = bannerData.find((b) => b.name === bannerName);
 
   if (!currentBanner) return null;

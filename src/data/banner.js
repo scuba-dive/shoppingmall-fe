@@ -4,7 +4,7 @@ const banner = [
     image: 'https://my-shop-image-bucket.s3.ap-northeast-2.amazonaws.com/Banner/MainBanner.png',
   },
   {
-    name: 'category',
+    name: '카테고리',
     image:
       'https://my-shop-image-bucket.s3.ap-northeast-2.amazonaws.com/Banner/CatergoryBanner.png',
   },
