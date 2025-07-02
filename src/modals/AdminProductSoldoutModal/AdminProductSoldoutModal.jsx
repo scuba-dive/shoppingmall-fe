@@ -40,6 +40,7 @@ function AdminProductQuantityModal({ isOpen, onClose, onConfirm }) {
         id="admin-product-quantity-modal"
         aria-modal="true"
         aria-labelledby="admin-product-quantity-modal-title"
+        aria-describedby="admin-product-quantity-modal-desc"
       >
         <button
           type="button"
@@ -58,11 +59,13 @@ function AdminProductQuantityModal({ isOpen, onClose, onConfirm }) {
         </button>
 
         <div className={styles.content}>
-          <div id="admin-product-quantity-modal-content" className={styles.title}>
+          <div id="admin-product-quantity-modal-title" className={styles.title}>
             해당 상품을 품절 처리하시겠습니까?
           </div>
 
-          <div className={styles.description}>남은 수량이 0으로 변경됩니다.</div>
+          <div id="admin-product-quantity-modal-desc" className={styles.description}>
+            남은 수량이 0으로 변경됩니다.
+          </div>
 
           <div className={styles.buttonContainer}>
             <button type="button" className={styles.confirmButton} onClick={handleConfirm}>
