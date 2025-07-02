@@ -1,0 +1,18 @@
+/* SignUpLinks 스타일 - 원본 SignUp.module.css와 동일하게 유지 */
+.signupLinks {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.signupLinkBtn {
+  font-weight: 400;
+  font-size: 13px;
+  color: #000;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
