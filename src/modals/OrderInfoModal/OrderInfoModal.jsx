@@ -144,28 +144,24 @@ function OrderInfoModal({ isOpen, onClose, orderId }) {
                 <div className={styles.infoRow}>
                   <span className={styles.label}>주문 일자</span>
                   <span className={styles.value}>
-                    {orderData.orderedAt
-                      ? new Date(orderData.orderedAt).toLocaleDateString('ko-KR')
-                      : '2025.06.17'}
+                    {new Date(orderData.orderedAt).toLocaleDateString('ko-KR')}
                   </span>
                 </div>
 
                 <div className={styles.infoRow}>
                   <span className={styles.label}>주문 번호</span>
-                  <span className={styles.value}>{orderData.orderNumber || '2025061703'}</span>
+                  <span className={styles.value}>{orderData.orderNumber}</span>
                 </div>
 
                 <div className={styles.infoRow}>
                   <span className={styles.label}>구매자</span>
-                  <span className={styles.value}>{orderData.userName || '김구름'}</span>
+                  <span className={styles.value}>{orderData.userName}</span>
                 </div>
 
                 <div className={styles.infoRow}>
                   <span className={styles.label}>배송지</span>
                   <span className={styles.value}>
-                    {orderData.shippingAddress
-                      ? `${orderData.shippingAddress.address1} ${orderData.shippingAddress.address2 || ''}`.trim()
-                      : '경기도 성남시 분당구 판교로 242 PDC A동 9층'}
+                    {`${orderData.shippingAddress.address1} ${orderData.shippingAddress.address2 || ''}`.trim()}
                   </span>
                 </div>
 
@@ -173,34 +169,26 @@ function OrderInfoModal({ isOpen, onClose, orderId }) {
                   <span className={styles.label}>주문 상품</span>
                   <span className={styles.value}>
                     {/* eslint-disable indent */}
-                    {orderData.orderItems && orderData.orderItems.length > 0
-                      ? orderData.orderItems
-                          .map((item) => `${item.productName} ${item.quantity}개`)
-                          .join(', ')
-                      : '머찐 의자 2개'}
+                    {orderData.orderItems
+                      .map((item) => `${item.productName} ${item.quantity}개`)
+                      .join(', ')}
                     {/* eslint-enable indent */}
                   </span>
                 </div>
 
                 <div className={styles.infoRow}>
                   <span className={styles.label}>총 결제 금액</span>
-                  <span className={styles.value}>
-                    {orderData.totalAmount?.toLocaleString() || '64,000'}
-                  </span>
+                  <span className={styles.value}>{orderData.totalAmount?.toLocaleString()}</span>
                 </div>
 
                 <div className={styles.infoRow}>
                   <span className={styles.label}>결제 수단</span>
-                  <span className={styles.value}>{orderData.paymentMethod || '치토스'}</span>
+                  <span className={styles.value}>{orderData.paymentMethod}</span>
                 </div>
 
                 <div className={styles.infoRow}>
                   <span className={styles.label}>주문 상태</span>
-                  <span className={styles.value}>
-                    {orderData.orderStatus === 'COMPLETED'
-                      ? '결제 완료'
-                      : orderData.orderStatus || '결제 완료'}
-                  </span>
+                  <span className={styles.value}>{orderData.orderStatus}</span>
                 </div>
               </div>
 
@@ -221,7 +209,7 @@ function OrderInfoModal({ isOpen, onClose, orderId }) {
 OrderInfoModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  orderId: PropTypes.string.isRequired,
+  orderId: PropTypes.number.isRequired,
 };
 
 export default OrderInfoModal;
