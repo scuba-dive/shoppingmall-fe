@@ -1,11 +1,22 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import categories from '@/data/categories';
+import axiosInstance from '@/services/axiosInstance';
 
 import styles from './CategorySection.module.css';
 
 function CategorySection() {
   const navigate = useNavigate();
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    axiosInstance
+      .get('/api/users/categories')
+      .then((res) => {
+        setCategories(res.data.data); // ← CategoryResponse[]
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
     <section className={styles.section}>
@@ -20,7 +31,7 @@ function CategorySection() {
             className={styles.categoryItem}
             onClick={() => navigate(`/category/${cat.name}`)}
           >
-            <img src={cat.image} alt={cat.name} />
+            <img src={cat.imageUrl} alt={cat.name} />
             <p>{cat.name}</p>
           </button>
         ))}
