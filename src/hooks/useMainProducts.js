@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import fetchMainProducts from '@/services/mainService'; // ✅ default import로 수정
+import fetchMainProducts from '@/services/mainService';
 
 const useMainProducts = (page = 0, size = 8) => {
   const [products, setProducts] = useState([]);
