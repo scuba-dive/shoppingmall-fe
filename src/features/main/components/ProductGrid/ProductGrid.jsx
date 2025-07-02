@@ -5,10 +5,11 @@ import ProductCard from '@/components/Card/ProductCard';
 import styles from './ProductGrid.module.css';
 
 function ProductGrid({
-  title, //
-  showSort = false, //
-  onSortChange, //
-  products = [], //
+  title,
+  showSort = false,
+  onSortChange,
+  products = [],
+  lastElementRef, //
 }) {
   return (
     <section className={styles.productSection}>
@@ -27,19 +28,24 @@ function ProductGrid({
         </div>
       )}
       <div className={styles.grid}>
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            id={product.id}
-            name={product.name}
-            price={product.price}
-            image={product.image}
-          />
-        ))}
+        {products.map((product, index) => {
+          const isLast = index === products.length - 1;
+          return (
+            <div key={product.id} ref={isLast ? lastElementRef : null}>
+              <ProductCard
+                id={product.id}
+                name={product.name}
+                price={product.price}
+                image={product.image}
+              />
+            </div>
+          );
+        })}
       </div>
     </section>
   );
 }
+
 ProductGrid.propTypes = {
   title: PropTypes.string,
   showSort: PropTypes.bool,
@@ -52,6 +58,10 @@ ProductGrid.propTypes = {
       image: PropTypes.string,
     }),
   ),
+  lastElementRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  ]),
 };
 
 ProductGrid.defaultProps = {
@@ -59,6 +69,7 @@ ProductGrid.defaultProps = {
   showSort: false,
   onSortChange: () => {},
   products: [],
+  lastElementRef: null,
 };
 
 export default ProductGrid;

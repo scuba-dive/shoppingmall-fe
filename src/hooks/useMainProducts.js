@@ -1,27 +1,44 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
+import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import fetchMainProducts from '@/services/mainService';
 
-const useMainProducts = (page = 0, size = 8) => {
+const useMainProducts = (initialPage = 0, size = 8) => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(initialPage);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const fetchMore = useCallback(async () => {
+    if (loading || !hasMore) return;
+
+    setLoading(true);
+    try {
+      const newProducts = await fetchMainProducts(page, size);
+
+      setProducts((prev) => {
+        const merged = [...prev, ...newProducts];
+        const uniqueMap = new Map();
+        merged.forEach((p) => uniqueMap.set(p.id, p));
+        return [...uniqueMap.values()];
+      });
+
+      setHasMore(newProducts.length === size);
+      setPage((prev) => prev + 1);
+    } catch (err) {
+      // console.error('상품 로딩 실패:', err);
+    } finally {
+      setLoading(false);
+    }
+  }, [page, size, loading, hasMore]);
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        const data = await fetchMainProducts(page, size);
-        setProducts(data);
-      } catch (err) {
-        // Handle error appropriately (e.g., set an error state or show a notification)
-      } finally {
-        setLoading(false);
-      }
-    };
+    fetchMore();
+  }, [fetchMore]);
 
-    load();
-  }, [page, size]);
+  const { lastElementRef } = useInfiniteScroll({ fetchMore, hasMore, loading });
 
-  return { products, loading };
+  return { products, lastElementRef, loading };
 };
 
 export default useMainProducts;
