@@ -17,3 +17,11 @@ const fetchMainProducts = async (page = 0, size = 8) => {
 };
 
 export default fetchMainProducts;
+
+// 카테고리 조회 API
+const fetchCategories = async () => {
+  const res = await axiosInstance.get('/api/users/categories');
+  return res.data?.data ?? [];
+};
+
+export { fetchCategories };

@@ -1,25 +1,12 @@
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import axiosInstance from '@/services/axiosInstance';
+import useCategories from '@/hooks/useCategories';
 
 import styles from './CategorySection.module.css';
 
 function CategorySection() {
   const navigate = useNavigate();
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    axiosInstance
-      .get('/api/users/categories')
-      .then((res) => {
-        setCategories(res.data.data); // ← CategoryResponse[]
-      })
-      .catch((_err) => {
-        // Handle error appropriately, e.g., set an error state or show a message
-        // setError(err); // Uncomment if you add error state
-      });
-  }, []);
+  const { categories } = useCategories();
 
   return (
     <section className={styles.section}>
