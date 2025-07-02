@@ -1,14 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+
+import { signInSchema } from '@/features/auth/schemas/signInSchema';
 
 import styles from './SignInForm.module.css';
-
-const signInSchema = z.object({
-  email: z.string().email('올바른 이메일 형식이 아닙니다.'),
-  password: z.string().min(4, '비밀번호는 4자 이상이어야 합니다.'),
-});
 
 function SignInForm({ onSubmit }) {
   const {
