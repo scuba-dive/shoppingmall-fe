@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import Pagination from '@/components/Pagination/Pagination';
 import { fetchAdminUsers, updateUserStatus } from '@/services/adminUserApi';
@@ -28,21 +28,24 @@ function AdminUser() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const handleStatusToggle = async (id) => {
-    try {
-      await updateUserStatus(id);
-      // eslint-disable-next-line no-alert
-      alert('상태가 변경되었습니다.');
+  const handleStatusToggle = useCallback(
+    async (id) => {
+      try {
+        await updateUserStatus(id);
+        // eslint-disable-next-line no-alert
+        alert('상태가 변경되었습니다.');
 
-      const updated = await fetchAdminUsers(currentPage - 1, 10);
-      setUsers(updated.content);
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error('상태 변경 실패:', err);
-      // eslint-disable-next-line no-alert
-      alert('상태 변경 실패');
-    }
-  };
+        const updated = await fetchAdminUsers(currentPage - 1, 10);
+        setUsers(updated.content);
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error('상태 변경 실패:', err);
+        // eslint-disable-next-line no-alert
+        alert('상태 변경 실패');
+      }
+    },
+    [currentPage],
+  );
 
   useEffect(() => {
     const getUsers = async () => {
@@ -58,8 +61,8 @@ function AdminUser() {
     getUsers();
   }, [currentPage]);
 
-  function renderUserRow(user) {
-    return (
+  const renderUserRow = useCallback(
+    (user) => (
       <tr key={user.id}>
         <td>{formatDate(user.createdAt)}</td>
         <td>{formatDate(user.lastLoginAt)}</td>
@@ -77,17 +80,14 @@ function AdminUser() {
           </button>
         </td>
       </tr>
-    );
-  }
+    ),
+    [handleStatusToggle],
+  );
 
   return (
     <>
       <h1> 사용자 관리 </h1>
-      <Table
-        columns={columns}
-        data={users}
-        renderRow={(user) => renderUserRow(user, handleStatusToggle)}
-      />
+      <Table columns={columns} data={users} renderRow={renderUserRow} />
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
     </>
   );
