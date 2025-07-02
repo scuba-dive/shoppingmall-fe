@@ -211,7 +211,7 @@ function AdminOrderInfoModal({ isOpen, onClose, orderId }) {
 AdminOrderInfoModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  orderId: PropTypes.string.isRequired,
+  orderId: PropTypes.number.isRequired,
 };
 
 export default AdminOrderInfoModal;
