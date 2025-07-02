@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 
 import logo from '@/assets//logo.svg';
 import icon from '@/assets/favicon.svg';
+import userImage from '@/assets/user-image.png';
 import useAuthStore from '@/states/authStore';
 
 import style from './Header.module.css';
@@ -21,19 +22,31 @@ function Header() {
         </Link>
       </div>
       <div className={style.headerRight}>
-        {user && user.role === 'ADMIN' && <span className={style.adminBadge}>관리자</span>}
-        {user && user.role === 'USER' && (
-          <>
-            <Link to="/cart" className={style.cartBtn}>
-              장바구니
-            </Link>
-            <Link to="/mypage" className={style.myPageBtn}>
-              마이페이지
-            </Link>
-          </>
-        )}
+        {user && user.role === 'ADMIN' && <span className={style.adminBadge}>관리자 모드</span>}
         {user ? (
-          <LogoutButton />
+          <div className={style.userDropdown}>
+            <div className={style.userProfile}>
+              <span className={style.userNickname}>{user.nickname} 님</span>
+              <img src={userImage} alt="사용자 프로필" className={style.userImage} />
+            </div>
+            <div className={style.dropdownMenu}>
+              <div className={style.userInfo}>
+                <div className={style.userName}>{user.username}</div>
+                <div className={style.userEmail}>{user.email}</div>
+              </div>
+              {user.role === 'USER' && (
+                <>
+                  <Link to="/cart" className={style.dropdownItem}>
+                    장바구니
+                  </Link>
+                  <Link to="/mypage" className={style.dropdownItem}>
+                    마이페이지
+                  </Link>
+                </>
+              )}
+              <LogoutButton />
+            </div>
+          </div>
         ) : (
           <>
             <Link to="/auth/signin" className={style.loginBtn}>
