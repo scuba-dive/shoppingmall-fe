@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 
-import styles from './OrderInfoModal.module.css';
+import styles from './AdminOrderInfoModal.module.css';
 
 const response = {
   status: 200,
@@ -10,6 +10,8 @@ const response = {
     orderId: 4,
     orderNumber: '20250625-000004',
     orderedAt: '2025-06-25T15:00:00',
+    orderStatus: 'READY_FOR_DELIVERY',
+    paymentMethod: 'CHEETOS',
     userName: '홍길동',
     shippingAddress: {
       recipient: '홍길동',
@@ -18,8 +20,6 @@ const response = {
       address1: '서울 강남구 테헤란로 123',
       address2: '101동 1001호',
     },
-    orderStatus: 'COMPLETED',
-    paymentMethod: 'CHEETOS',
     totalAmount: 1097000,
     orderItems: [
       {
@@ -37,11 +37,10 @@ const response = {
         totalPrice: 299000,
       },
     ],
-    totalCount: 3,
   },
 };
 
-function OrderInfoModal({ isOpen, onClose, orderId }) {
+function AdminOrderInfoModal({ isOpen, onClose, orderId }) {
   const [orderData, setOrderData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -67,7 +66,7 @@ function OrderInfoModal({ isOpen, onClose, orderId }) {
         setLoading(true);
         setError(null);
         try {
-          // const response = await fetch(`/api/users/me/orders/${orderId}`);
+          // const response = await fetch(`/api/admin/orders/{orderId}`);
           // if (!response.ok) {
           //   throw new Error('주문 정보를 불러오는데 실패했습니다.');
           // }
@@ -103,9 +102,9 @@ function OrderInfoModal({ isOpen, onClose, orderId }) {
       <div
         className={styles.modal}
         role="dialog"
-        id="order-info-modal"
+        id="admin-order-info-modal"
         aria-modal="true"
-        aria-labelledby="order-info-modal-title"
+        aria-labelledby="admin-order-info-modal-title"
       >
         {/* 닫기 버튼 */}
         <button
@@ -192,8 +191,11 @@ function OrderInfoModal({ isOpen, onClose, orderId }) {
                 </div>
               </div>
 
-              {/* 주문 취소 버튼 */}
+              {/* 주문 수정 버튼 */}
               <div className={styles.buttonContainer}>
+                <button type="button" className={styles.updateButton}>
+                  배송 상태 변경
+                </button>
                 <button type="button" className={styles.cancelButton} onClick={handleOrderCancel}>
                   주문 취소
                 </button>
@@ -206,10 +208,10 @@ function OrderInfoModal({ isOpen, onClose, orderId }) {
   );
 }
 
-OrderInfoModal.propTypes = {
+AdminOrderInfoModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   orderId: PropTypes.number.isRequired,
 };
 
-export default OrderInfoModal;
+export default AdminOrderInfoModal;

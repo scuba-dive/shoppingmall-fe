@@ -99,6 +99,28 @@
   display: flex;
   justify-content: flex-end;
   padding-top: 30px;
+  gap: 20px;
+}
+
+.updateButton {
+  width: 100px;
+  height: 40px;
+  background-color: #ffa948;
+  border: none;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 13px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.updateButton:hover {
+  background-color: #fe9253;
+}
+
+.updateButton:active {
+  background-color: #f87c35;
 }
 
 .cancelButton {
