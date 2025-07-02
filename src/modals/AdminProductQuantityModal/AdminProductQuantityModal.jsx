@@ -42,7 +42,7 @@ function AdminProductQuantityModal({ isOpen, onClose, onConfirm, currQuantity })
   };
 
   const handleDecrease = () => {
-    if (newQuantity > 0) {
+    if (newQuantity > 1) {
       setNewQuantity(newQuantity - 1);
     }
   };
@@ -53,7 +53,7 @@ function AdminProductQuantityModal({ isOpen, onClose, onConfirm, currQuantity })
 
   const handleInputChange = (e) => {
     const value = parseInt(e.target.value, 10);
-    if (!Number.isNaN(value) && value >= 0) {
+    if (!Number.isNaN(value) && value >= 1) {
       setNewQuantity(value);
     }
   };
@@ -66,6 +66,7 @@ function AdminProductQuantityModal({ isOpen, onClose, onConfirm, currQuantity })
         id="admin-product-quantity-modal"
         aria-modal="true"
         aria-labelledby="admin-product-quantity-modal-title"
+        aria-describedby="admin-product-quantity-modal-desc"
       >
         <button
           type="button"
@@ -84,8 +85,12 @@ function AdminProductQuantityModal({ isOpen, onClose, onConfirm, currQuantity })
         </button>
 
         <div className={styles.content}>
-          <div id="admin-product-quantity-modal-content" className={styles.title}>
+          <div id="admin-product-quantity-modal-title" className={styles.title}>
             해당 상품의 수량을 변경하시겠습니까?
+          </div>
+
+          <div id="admin-product-quantity-modal-desc" className={styles.description}>
+            수량을 직접 입력하거나 버튼으로 조절할 수 있습니다.
           </div>
 
           <div className={styles.quantityContainer}>
@@ -103,7 +108,7 @@ function AdminProductQuantityModal({ isOpen, onClose, onConfirm, currQuantity })
               className={styles.quantityInput}
               value={newQuantity}
               onChange={handleInputChange}
-              min="0"
+              min="1"
             />
 
             <button type="button" className={styles.quantityButton} onClick={handleIncrease}>
