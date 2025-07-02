@@ -15,7 +15,10 @@ function CategorySection() {
       .then((res) => {
         setCategories(res.data.data); // ← CategoryResponse[]
       })
-      .catch((err) => console.error(err));
+      .catch((_err) => {
+        // Handle error appropriately, e.g., set an error state or show a message
+        // setError(err); // Uncomment if you add error state
+      });
   }, []);
 
   return (
