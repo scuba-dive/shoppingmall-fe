@@ -1,0 +1,17 @@
+.signinLinks {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.signinLinkBtn {
+  font-weight: 400;
+  font-size: 13px;
+  color: #000;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
