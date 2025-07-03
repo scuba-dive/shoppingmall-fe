@@ -46,3 +46,11 @@ const fetchProductsByCategory = async (categoryId, size = 8, page = 0) => {
 };
 
 export { fetchProductsByCategory };
+
+// 상품 상세 정보 조회
+const fetchProductById = async (id) => {
+  const res = await axiosInstance.get(`/api/users/products/${id}`);
+  return res.data.data;
+};
+
+export { fetchProductById };
