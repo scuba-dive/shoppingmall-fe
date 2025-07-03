@@ -1,44 +1,21 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 
+import { fetchOrderDetail } from '@/services/adminOrderApi';
+
 import styles from './AdminOrderInfoModal.module.css';
 
-const response = {
-  status: 200,
-  message: '주문 상세 조회 성공',
-  data: {
-    orderId: 4,
-    orderNumber: '20250625-000004',
-    orderedAt: '2025-06-25T15:00:00',
-    orderStatus: 'READY_FOR_DELIVERY',
-    paymentMethod: 'CHEETOS',
-    userName: '홍길동',
-    shippingAddress: {
-      recipient: '홍길동',
-      phone: '010-1234-5678',
-      zipcode: '06236',
-      address1: '서울 강남구 테헤란로 123',
-      address2: '101동 1001호',
-    },
-    totalAmount: 1097000,
-    orderItems: [
-      {
-        productName: '머찐의자',
-        option: '빨간색',
-        quantity: 2,
-        price: 399000,
-        totalPrice: 798000,
-      },
-      {
-        productName: '귀여운책상',
-        option: '파란색',
-        quantity: 1,
-        price: 299000,
-        totalPrice: 299000,
-      },
-    ],
-  },
+const ORDER_STATUS_MAP = {
+  PAYMENT_COMPLETED: '결제 완료',
+  CANCELED: '결제 취소',
+  CREATED: '배송 준비 중',
+  SHIPPING: '배송 중',
+  COMPLETED: '배송 완료',
 };
+
+function getOrderStatusText(status) {
+  return ORDER_STATUS_MAP[status] || status;
+}
 
 function AdminOrderInfoModal({ isOpen, onClose, orderId }) {
   const [orderData, setOrderData] = useState(null);
@@ -66,14 +43,8 @@ function AdminOrderInfoModal({ isOpen, onClose, orderId }) {
         setLoading(true);
         setError(null);
         try {
-          // const response = await fetch(`/api/admin/orders/{orderId}`);
-          // if (!response.ok) {
-          //   throw new Error('주문 정보를 불러오는데 실패했습니다.');
-          // }
-          // const data = await response.json();
-
-          // 실제 API 호출 대신 하드코딩된 response 사용
-          setOrderData(response.data);
+          const data = await fetchOrderDetail(orderId);
+          setOrderData(data);
         } catch (err) {
           setError(err.message);
         } finally {
@@ -159,9 +130,7 @@ function AdminOrderInfoModal({ isOpen, onClose, orderId }) {
 
                 <div className={styles.infoRow}>
                   <span className={styles.label}>배송지</span>
-                  <span className={styles.value}>
-                    {`${orderData.shippingAddress.address1} ${orderData.shippingAddress.address2 || ''}`.trim()}
-                  </span>
+                  <span className={styles.value}>{orderData.address}</span>
                 </div>
 
                 <div className={styles.infoRow}>
@@ -182,12 +151,12 @@ function AdminOrderInfoModal({ isOpen, onClose, orderId }) {
 
                 <div className={styles.infoRow}>
                   <span className={styles.label}>결제 수단</span>
-                  <span className={styles.value}>{orderData.paymentMethod}</span>
+                  <span className={styles.value}>토스</span>
                 </div>
 
                 <div className={styles.infoRow}>
                   <span className={styles.label}>주문 상태</span>
-                  <span className={styles.value}>{orderData.orderStatus}</span>
+                  <span className={styles.value}>{getOrderStatusText(orderData.orderStatus)}</span>
                 </div>
               </div>
 
