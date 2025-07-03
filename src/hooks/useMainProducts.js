@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
-import fetchMainProducts from '@/services/mainService';
+import { fetchMainProducts } from '@/services/mainService';
 
 const useMainProducts = (initialPage = 0, size = 8) => {
   const [products, setProducts] = useState([]);

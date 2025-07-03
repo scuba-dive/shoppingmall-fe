@@ -1,7 +1,7 @@
 import axiosInstance from '@/services/axiosInstance';
 
 // 상품 전체 조회 API
-const fetchMainProducts = async (page = 0, size = 8) => {
+export const fetchMainProducts = async (page = 0, size = 8) => {
   const res = await axiosInstance.get('/api/users/products', {
     params: { page, size },
   });
@@ -16,18 +16,14 @@ const fetchMainProducts = async (page = 0, size = 8) => {
   }));
 };
 
-export default fetchMainProducts;
-
 // 카테고리 조회 API
-const fetchCategories = async () => {
+export const fetchCategories = async () => {
   const res = await axiosInstance.get('/api/users/categories');
   return res.data?.data ?? [];
 };
 
-export { fetchCategories };
-
 // 카테고리별 상품 조회 API
-const fetchProductsByCategory = async (categoryId, size = 8, page = 0) => {
+export const fetchProductsByCategory = async (categoryId, size = 8, page = 0) => {
   const res = await axiosInstance.get(`/api/users/categories/${categoryId}/products`, {
     params: {
       page,
@@ -45,12 +41,8 @@ const fetchProductsByCategory = async (categoryId, size = 8, page = 0) => {
   }));
 };
 
-export { fetchProductsByCategory };
-
 // 상품 상세 정보 조회
-const fetchProductById = async (id) => {
+export const fetchProductById = async (id) => {
   const res = await axiosInstance.get(`/api/users/products/${id}`);
   return res.data.data;
 };
-
-export { fetchProductById };
