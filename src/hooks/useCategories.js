@@ -1,26 +1,18 @@
-import { useEffect, useState } from 'react';
+// src/hooks/useCategories.js
+import { useEffect } from 'react';
 
-import { fetchCategories } from '@/services/mainService';
+import useCategoryState from '@/states/categoryState';
 
 const useCategories = () => {
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const categories = useCategoryState((state) => state.categories);
+  const isLoaded = useCategoryState((state) => state.isLoaded);
+  const loadCategories = useCategoryState((state) => state.loadCategories);
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        const data = await fetchCategories();
-        setCategories(data);
-      } catch (err) {
-        // Handle error (e.g., set an error state or log to an external service)
-      } finally {
-        setLoading(false);
-      }
-    };
-    load();
-  }, []);
+    loadCategories();
+  }, [loadCategories]);
 
-  return { categories, loading };
+  return { categories, loading: !isLoaded };
 };
 
 export default useCategories;
