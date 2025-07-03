@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 import { fetchProductsByCategory } from '@/services/mainService';
 
-const useCategoryPreviewState = create((set, _get) => ({
+const useCategoryPreviewStore = create((set, _get) => ({
   categoryProducts: {},
   loading: false,
 
@@ -25,4 +25,4 @@ const useCategoryPreviewState = create((set, _get) => ({
   },
 }));
 
-export default useCategoryPreviewState;
+export default useCategoryPreviewStore;

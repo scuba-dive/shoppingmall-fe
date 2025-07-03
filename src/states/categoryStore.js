@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 import { fetchCategories } from '@/services/mainService';
 
-const useCategoryState = create((set, get) => ({
+const useCategoryStore = create((set, get) => ({
   categories: [],
   isLoaded: false,
 
@@ -19,4 +19,4 @@ const useCategoryState = create((set, get) => ({
   },
 }));
 
-export default useCategoryState;
+export default useCategoryStore;

@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 
-import useCategoryState from '@/states/categoryState';
+import useCategoryStore from '@/states/categoryStore';
 
 const useCategories = () => {
-  const categories = useCategoryState((state) => state.categories);
-  const isLoaded = useCategoryState((state) => state.isLoaded);
-  const loadCategories = useCategoryState((state) => state.loadCategories);
+  const categories = useCategoryStore((state) => state.categories);
+  const isLoaded = useCategoryStore((state) => state.isLoaded);
+  const loadCategories = useCategoryStore((state) => state.loadCategories);
 
   useEffect(() => {
     loadCategories();

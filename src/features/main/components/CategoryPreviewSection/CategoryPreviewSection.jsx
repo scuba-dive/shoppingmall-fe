@@ -4,14 +4,14 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import ProductCard from '@/components/Card/ProductCard';
 import useCategories from '@/hooks/useCategories';
-import useCategoryPreviewState from '@/states/categoryPreviewState';
+import useCategoryPreviewStore from '@/states/categoryPreviewStore';
 
 import styles from './CategoryPreviewSection.module.css';
 
 function CategoryPreviewSection() {
   const navigate = useNavigate();
   const { categories } = useCategories();
-  const { categoryProducts, fetchPreviews } = useCategoryPreviewState();
+  const { categoryProducts, fetchPreviews } = useCategoryPreviewStore();
 
   useEffect(() => {
     if (categories.length > 0) {
