@@ -17,14 +17,14 @@ function SignUp() {
       passwordCheck: data.passwordCheck,
       username: data.nickname,
       phoneNumber: data.phone,
-      address: data.address,
+      address: '서울특별시 강남구 테헤란로 123',
     };
 
     try {
       const success = await signup(signupBody);
       if (success) {
         alert('회원가입에 성공했습니다. 로그인해주세요.');
-        navigate('/signin');
+        navigate('/auth/signin', { replace: true });
         return true;
       }
       alert('회원가입에 실패했습니다.');
