@@ -25,3 +25,24 @@ const fetchCategories = async () => {
 };
 
 export { fetchCategories };
+
+// 카테고리별 상품 조회 API
+const fetchProductsByCategory = async (categoryId, size = 8) => {
+  const res = await axiosInstance.get(`/api/users/categories/${categoryId}/products`, {
+    params: {
+      page: 0,
+      size,
+    },
+  });
+
+  const rawProducts = res.data?.data?.products ?? [];
+
+  return rawProducts.map((p) => ({
+    id: p.id,
+    name: p.productName,
+    price: p.price,
+    image: p.thumbnailUrl,
+  }));
+};
+
+export { fetchProductsByCategory };
