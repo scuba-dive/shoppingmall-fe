@@ -1,45 +1,7 @@
-// import axios from 'axios';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-// 테스트용
-const MOCK_USER = {
-  email: 'e@e.com',
-  password: '1234',
-};
-
-const MOCK_ADMIN = {
-  email: 'admin@e.com',
-  password: '1234',
-};
-
-const MOCK_USER_RESPONSE = {
-  id: 1,
-  username: '홍길동',
-  nickname: '불타는 수박1',
-  email: 'e@e.com',
-  phoneNumber: '01012345678',
-  role: 'USER',
-  status: 'active',
-  grade: 'VIP',
-  last_login_at: '2024-12-01T10:30:00',
-  createdAt: '2024-12-01T10:30:00',
-  updatedAt: null,
-};
-
-const MOCK_ADMIN_RESPONSE = {
-  id: 0,
-  username: '관리자',
-  nickname: '나는야 관리자',
-  email: 'admin@e.com',
-  phoneNumber: '01012345678',
-  role: 'ADMIN',
-  status: 'active',
-  grade: 'VIP',
-  last_login_at: '2024-12-01T10:30:00',
-  createdAt: '2024-12-01T10:30:00',
-  updatedAt: null,
-};
+import axiosInstance from '@/services/axiosInstance';
 
 const useAuthStore = create(
   persist(
@@ -47,27 +9,25 @@ const useAuthStore = create(
       user: null,
 
       login: async ({ email, password }) => {
-        // mock 유저로 테스트
-        if (email === MOCK_USER.email && password === MOCK_USER.password) {
-          set({ user: MOCK_USER_RESPONSE });
+        try {
+          const response = await axiosInstance.post('/api/users/login', { email, password });
+          const { accessToken, refreshToken, user } = response.data.data;
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('refreshToken', refreshToken);
+          set({ user });
           return true;
+        } catch (e) {
+          return false;
         }
-        if (email === MOCK_ADMIN.email && password === MOCK_ADMIN.password) {
-          set({ user: MOCK_ADMIN_RESPONSE });
-          return true;
-        }
-        return false;
+      },
 
-        // API 연동
-        // try {
-        //   const response = await axios.post('/api/auth/login', { email, password });
-        //   const { accessToken, user } = response.data.data;
-        //   localStorage.setItem('accessToken', accessToken);
-        //   set({ user });
-        //   return true;
-        // } catch (e) {
-        //   return false;
-        // }
+      signup: async (payload) => {
+        try {
+          await axiosInstance.post('/api/users/signup', payload);
+          return true;
+        } catch (e) {
+          return false;
+        }
       },
 
       logout: () => set({ user: null }),
