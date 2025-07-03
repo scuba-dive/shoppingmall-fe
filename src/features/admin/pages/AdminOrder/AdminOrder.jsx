@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import Pagination from '@/components/Pagination/Pagination';
+import AdminOrderInfoModal from '@/modals/AdminOrderInfoModal/AdminOrderInfoModal';
 import { fetchAdminOrders } from '@/services/adminOrderApi';
 
 import Table from '../../components/Table/Table';
@@ -38,6 +39,18 @@ function AdminOrder() {
   const [orders, setOrders] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
+
+  const handleOpenModal = (orderId) => {
+    setSelectedOrderId(orderId);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedOrderId(null);
+  };
 
   useEffect(() => {
     const getOrders = async () => {
@@ -62,7 +75,11 @@ function AdminOrder() {
         <td>{row.totalAmount.toLocaleString()}</td>
         <td>{getOrderStatusText(row.orderStatus)}</td>
         <td>
-          <button type="button" className={styles.button}>
+          <button
+            type="button"
+            className={styles.button}
+            onClick={() => handleOpenModal(row.orderId)}
+          >
             조회
           </button>
         </td>
@@ -76,6 +93,14 @@ function AdminOrder() {
       <h1> 주문 관리 </h1>
       <Table columns={columns} data={orders} renderRow={renderOrderRow} />
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+
+      {isModalOpen && selectedOrderId && (
+        <AdminOrderInfoModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          orderId={selectedOrderId}
+        />
+      )}
     </>
   );
 }
