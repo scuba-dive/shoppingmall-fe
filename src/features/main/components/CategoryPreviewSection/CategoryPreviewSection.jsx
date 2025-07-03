@@ -1,38 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import ProductCard from '@/components/Card/ProductCard';
 import useCategories from '@/hooks/useCategories';
-import { fetchProductsByCategory } from '@/services/mainService';
+import useCategoryPreviewState from '@/states/categoryPreviewState';
 
 import styles from './CategoryPreviewSection.module.css';
 
 function CategoryPreviewSection() {
   const navigate = useNavigate();
   const { categories } = useCategories();
-  const [categoryProducts, setCategoryProducts] = useState({});
+  const { categoryProducts, fetchPreviews } = useCategoryPreviewState();
 
   useEffect(() => {
-    const fetchAll = async () => {
-      const results = {};
-
-      await Promise.all(
-        categories.map(async (category) => {
-          try {
-            const products = await fetchProductsByCategory(category.id, 8);
-            results[category.id] = products;
-          } catch (e) {
-            results[category.id] = [];
-          }
-        }),
-      );
-
-      setCategoryProducts(results);
-    };
-
-    fetchAll();
-  }, [categories]);
+    if (categories.length > 0) {
+      fetchPreviews(categories);
+    }
+  }, [categories, fetchPreviews]);
 
   return (
     <div className={styles.wrapper}>
