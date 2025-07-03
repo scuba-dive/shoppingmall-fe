@@ -42,15 +42,15 @@ function AdminOrder() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrderId, setSelectedOrderId] = useState(null);
 
-  const handleOpenModal = (orderId) => {
+  const handleOpenModal = useCallback((orderId) => {
     setSelectedOrderId(orderId);
     setIsModalOpen(true);
-  };
+  }, []);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setIsModalOpen(false);
     setSelectedOrderId(null);
-  };
+  }, []);
 
   useEffect(() => {
     const getOrders = async () => {
@@ -85,7 +85,7 @@ function AdminOrder() {
         </td>
       </tr>
     ),
-    [],
+    [handleOpenModal],
   );
 
   return (
