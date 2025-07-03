@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
+import { fetchRankingStats } from '@/services/adminStatsApi';
 
 import Table from '../Table/Table';
 import styles from './StatRanking.module.css';
@@ -9,30 +11,46 @@ const columns = [
   { key: 'total_quantity', label: '판매량' },
 ];
 
-function renderProductRow(row) {
-  return (
-    <tr key={row.rank}>
-      <td>{row.rank}</td>
-      <td>{row.product_name}</td>
-      <td>{row.total_quantity}</td>
-    </tr>
-  );
-}
-
 function StatsRanking() {
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const mockData = [
-      { rank: 1, product_name: '머찐 의자', total_quantity: 30 },
-      { rank: 2, product_name: '간지나는 조명', total_quantity: 28 },
-      { rank: 3, product_name: '삐까뻔쩍 거울', total_quantity: 21 },
-      { rank: 4, product_name: '센스있는 쇼파', total_quantity: 14 },
-      { rank: 5, product_name: '언제잤니 침대', total_quantity: 9 },
-    ];
-
-    setData(mockData);
+    const getRankingData = async () => {
+      try {
+        setIsLoading(true);
+        const stats = await fetchRankingStats();
+        setData(stats);
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error('정보 불러오기 실패:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    getRankingData();
   }, []);
+
+  const renderProductRow = useCallback(
+    (row) => (
+      <tr key={row.rank}>
+        <td>{row.rank}</td>
+        <td>{row.productName}</td>
+        <td>{row.totalQuantity}</td>
+      </tr>
+    ),
+    [],
+  );
+  if (isLoading) return <p>순위 로딩 중...</p>;
+
+  if (!data || data.length === 0) {
+    return (
+      <section className={styles.section2}>
+        <h2>오늘의 상품 판매 순위 (1시간 별 기준)</h2>
+        <p>표시할 데이터가 없습니다.</p>
+      </section>
+    );
+  }
 
   return (
     <section className={styles.section2}>
