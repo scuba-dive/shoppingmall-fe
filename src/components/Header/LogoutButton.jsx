@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import axiosInstance from '@/services/axiosInstance';
 import useAuthStore from '@/states/authStore';
 
 import style from './LogoutButton.module.css';
@@ -11,18 +11,15 @@ function LogoutButton() {
 
   const handleLogout = async () => {
     try {
-      const res = await axios.post('/api/logout');
-      // 200
+      const res = await axiosInstance.post('/api/users/logout');
       if (res.data?.status === 200) {
         logout();
         navigate('/');
       } else {
-        // 401
-        logout(); // 실패하더라도 상태는 초기화
+        logout();
         navigate('/');
       }
     } catch (error) {
-      // 기타 오류
       logout();
       navigate('/');
     }
