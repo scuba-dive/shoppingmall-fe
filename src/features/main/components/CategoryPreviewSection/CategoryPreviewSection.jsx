@@ -1,22 +1,31 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import ProductCard from '@/components/Card/ProductCard';
-import categories from '@/data/categories';
-import products from '@/data/products';
+import useCategories from '@/hooks/useCategories';
+import useCategoryPreviewStore from '@/states/categoryPreviewStore';
 
 import styles from './CategoryPreviewSection.module.css';
 
 function CategoryPreviewSection() {
   const navigate = useNavigate();
+  const { categories } = useCategories();
+  const { categoryProducts, fetchPreviews } = useCategoryPreviewStore();
+
+  useEffect(() => {
+    if (categories.length > 0) {
+      fetchPreviews(categories);
+    }
+  }, [categories, fetchPreviews]);
 
   return (
     <div className={styles.wrapper}>
       {categories.map((category) => {
-        const filtered = products.filter((p) => p.category === category.name).slice(0, 8);
+        const filtered = categoryProducts[category.id] || [];
 
         return (
-          <section key={category.name} className={styles.section}>
+          <section key={category.id} className={styles.section}>
             <button
               type="button"
               className={styles.titleButton}

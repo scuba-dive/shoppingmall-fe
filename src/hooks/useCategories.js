@@ -1,26 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-import { fetchCategories } from '@/services/mainService';
+import useCategoryStore from '@/states/categoryStore';
 
 const useCategories = () => {
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const categories = useCategoryStore((state) => state.categories);
+  const isLoaded = useCategoryStore((state) => state.isLoaded);
+  const loadCategories = useCategoryStore((state) => state.loadCategories);
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        const data = await fetchCategories();
-        setCategories(data);
-      } catch (err) {
-        // Handle error (e.g., set an error state or log to an external service)
-      } finally {
-        setLoading(false);
-      }
-    };
-    load();
-  }, []);
+    loadCategories();
+  }, [loadCategories]);
 
-  return { categories, loading };
+  return { categories, loading: !isLoaded };
 };
 
 export default useCategories;
