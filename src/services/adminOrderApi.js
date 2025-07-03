@@ -6,3 +6,8 @@ export const fetchAdminOrders = async (page = 0, size = 10) => {
   });
   return res.data.data;
 };
+
+export const fetchOrderDetail = async (orderId) => {
+  const res = await axiosInstance.get(`/api/admin/orders/${orderId}`);
+  return res.data.data;
+};
