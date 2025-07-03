@@ -4,7 +4,7 @@ const categories = [
     image: 'https://my-shop-image-bucket.s3.ap-northeast-2.amazonaws.com/category/category-bed.png',
   },
   {
-    name: '테이블',
+    name: '책상',
     image:
       'https://my-shop-image-bucket.s3.ap-northeast-2.amazonaws.com/category/category-table.png',
   },

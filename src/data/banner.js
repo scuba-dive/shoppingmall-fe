@@ -14,7 +14,7 @@ const banner = [
       'https://my-shop-image-bucket.s3.ap-northeast-2.amazonaws.com/Banner/CategoryBanner-Bed.webp',
   },
   {
-    name: '테이블',
+    name: '책상',
     image:
       'https://my-shop-image-bucket.s3.ap-northeast-2.amazonaws.com/Banner/CategoryBanner-Table.webp',
   },
