@@ -1,4 +1,3 @@
-// src/hooks/useCategories.js
 import { useEffect } from 'react';
 
 import useCategoryState from '@/states/categoryState';
