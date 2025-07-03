@@ -1,5 +1,9 @@
-// 여기에 추후에 통계에 관련된 axios를 받아올 예정입니닷
-// 여기에 추후에 통계에 관련된 axios를 받아올 예정입니닷
+import axiosInstance from './axiosInstance';
+
+export const fetchTodaySummary = async () => {
+  const res = await axiosInstance.get('/api/admin/stats/today');
+  return res.data.data;
+};
 
 // 오늘의 매출 및 주문 수
 
