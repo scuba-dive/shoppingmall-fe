@@ -1,10 +1,14 @@
-// components/Cart/CartRow.jsx
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 import styles from './CartRow.module.css';
 
-function CartRow({ item, index, onUpdate, onDelete }) {
+function CartRow({
+  item, //
+  index, //
+  onUpdate, //
+  onDelete, //
+}) {
   const [quantity, setQuantity] = useState(item.quantity);
 
   const handleChange = (newQty) => {
