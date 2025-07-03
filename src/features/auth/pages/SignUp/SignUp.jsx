@@ -2,35 +2,35 @@ import { useNavigate } from 'react-router-dom';
 
 import SignUpForm from '@/features/auth/components/SignUpForm/SignUpForm';
 import SignUpLinks from '@/features/auth/components/SignUpLinks/SignUpLinks';
+import useAuthStore from '@/states/authStore';
 
 import styles from './SignUp.module.css';
 
 function SignUp() {
   const navigate = useNavigate();
+  const signup = useAuthStore((state) => state.signup);
 
-  const handleSignUp = async (_data) => {
+  const handleSignUp = async (data) => {
+    const signupBody = {
+      email: data.email,
+      password: data.password,
+      passwordCheck: data.passwordCheck,
+      username: data.nickname,
+      phoneNumber: data.phone,
+      address: data.address,
+    };
+
     try {
-      // 회원가입 request body
-      // const signupBody = {
-      //   username: data.nickname,
-      //   email: data.email,
-      //   password: data.password,
-      //   passwordCheck: data.passwordCheck,
-      //   phoneNumber: data.phone,
-      // };
-
-      // 실제 API 호출
-      // const res = await axios.post('/api/auth/signup', signupBody);
-      // const user = res.data?.data;
-      // setUser(user);
-      // navigate('/');
-
-      // 임의로 성공 처리
-      // eslint-disable-next-line no-alert
-      alert('회원가입에 성공했습니다. 로그인해주세요.');
-      navigate('/signin');
-      return true;
+      const success = await signup(signupBody);
+      if (success) {
+        alert('회원가입에 성공했습니다. 로그인해주세요.');
+        navigate('/signin');
+        return true;
+      }
+      alert('회원가입에 실패했습니다.');
+      return false;
     } catch (err) {
+      alert('회원가입 중 오류가 발생했습니다.');
       return false;
     }
   };
