@@ -27,10 +27,10 @@ const fetchCategories = async () => {
 export { fetchCategories };
 
 // 카테고리별 상품 조회 API
-const fetchProductsByCategory = async (categoryId, size = 8) => {
+const fetchProductsByCategory = async (categoryId, size = 8, page = 0) => {
   const res = await axiosInstance.get(`/api/users/categories/${categoryId}/products`, {
     params: {
-      page: 0,
+      page,
       size,
     },
   });
