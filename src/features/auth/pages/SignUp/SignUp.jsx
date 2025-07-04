@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import SignUpForm from '@/features/auth/components/SignUpForm/SignUpForm';
 import SignUpLinks from '@/features/auth/components/SignUpLinks/SignUpLinks';
@@ -23,14 +24,14 @@ function SignUp() {
     try {
       const success = await signup(signupBody);
       if (success) {
-        alert('회원가입에 성공했습니다. 로그인해주세요.');
+        toast.success('회원가입에 성공했습니다. 로그인해주세요.');
         navigate('/auth/signin', { replace: true });
         return true;
       }
-      alert('회원가입에 실패했습니다.');
+      toast.error('회원가입에 실패했습니다.');
       return false;
     } catch (err) {
-      alert('회원가입 중 오류가 발생했습니다.');
+      toast.warning('회원가입 중 오류가 발생했습니다.');
       return false;
     }
   };
