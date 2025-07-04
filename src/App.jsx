@@ -11,6 +11,14 @@ import AuthPage from './pages/AuthPage';
 import CartPage from './pages/CartPage';
 import MyPage from './pages/MyPage';
 import OrderPage from './pages/OrderPage';
+import ProtectedAdminRoute from './routes/ProtectedAdminRouter';
+
+// 원래는 라우터 안에 작성하고 싶었으나.. 우리의 린트가 허용해 주질 않앗어오..ㅜ
+const adminElement = (
+  <ProtectedAdminRoute allowedRoles={['ADMIN']}>
+    <AdminPage />
+  </ProtectedAdminRoute>
+);
 
 function App() {
   return (
@@ -19,7 +27,7 @@ function App() {
         <Routes>
           <Route path="/*" element={<MainPage />} />
           <Route path="auth/*" element={<AuthPage />} />
-          <Route path="admin/*" element={<AdminPage />} />
+          <Route path="admin/*" element={adminElement} />
           <Route path="mypage/*" element={<MyPage />} />
           <Route path="order/*" element={<OrderPage />} />
           <Route path="cart/*" element={<CartPage />} />

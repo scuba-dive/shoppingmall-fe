@@ -8,7 +8,7 @@ function SignInLinks() {
       <button type="button" className={styles.signinLinkBtn}>
         이메일 & 비밀번호 찾기
       </button>
-      <Link to="/signup" className={styles.signinLinkBtn}>
+      <Link to="/auth/signup" className={styles.signinLinkBtn}>
         회원이 아니신가요? 회원가입
       </Link>
     </div>
