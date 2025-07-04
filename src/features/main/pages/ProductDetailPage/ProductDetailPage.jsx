@@ -6,6 +6,7 @@ import Breadcrumb from '@/features/main/components/Breadcrumb/Breadcrumb';
 import CategoryNavBar from '@/features/main/components/CategoryNavBar/CategoryNavBar';
 import QuantitySelector from '@/features/main/components/QuantitySelector/QuantitySelector';
 import StarRating from '@/features/main/components/StarRating/StarRating';
+import { addToCart } from '@/services/cartService';
 import { fetchProductById } from '@/services/mainService';
 
 import styles from './ProductDetailPage.module.css';
@@ -25,7 +26,7 @@ function ProductDetailPage() {
           setSelectedOption(data.options[0]);
         }
       } catch (err) {
-        // TODO: Handle error (e.g., show error message to user)
+        // console.error('상품 불러오기 실패:', err);
       }
     };
 
@@ -45,8 +46,18 @@ function ProductDetailPage() {
     if (matched) setSelectedOption(matched);
   };
 
-  const handleAddToCart = () => {
-    // TODO: Implement add to cart functionality here
+  const handleAddToCart = async () => {
+    try {
+      const optionId = selectedOption?.productOptionId || selectedOption?.id;
+
+      if (!optionId) return;
+
+      await addToCart({ productOptionId: optionId, quantity });
+
+      // TODO: 장바구니 성공 모달 표시
+    } catch (error) {
+      // TODO: 장바구니 실패 모달 표시
+    }
   };
 
   if (!product || !selectedOption) {
