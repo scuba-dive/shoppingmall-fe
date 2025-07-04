@@ -4,6 +4,7 @@ import {
   useMemo, //
   useState, //
 } from 'react';
+import { toast } from 'react-toastify';
 
 import Pagination from '@/components/Pagination/Pagination';
 import { fetchAdminUsers, updateUserStatus } from '@/services/adminUserApi';
@@ -46,16 +47,14 @@ function AdminUser() {
     async (id) => {
       try {
         await updateUserStatus(id);
-        // eslint-disable-next-line no-alert
-        alert('상태가 변경되었습니다.');
+        toast.success('상태가 변경되었습니다.');
 
         const updated = await fetchAdminUsers(currentPage - 1, 10);
         setUsers(updated.content);
       } catch (err) {
         // eslint-disable-next-line no-console
         console.error('상태 변경 실패:', err);
-        // eslint-disable-next-line no-alert
-        alert('상태 변경 실패');
+        toast.error('상태 변경 실패');
       }
     },
     [currentPage],
