@@ -1,7 +1,9 @@
+/* eslint-disable function-paren-newline */
+/* eslint-disable implicit-arrow-linebreak */
 import { useEffect, useState } from 'react';
 
 import CartTable from '@/features/cart/components/CartTable';
-import { fetchCart } from '@/services/cartService';
+import { fetchCart, updateCartItem } from '@/services/cartService';
 
 import styles from './CartPage.module.css';
 
@@ -20,14 +22,17 @@ function CartPage() {
 
     loadCart();
   }, []);
-  const updateQuantity = (cartItemId, newQty) => {
-    // eslint-disable-next-line max-len
-    setCartItems(
-      (prev) =>
-        // eslint-disable-next-line implicit-arrow-linebreak
+
+  const updateQuantity = async (cartItemId, newQty) => {
+    try {
+      await updateCartItem({ cartItemId, quantity: newQty });
+
+      setCartItems((prev) =>
         prev.map((item) => (item.cartItemId === cartItemId ? { ...item, quantity: newQty } : item)),
-      // eslint-disable-next-line function-paren-newline
-    );
+      );
+    } catch (error) {
+      // console.error('수량 변경 실패:', error);
+    }
   };
 
   const deleteItem = (cartItemId) => {

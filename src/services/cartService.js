@@ -12,3 +12,10 @@ export const addToCart = async ({ productOptionId, quantity }) => {
   });
   return res.data;
 };
+
+export const updateCartItem = async ({ cartItemId, quantity }) => {
+  const res = await axiosInstance.put(`/api/users/cart/items/${cartItemId}`, {
+    quantity,
+  });
+  return res.data.data;
+};
