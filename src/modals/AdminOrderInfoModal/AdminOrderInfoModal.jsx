@@ -69,8 +69,16 @@ function AdminOrderInfoModal({ isOpen, onClose, orderId }) {
   };
 
   const handleOrderCancel = async () => {
-    if (!orderData || orderData.orderStatus === 'CANCELED' || orderData.orderStatus === 'COMPLETED')
+    /* eslint-disable operator-linebreak */
+    if (
+      !orderData ||
+      orderData.orderStatus === 'CANCELED' ||
+      orderData.orderStatus === 'COMPLETED'
+    ) {
       return;
+    }
+    /* eslint-disable operator-linebreak */
+
     // eslint-disable-next-line no-restricted-globals, no-alert
     const confirmed = confirm('정말로 주문을 취소하시겠습니까?');
     if (!confirmed) return;
