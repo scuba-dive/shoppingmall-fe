@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import Pagination from '@/components/Pagination/Pagination';
 import AdminOrderInfoModal from '@/modals/AdminOrderInfoModal/AdminOrderInfoModal';
@@ -64,6 +65,7 @@ function AdminOrder() {
     setIsModalOpen(false);
     setSelectedOrderId(null);
     fetchOrders();
+    toast.dismiss('confirm-toast');
   }, [fetchOrders]);
 
   useEffect(() => {
