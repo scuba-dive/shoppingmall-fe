@@ -24,7 +24,7 @@ function MyPage() {
         ]);
         setUser(userData);
         setCartItems(cartData.items.slice(0, 2));
-        setOrders(orderData);
+        setOrders(orderData.orders);
       } catch (err) {
         // console.error('데이터 불러오기 실패', err);
       }

@@ -1,11 +1,31 @@
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
+import Pagination from '@/components/Pagination/Pagination';
+
 import styles from './OrderSection.module.css';
 
-export default function OrderSection({ orders, isPreview = true }) {
-  const displayedOrders = isPreview ? orders.slice(0, 2) : orders;
+const ORDER_STATUS_MAP = {
+  PAYMENT_COMPLETED: '결제 완료',
+  CANCELED: '결제 취소',
+  CREATED: '배송 준비 중',
+  SHIPPING: '배송 중',
+  COMPLETED: '배송 완료',
+};
+
+export default function OrderSection({
+  orders, //
+  isPreview,
+  currentPage,
+  totalPages,
+  onPageChange,
+}) {
   const navigate = useNavigate();
+  let displayedOrders = [];
+
+  if (Array.isArray(orders)) {
+    displayedOrders = isPreview ? orders.slice(0, 2) : orders;
+  }
 
   const handlePreviewAll = () => {
     navigate('/order');
@@ -21,37 +41,48 @@ export default function OrderSection({ orders, isPreview = true }) {
           </button>
         )}
       </div>
-      {orders.length === 0 ? (
+
+      {displayedOrders.length === 0 ? (
         <p className={styles.emptyText}>주문 내역이 없습니다.</p>
       ) : (
-        <table className={styles.orderTable}>
-          <thead>
-            <tr>
-              <th>주문일자</th>
-              <th>주문번호</th>
-              <th>수량</th>
-              <th>결제금액</th>
-              <th>상태</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {displayedOrders.map((order) => (
-              <tr key={order.orderNumber}>
-                <td>{order.orderedAt.split('T')[0]}</td>
-                <td>{order.orderNumber}</td>
-                <td>{order.totalQuantity}</td>
-                <td>{order.totalAmount.toLocaleString()}원</td>
-                <td>{order.orderStatus}</td>
-                <td>
-                  <button type="button" className={styles.viewButton}>
-                    조회
-                  </button>
-                </td>
+        <>
+          <table className={styles.orderTable}>
+            <thead>
+              <tr>
+                <th>주문일자</th>
+                <th>주문번호</th>
+                <th>수량</th>
+                <th>결제금액</th>
+                <th>상태</th>
+                <th />
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {displayedOrders.map((order) => (
+                <tr key={order.orderId}>
+                  <td>{order.orderedAt?.slice(0, 10).replace(/-/g, '.')}</td>
+                  <td>{order.orderNumber}</td>
+                  <td>{order.totalQuantity}</td>
+                  <td>{order.totalAmount.toLocaleString()}</td>
+                  <td>{ORDER_STATUS_MAP[order.orderStatus] || order.orderStatus}</td>
+                  <td>
+                    <button type="button" className={styles.viewButton}>
+                      조회
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {!isPreview && totalPages > 1 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={onPageChange}
+            />
+          )}
+        </>
       )}
     </section>
   );
@@ -69,8 +100,14 @@ OrderSection.propTypes = {
     }),
   ).isRequired,
   isPreview: PropTypes.bool,
+  currentPage: PropTypes.number,
+  totalPages: PropTypes.number,
+  onPageChange: PropTypes.func,
 };
 
 OrderSection.defaultProps = {
   isPreview: true,
+  currentPage: 1,
+  totalPages: 1,
+  onPageChange: () => {},
 };
