@@ -27,6 +27,7 @@ function AdminProduct() {
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [modalType, setModalType] = useState(null);
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
 
   const handleOpenSoldOutModal = useCallback((productId, status) => {
     setSelectedProductId(productId);
@@ -35,8 +36,9 @@ function AdminProduct() {
     setIsModalOpen(true);
   }, []);
 
-  const handleOpenQuantityModal = useCallback((productId) => {
+  const handleOpenQuantityModal = useCallback((productId, stock) => {
     setSelectedProductId(productId);
+    setSelectedQuantity(stock);
     setModalType('quantity');
     setIsModalOpen(true);
   }, []);
@@ -88,7 +90,7 @@ function AdminProduct() {
           </span>
         </td>
         <td>
-          <button type="button" onClick={() => handleOpenQuantityModal(row.optionId)}>
+          <button type="button" onClick={() => handleOpenQuantityModal(row.optionId, row.stock)}>
             ↑↓
           </button>
         </td>
@@ -124,7 +126,7 @@ function AdminProduct() {
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           productId={selectedProductId}
-          currentStatus={selectedStatus}
+          currQuantity={selectedQuantity}
           onStatusChanged={handleStatusChanged}
         />
       )}
