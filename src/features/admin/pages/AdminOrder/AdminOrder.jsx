@@ -42,6 +42,19 @@ function AdminOrder() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrderId, setSelectedOrderId] = useState(null);
 
+  const fetchOrders = useCallback(async () => {
+    try {
+      const data = await fetchAdminOrders(currentPage - 1, 10);
+      setOrders(data.orders);
+      setTotalPages(data.totalPages);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('주문 목록 불러오기 실패:', err);
+    }
+
+    fetchOrders();
+  }, [currentPage]);
+
   const handleOpenModal = useCallback((orderId) => {
     setSelectedOrderId(orderId);
     setIsModalOpen(true);
@@ -50,21 +63,12 @@ function AdminOrder() {
   const handleCloseModal = useCallback(() => {
     setIsModalOpen(false);
     setSelectedOrderId(null);
-  }, []);
+    fetchOrders();
+  }, [fetchOrders]);
 
   useEffect(() => {
-    const getOrders = async () => {
-      try {
-        const data = await fetchAdminOrders(currentPage - 1, 10);
-        setOrders(data.orders);
-        setTotalPages(data.totalPages);
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error('주문 목록 불러오기 실패:', err);
-      }
-    };
-    getOrders();
-  }, [currentPage]);
+    fetchOrders();
+  }, [fetchOrders]);
 
   const renderOrderRow = useCallback(
     (row) => (
