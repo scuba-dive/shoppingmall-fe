@@ -55,7 +55,15 @@ function StatsChart() {
             <YAxis
               yAxisId="left"
               orientation="left"
-              tickFormatter={(value) => `${(value / 10000).toLocaleString()}만 원`}
+              tickFormatter={(value) => {
+                if (value >= 100000000) {
+                  return `${(value / 100000000).toLocaleString()}억`;
+                }
+                if (value >= 10000) {
+                  return `${(value / 10000).toLocaleString()}만`;
+                }
+                return value.toLocaleString();
+              }}
             />
 
             {/* 오른쪽 Y축: 주문 건수 */}
