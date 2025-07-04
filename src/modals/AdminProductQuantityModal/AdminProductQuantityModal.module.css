@@ -168,3 +168,8 @@
 .confirmButton:active {
   transform: translateY(0);
 }
+
+.description {
+  white-space: nowrap;
+  padding-bottom: 10px;
+}
