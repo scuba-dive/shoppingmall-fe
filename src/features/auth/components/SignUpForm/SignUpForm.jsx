@@ -25,7 +25,7 @@ function SignUpForm({ onSubmit }) {
     resolver: zodResolver(signUpSchema),
     mode: 'onBlur',
     defaultValues: {
-      nickname: '',
+      username: '',
       email: '',
       password: '',
       passwordCheck: '',
@@ -36,8 +36,13 @@ function SignUpForm({ onSubmit }) {
 
   // 인증번호 발송
   const handleSendAuth = () => {
-    if (!watch('phone')) {
+    const phone = watch('phone');
+    if (!phone) {
       setError('phone', { message: '휴대폰 번호를 입력해 주세요.' });
+      return;
+    }
+    if (!/^010\d{8}$/.test(phone)) {
+      setError('phone', { message: '휴대폰 번호는 010으로 시작하는 11자리 숫자여야 합니다.' });
       return;
     }
     setIsAuthSent(true);
@@ -120,18 +125,18 @@ function SignUpForm({ onSubmit }) {
   return (
     <form className={styles.signupForm} onSubmit={handleSubmit(handleFormSubmit)}>
       {/* 실명 입력 */}
-      <label htmlFor="signup-nickname" className={styles.signupLabel}>
+      <label htmlFor="signup-username" className={styles.signupLabel}>
         이름
         <input
-          id="signup-nickname"
+          id="signup-username"
           type="text"
           placeholder="사용자 찾기에 사용됩니다."
           className={styles.signupInput}
-          {...register('nickname')} // eslint-disable-line react/jsx-props-no-spreading
+          {...register('username')} // eslint-disable-line react/jsx-props-no-spreading
           required
         />
-        {errors.nickname && (
-          <div style={{ color: 'red', fontSize: 14 }}>{errors.nickname.message}</div>
+        {errors.username && (
+          <div style={{ color: 'red', fontSize: 14 }}>{errors.username.message}</div>
         )}
       </label>
       {/* 이메일 및 중복 확인 */}

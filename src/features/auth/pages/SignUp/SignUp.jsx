@@ -15,7 +15,7 @@ function SignUp() {
       email: data.email,
       password: data.password,
       passwordCheck: data.passwordCheck,
-      username: data.nickname,
+      username: data.username,
       phoneNumber: data.phone,
       address: '서울특별시 강남구 테헤란로 123',
     };
