@@ -1,7 +1,14 @@
+/* eslint-disable function-paren-newline */
+/* eslint-disable implicit-arrow-linebreak */
 import { useEffect, useState } from 'react';
 
 import CartTable from '@/features/cart/components/CartTable';
-import { fetchCart } from '@/services/cartService';
+import {
+  clearCart, // 장바우기 비우기
+  deleteCartItem,
+  fetchCart,
+  updateCartItem,
+} from '@/services/cartService';
 
 import styles from './CartPage.module.css';
 
@@ -20,18 +27,35 @@ function CartPage() {
 
     loadCart();
   }, []);
-  const updateQuantity = (cartItemId, newQty) => {
-    // eslint-disable-next-line max-len
-    setCartItems(
-      (prev) =>
-        // eslint-disable-next-line implicit-arrow-linebreak
+
+  const updateQuantity = async (cartItemId, newQty) => {
+    try {
+      await updateCartItem({ cartItemId, quantity: newQty });
+
+      setCartItems((prev) =>
         prev.map((item) => (item.cartItemId === cartItemId ? { ...item, quantity: newQty } : item)),
-      // eslint-disable-next-line function-paren-newline
-    );
+      );
+    } catch (error) {
+      // console.error('수량 변경 실패:', error);
+    }
   };
 
-  const deleteItem = (cartItemId) => {
-    setCartItems((prev) => prev.filter((item) => item.cartItemId !== cartItemId));
+  const deleteItem = async (cartItemId) => {
+    try {
+      await deleteCartItem(cartItemId);
+      setCartItems((prev) => prev.filter((item) => item.cartItemId !== cartItemId));
+    } catch (error) {
+      // console.error('장바구니 항목 삭제 실패:', error);
+    }
+  };
+
+  const handleClearCart = async () => {
+    try {
+      await clearCart(); // 서버 요청
+      setCartItems([]); // 프론트 상태 비움
+    } catch (error) {
+      // console.error('장바구니 비우기 실패:', error);
+    }
   };
 
   const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -59,8 +83,12 @@ function CartPage() {
               <button type="button" className={styles.payButton}>
                 결제하기
               </button>
-              <button type="button" className={styles.deleteSelectedButton}>
-                삭제하기
+              <button
+                type="button"
+                className={styles.deleteSelectedButton}
+                onClick={handleClearCart}
+              >
+                장바구니 비우기
               </button>
             </div>
           </div>

@@ -1,3 +1,4 @@
+import { Trash2 } from 'lucide-react';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
@@ -5,8 +6,10 @@ import styles from './CartRow.module.css';
 
 function CartRow({
   item, //
-  onUpdate, //
-  onDelete, //
+  onUpdate,
+  onDelete,
+  isChecked,
+  onCheck,
 }) {
   const [quantity, setQuantity] = useState(item.quantity);
 
@@ -19,7 +22,7 @@ function CartRow({
   return (
     <tr>
       <td>
-        <input type="checkbox" defaultChecked />
+        <input type="checkbox" checked={isChecked} onChange={() => onCheck(item.cartItemId)} />
       </td>
       <td>{item.productName}</td>
       <td>{item.price.toLocaleString()}</td>
@@ -46,8 +49,9 @@ function CartRow({
           type="button"
           onClick={() => onDelete(item.cartItemId)}
           className={styles.deleteButton}
+          aria-label="장바구니 항목 제거"
         >
-          제거
+          <Trash2 size={20} />
         </button>
       </td>
     </tr>
@@ -64,6 +68,8 @@ CartRow.propTypes = {
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  isChecked: PropTypes.bool.isRequired,
+  onCheck: PropTypes.func.isRequired,
 };
 
 export default CartRow;
