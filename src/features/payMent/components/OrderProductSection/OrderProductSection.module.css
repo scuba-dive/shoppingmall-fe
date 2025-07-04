@@ -1,0 +1,76 @@
+.section {
+  width: 100%;
+}
+
+.content {
+  background-color: white;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+h2 {
+  margin-bottom: 1rem;
+  font-size: 17px;
+}
+
+.productList {
+  border: 1px solid #858585;
+}
+
+.product {
+  border-bottom: 1px solid #858585;
+  padding: 1rem 2rem;
+  display: flex;
+}
+
+.product:last-child {
+  border-bottom: none;
+}
+
+.img {
+  margin-right: 2rem;
+}
+
+.imgP {
+  background-color: rgb(239, 255, 237);
+  width: 80px;
+  height: 100px;
+}
+
+.name {
+  font-size: 15px;
+  margin-bottom: 0.5rem;
+}
+
+.number {
+  font-size: 12px;
+  color: #858585;
+  margin-bottom: 0.5rem;
+}
+
+.money {
+  font-size: 15px;
+  margin-bottom: 0.5rem;
+}
+
+.info {
+  font-size: 14px;
+  color: #858585;
+  margin-bottom: 0.5rem;
+}
+.boxS {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding-bottom: 2rem;
+}
+
+.box {
+  flex: 1;
+  height: 18px;
+  border: 1px solid #858585;
+  border-radius: 5px;
+  padding: 0.5rem;
+  background-color: #f0f0f0;
+  color: #858585;
+}

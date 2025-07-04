@@ -1,0 +1,30 @@
+.container {
+  padding: 1.5rem;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.content {
+  display: flex;
+  border-top: 1px solid #858585;
+  gap: 30px;
+  padding: 1.5rem;
+  justify-content: space-between;
+}
+
+h1 {
+  font-size: 24px;
+  padding: 30px 15px;
+}
+
+.orderSection {
+  flex: 6;
+}
+
+.paymentSection {
+  flex: 4;
+}
