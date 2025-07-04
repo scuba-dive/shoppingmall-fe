@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 
 const useConfirm = () => {
   const confirm = (message, onConfirm, onCancel) => {
-    toast(
+    const toastId = toast(
       ({ closeToast }) => (
         <div>
           <p
@@ -63,8 +63,10 @@ const useConfirm = () => {
         hideProgressBar: true,
         closeOnClick: false,
         closeButton: false,
+        toastId: 'confirm-toast',
       },
     );
+    return toastId;
   };
 
   return confirm;
