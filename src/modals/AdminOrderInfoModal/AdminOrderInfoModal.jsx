@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { fetchOrderDetail } from '@/services/adminOrderApi';
 import axiosInstance from '@/services/axiosInstance';
+import useConfirm from '@/utils/useConfirm';
 
 import styles from './AdminOrderInfoModal.module.css';
 
@@ -25,6 +27,8 @@ function AdminOrderInfoModal({ isOpen, onClose, orderId }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [manualStatus, setManualStatus] = useState('PAYMENT_COMPLETED');
+
+  const confirm = useConfirm();
 
   useEffect(() => {
     const handleEscape = (e) => {
@@ -79,18 +83,23 @@ function AdminOrderInfoModal({ isOpen, onClose, orderId }) {
     }
     /* eslint-disable operator-linebreak */
 
-    // eslint-disable-next-line no-restricted-globals, no-alert
-    const confirmed = confirm('정말로 주문을 취소하시겠습니까?');
-    if (!confirmed) return;
-    try {
-      setLoading(true);
-      await axiosInstance.patch(`/api/admin/orders/${orderId}/status`, { status: 'CANCELED' });
-      setOrderData((prev) => ({ ...prev, orderStatus: 'CANCELED' }));
-    } catch (err) {
-      setError(err.response?.data?.message || '주문 취소에 실패했습니다.');
-    } finally {
-      setLoading(false);
-    }
+    // eslint-disable-next-line no-restricted-globals
+    confirm('정말로 주문을 취소하시겠습니까?', async () => {
+      try {
+        setLoading(true);
+        await axiosInstance.patch(`/api/admin/orders/${orderId}/status`, {
+          status: 'CANCELED',
+        });
+        setOrderData((prev) => ({ ...prev, orderStatus: 'CANCELED' }));
+        toast.success('주문이 성공적으로 취소되었습니다.');
+      } catch (err) {
+        const errorMessage = err.response?.data?.message || '주문 취소에 실패했습니다.';
+        setError(errorMessage);
+        toast.error(errorMessage);
+      } finally {
+        setLoading(false);
+      }
+    });
   };
 
   const handleStatusChange = async () => {
@@ -103,21 +112,48 @@ function AdminOrderInfoModal({ isOpen, onClose, orderId }) {
     } else if (orderData.orderStatus === 'SHIPPING') {
       message = '배송 완료 상태로 변경하시겠습니까?';
     }
-    // eslint-disable-next-line no-restricted-globals, no-alert
-    const confirmed = confirm(message);
-    if (!confirmed) return;
-    const currentIdx = STATUS_SEQUENCE.indexOf(orderData.orderStatus);
-    if (currentIdx === -1 || currentIdx === STATUS_SEQUENCE.length - 1) return;
-    const nextStatus = STATUS_SEQUENCE[currentIdx + 1];
-    try {
-      setLoading(true);
-      await axiosInstance.patch(`/api/admin/orders/${orderId}/status`, { status: nextStatus });
-      setOrderData((prev) => ({ ...prev, orderStatus: nextStatus }));
-    } catch (err) {
-      setError(err.response?.data?.message || '배송 상태 변경에 실패했습니다.');
-    } finally {
-      setLoading(false);
-    }
+
+    confirm(message, async () => {
+      const currentIdx = STATUS_SEQUENCE.indexOf(orderData.orderStatus);
+      if (currentIdx === -1 || currentIdx === STATUS_SEQUENCE.length - 1) return;
+
+      const nextStatus = STATUS_SEQUENCE[currentIdx + 1];
+      try {
+        setLoading(true);
+        await axiosInstance.patch(`/api/admin/orders/${orderId}/status`, {
+          status: nextStatus,
+        });
+        setOrderData((prev) => ({ ...prev, orderStatus: nextStatus }));
+        toast.success('배송 상태가 성공적으로 변경되었습니다.');
+      } catch (err) {
+        const errorMessage = err.response?.data?.message || '배송 상태 변경에 실패했습니다.';
+        setError(errorMessage);
+        toast.error(errorMessage);
+      } finally {
+        setLoading(false);
+      }
+    });
+  };
+
+  const handleManualStatusChange = async () => {
+    if (!orderData) return;
+
+    confirm(`${ORDER_STATUS_MAP[manualStatus]} 상태로 직접 변경하시겠습니까?`, async () => {
+      try {
+        setLoading(true);
+        await axiosInstance.patch(`/api/admin/orders/${orderId}/status`, {
+          status: manualStatus,
+        });
+        setOrderData((prev) => ({ ...prev, orderStatus: manualStatus }));
+        toast.success(`주문 상태가 ${ORDER_STATUS_MAP[manualStatus]}(으)로 변경되었습니다.`);
+      } catch (err) {
+        const errorMessage = err.response?.data?.message || '상태 변경에 실패했습니다.';
+        setError(errorMessage);
+        toast.error(errorMessage);
+      } finally {
+        setLoading(false);
+      }
+    });
   };
 
   return (
@@ -234,25 +270,7 @@ function AdminOrderInfoModal({ isOpen, onClose, orderId }) {
                     borderRadius: 4,
                     backgroundColor: '#cfcfcf',
                   }}
-                  onClick={async () => {
-                    if (!orderData) return;
-                    // eslint-disable-next-line no-restricted-globals, no-alert
-                    const confirmed = confirm(
-                      `${ORDER_STATUS_MAP[manualStatus]} 상태로 직접 변경하시겠습니까?`,
-                    );
-                    if (!confirmed) return;
-                    try {
-                      setLoading(true);
-                      await axiosInstance.patch(`/api/admin/orders/${orderId}/status`, {
-                        status: manualStatus,
-                      });
-                      setOrderData((prev) => ({ ...prev, orderStatus: manualStatus }));
-                    } catch (err) {
-                      setError(err.response?.data?.message || '상태 변경에 실패했습니다.');
-                    } finally {
-                      setLoading(false);
-                    }
-                  }}
+                  onClick={handleManualStatusChange}
                   disabled={loading}
                 >
                   상태 직접 변경
