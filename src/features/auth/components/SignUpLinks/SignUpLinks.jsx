@@ -5,7 +5,7 @@ import styles from './SignUpLinks.module.css';
 function SignUpLinks() {
   return (
     <div className={styles.signupLinks}>
-      <Link to="/signin" className={styles.signupLinkBtn}>
+      <Link to="/auth/signin" className={styles.signupLinkBtn}>
         회원이신가요? 로그인
       </Link>
     </div>
