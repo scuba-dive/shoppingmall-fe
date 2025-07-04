@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import Pagination from '@/components/Pagination/Pagination';
-import { fetchAdminProducts } from '@/services/adminProductApi';
+import AdminProductSoldoutModal from '@/modals/AdminProductSoldoutModal/AdminProductSoldoutModal';
+import { fetchAdminProducts, updateProductState } from '@/services/adminProductApi';
 
 import Table from '../../components/Table/Table';
 
@@ -20,15 +21,38 @@ function AdminProduct() {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState(null);
+  const [selectedStatus, setSelectedStatus] = useState(null);
+
+  const handleOpenModal = useCallback((productId, status) => {
+    setSelectedProductId(productId);
+    setSelectedStatus(status);
+    setIsModalOpen(true);
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setIsModalOpen(false);
+    setSelectedProductId(null);
+  }, []);
+
+  const handleStatusChanged = useCallback(async () => {
+    try {
+      // 목록 새로고침
+      const updated = await fetchAdminProducts(currentPage - 1, 10);
+      setProducts(updated.products);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('상품 상태 변경 실패:', err);
+    }
+  }, [currentPage]);
 
   useEffect(() => {
     const getProducts = async () => {
       try {
         const data = await fetchAdminProducts(currentPage - 1, 10);
         setProducts(data.products);
-        // totalPages가 존재하지 않아 일단 셀프로 계산 함.
-        const selfTotalPages = Math.ceil(data.total / data.size);
-        setTotalPages(selfTotalPages);
+        setTotalPages(data.totalPages);
       } catch (err) {
         // eslint-disable-next-line no-console
         console.error('상품 목록 불러오기 실패:', err);
@@ -50,11 +74,13 @@ function AdminProduct() {
           <button type="button">↑↓</button>
         </td>
         <td>
-          <button type="button">{row.stock === 0 ? '⊕' : '⊖'}</button>
+          <button type="button" onClick={() => handleOpenModal(row.optionId, row.status)}>
+            {row.status === 'SOLD_OUT' ? '⊕' : '⊖'}
+          </button>
         </td>
       </tr>
     ),
-    [],
+    [handleOpenModal],
   );
 
   return (
@@ -63,6 +89,16 @@ function AdminProduct() {
       <Table columns={columns} data={products} renderRow={renderProductRow} />
 
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+
+      {isModalOpen && selectedProductId && (
+        <AdminProductSoldoutModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          productId={selectedProductId}
+          currentStatus={selectedStatus}
+          onStatusChanged={handleStatusChanged}
+        />
+      )}
     </>
   );
 }

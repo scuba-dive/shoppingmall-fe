@@ -1,9 +1,17 @@
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 
+import { updateProductState } from '@/services/adminProductApi';
+
 import styles from './AdminProductSoldoutModal.module.css';
 
-function AdminProductQuantityModal({ isOpen, onClose, onConfirm }) {
+function AdminProductQuantityModal({
+  isOpen, //
+  onClose, //
+  productId, //
+  currentStatus, //
+  onStatusChanged, //
+}) {
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape') {
@@ -27,10 +35,26 @@ function AdminProductQuantityModal({ isOpen, onClose, onConfirm }) {
     }
   };
 
-  const handleConfirm = () => {
-    onConfirm();
-    onClose();
+  const handleConfirm = async () => {
+    try {
+      await updateProductState(productId);
+      // eslint-disable-next-line no-alert
+      alert('상품 상태가 변경되었습니다.');
+
+      if (onStatusChanged) {
+        await onStatusChanged();
+      }
+
+      onClose();
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('상품 상태 변경 실패:', err);
+      // eslint-disable-next-line no-alert
+      alert('상품 상태 변경 실패');
+    }
   };
+
+  const isCurrentlySoldOut = currentStatus === 'SOLD_OUT';
 
   return (
     <div className={styles.overlay} onClick={handleOverlayClick} role="presentation">
@@ -60,11 +84,13 @@ function AdminProductQuantityModal({ isOpen, onClose, onConfirm }) {
 
         <div className={styles.content}>
           <div id="admin-product-quantity-modal-title" className={styles.title}>
-            해당 상품을 품절 처리하시겠습니까?
+            {isCurrentlySoldOut
+              ? '해당 상품을 다시 판매 처리 하시겠습니까?'
+              : '해당 상품을 품절 처리하시겠습니까?'}
           </div>
 
           <div id="admin-product-quantity-modal-desc" className={styles.description}>
-            남은 수량이 0으로 변경됩니다.
+            {isCurrentlySoldOut ? '' : '남은 수량이 0으로 변경됩니다.'}
           </div>
 
           <div className={styles.buttonContainer}>
@@ -81,7 +107,9 @@ function AdminProductQuantityModal({ isOpen, onClose, onConfirm }) {
 AdminProductQuantityModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func.isRequired,
+  productId: PropTypes.number.isRequired,
+  currentStatus: PropTypes.string.isRequired,
+  onStatusChanged: PropTypes.func.isRequired,
 };
 
 export default AdminProductQuantityModal;
