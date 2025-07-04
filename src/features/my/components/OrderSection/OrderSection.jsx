@@ -54,6 +54,7 @@ export default function OrderSection({
                 <th>수량</th>
                 <th>결제금액</th>
                 <th>상태</th>
+                <th>조회</th>
                 <th />
               </tr>
             </thead>
