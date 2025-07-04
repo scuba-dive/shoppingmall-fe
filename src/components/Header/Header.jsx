@@ -27,7 +27,11 @@ function Header() {
           <div className={style.userDropdown}>
             <div className={style.userProfile}>
               <span className={style.userNickname}>{user.nickname} 님</span>
-              <img src={userImage} alt="사용자 프로필" className={style.userImage} />
+              <img
+                src={user.imagePath || userImage}
+                alt="사용자 프로필"
+                className={style.userImage}
+              />
             </div>
             <div className={style.dropdownMenu}>
               <div className={style.userInfo}>
