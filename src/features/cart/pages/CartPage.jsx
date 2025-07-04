@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import CartTable from '@/features/cart/components/CartTable';
-import fetchCart from '@/services/cartService';
+import { fetchCart } from '@/services/cartService';
 
 import styles from './CartPage.module.css';
 
