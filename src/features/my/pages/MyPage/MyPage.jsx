@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import carts from '@/data/cart';
-import orders from '@/data/orders';
+import { fetchCart } from '@/services/cartService';
 import { fetchUserInfo } from '@/services/userService';
 
 import CartSection from '../../components/CartSection/CartSection';
@@ -11,21 +10,22 @@ import styles from './MyPage.module.css';
 
 function MyPage() {
   const [user, setUser] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
-    const loadUserInfo = async () => {
+    const loadData = async () => {
       try {
-        const data = await fetchUserInfo();
-        setUser(data);
+        const [userData, cartData] = await Promise.all([fetchUserInfo(), fetchCart()]);
+        setUser(userData);
+        setCartItems(cartData.items); // ✅ 여기를 수정!
       } catch (err) {
-        setUser({ error: '유저 정보 조회 실패' });
+        // console.error('데이터 불러오기 실패', err);
       }
     };
 
-    loadUserInfo();
+    loadData();
   }, []);
-  if (!user) return <div>로딩 중...</div>;
-  if (user && user.error) return <div>{user.error}</div>;
+
   if (!user) return <div>로딩 중...</div>;
 
   return (
@@ -37,8 +37,8 @@ function MyPage() {
         totalAmount={user.totalPaid}
         imagePath={user.imagePath}
       />
-      <CartSection cartItems={carts} />
-      <OrderSection orders={orders} />
+      <CartSection cartItems={cartItems} />
+      <OrderSection orders={[]} />
     </div>
   );
 }

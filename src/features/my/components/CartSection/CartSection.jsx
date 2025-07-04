@@ -19,7 +19,7 @@ function CartSection({ cartItems }) {
           전체 보기
         </button>
       </div>
-      {cartItems.length === 0 ? (
+      {displayedItems.length === 0 ? (
         <p className={styles.emptyText}>장바구니가 비었습니다.</p>
       ) : (
         <table className={styles.cartTable}>
@@ -32,10 +32,10 @@ function CartSection({ cartItems }) {
             </tr>
           </thead>
           <tbody>
-            {displayedItems.map((item, idx) => (
-              <tr key={`${item.name}`}>
-                <td>{item.name}</td>
-                <td>{item.price.toLocaleString()}</td>
+            {displayedItems.map((item) => (
+              <tr key={item.cartItemId}>
+                <td>{item.productName}</td>
+                <td>{item.price.toLocaleString()}원</td>
                 <td>{item.color}</td>
                 <td>{item.quantity}</td>
               </tr>
@@ -48,7 +48,15 @@ function CartSection({ cartItems }) {
 }
 
 CartSection.propTypes = {
-  cartItems: PropTypes.arrayOf(PropTypes.string).isRequired,
+  cartItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      cartItemId: PropTypes.number.isRequired,
+      productName: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      color: PropTypes.string.isRequired,
+      quantity: PropTypes.number.isRequired,
+    }),
+  ).isRequired,
 };
 
 export default CartSection;
