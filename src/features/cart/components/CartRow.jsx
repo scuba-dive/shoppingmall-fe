@@ -1,3 +1,4 @@
+import { Trash2 } from 'lucide-react';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
@@ -46,8 +47,9 @@ function CartRow({
           type="button"
           onClick={() => onDelete(item.cartItemId)}
           className={styles.deleteButton}
+          aria-label="장바구니 항목 제거"
         >
-          제거
+          <Trash2 size={20} />
         </button>
       </td>
     </tr>
