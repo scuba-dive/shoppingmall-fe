@@ -70,7 +70,13 @@ function AdminProduct() {
         <td>{row.category.name}</td>
         <td>{row.price.toLocaleString()}</td>
         <td>{row.stock}</td>
-        <td className={styles.status}>{row.status === 'SOLD_OUT' ? 'sold out' : 'sell'}</td>
+        <td>
+          <span
+            className={`${styles.status} ${row.status === 'SOLD_OUT' ? styles.soldOut : styles.sell}`}
+          >
+            {row.status === 'SOLD_OUT' ? 'sold out' : 'sell'}
+          </span>
+        </td>
         <td>
           <button type="button">↑↓</button>
         </td>
