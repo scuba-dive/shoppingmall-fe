@@ -3,7 +3,12 @@
 import { useEffect, useState } from 'react';
 
 import CartTable from '@/features/cart/components/CartTable';
-import { deleteCartItem, fetchCart, updateCartItem } from '@/services/cartService';
+import {
+  clearCart, // 장바우기 비우기
+  deleteCartItem,
+  fetchCart,
+  updateCartItem,
+} from '@/services/cartService';
 
 import styles from './CartPage.module.css';
 
@@ -44,6 +49,15 @@ function CartPage() {
     }
   };
 
+  const handleClearCart = async () => {
+    try {
+      await clearCart(); // 서버 요청
+      setCartItems([]); // 프론트 상태 비움
+    } catch (error) {
+      // console.error('장바구니 비우기 실패:', error);
+    }
+  };
+
   const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
@@ -69,7 +83,11 @@ function CartPage() {
               <button type="button" className={styles.payButton}>
                 결제하기
               </button>
-              <button type="button" className={styles.deleteSelectedButton}>
+              <button
+                type="button"
+                className={styles.deleteSelectedButton}
+                onClick={handleClearCart}
+              >
                 삭제하기
               </button>
             </div>
