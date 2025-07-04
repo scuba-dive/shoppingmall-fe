@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import CartTable from '@/features/cart/components/CartTable';
-import { fetchCart, updateCartItem } from '@/services/cartService';
+import { deleteCartItem, fetchCart, updateCartItem } from '@/services/cartService';
 
 import styles from './CartPage.module.css';
 
@@ -35,8 +35,13 @@ function CartPage() {
     }
   };
 
-  const deleteItem = (cartItemId) => {
-    setCartItems((prev) => prev.filter((item) => item.cartItemId !== cartItemId));
+  const deleteItem = async (cartItemId) => {
+    try {
+      await deleteCartItem(cartItemId);
+      setCartItems((prev) => prev.filter((item) => item.cartItemId !== cartItemId));
+    } catch (error) {
+      // console.error('장바구니 항목 삭제 실패:', error);
+    }
   };
 
   const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
