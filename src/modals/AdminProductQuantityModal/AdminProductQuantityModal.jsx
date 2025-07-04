@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { updateProductStock } from '@/services/adminProductApi';
 
@@ -46,8 +47,7 @@ function AdminProductQuantityModal({
   const handleConfirm = async () => {
     try {
       await updateProductStock(productId, newQuantity);
-      // eslint-disable-next-line no-alert
-      alert('상품 수량이 변경되었습니다.');
+      toast.success('상품 수량이 변경되었습니다.');
 
       if (onStatusChanged) {
         await onStatusChanged();
@@ -57,8 +57,7 @@ function AdminProductQuantityModal({
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error('상품 수량 변경 실패:', err);
-      // eslint-disable-next-line no-alert
-      alert('상품 수량 변경에 실패했습니다.');
+      toast.error('상품 수량 변경에 실패했습니다.');
     }
   };
 

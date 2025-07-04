@@ -20,7 +20,9 @@ function StatsRanking() {
       try {
         setIsLoading(true);
         const stats = await fetchRankingStats();
-        setData(stats);
+
+        const top5 = stats.sort((a, b) => a.rank - b.rank).slice(0, 5);
+        setData(top5);
       } catch (err) {
         // eslint-disable-next-line no-console
         console.error('정보 불러오기 실패:', err);
@@ -46,7 +48,7 @@ function StatsRanking() {
   if (!data || data.length === 0) {
     return (
       <section className={styles.section2}>
-        <h2>오늘의 상품 판매 순위 (1시간 별 기준)</h2>
+        <h2>오늘의 상품 판매 순위 TOP 5 (1시간 별 기준)</h2>
         <p>표시할 데이터가 없습니다.</p>
       </section>
     );
@@ -54,7 +56,7 @@ function StatsRanking() {
 
   return (
     <section className={styles.section2}>
-      <h2>오늘의 상품 판매 순위 (1시간 별 기준)</h2>
+      <h2>오늘의 상품 판매 순위 TOP 5 (1시간 별 기준)</h2>
       <div className={styles.table}>
         <Table columns={columns} data={data} renderRow={renderProductRow} />
       </div>

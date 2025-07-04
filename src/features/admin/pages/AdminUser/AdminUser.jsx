@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useState } from 'react';
+import {
+  useCallback, //
+  useEffect, //
+  useMemo, //
+  useState, //
+} from 'react';
+import { toast } from 'react-toastify';
 
 import Pagination from '@/components/Pagination/Pagination';
 import { fetchAdminUsers, updateUserStatus } from '@/services/adminUserApi';
@@ -28,20 +34,27 @@ function AdminUser() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
+  const statusTextMap = useMemo(
+    () => ({
+      ACTIVE: '활성',
+      DORMANT_AUTO: '자동 휴면',
+      DORMANT_MANUAL: '수동 휴면',
+    }),
+    [],
+  );
+
   const handleStatusToggle = useCallback(
     async (id) => {
       try {
         await updateUserStatus(id);
-        // eslint-disable-next-line no-alert
-        alert('상태가 변경되었습니다.');
+        toast.success('상태가 변경되었습니다.');
 
         const updated = await fetchAdminUsers(currentPage - 1, 10);
         setUsers(updated.content);
       } catch (err) {
         // eslint-disable-next-line no-console
         console.error('상태 변경 실패:', err);
-        // eslint-disable-next-line no-alert
-        alert('상태 변경 실패');
+        toast.error('상태 변경 실패');
       }
     },
     [currentPage],
@@ -76,12 +89,12 @@ function AdminUser() {
         </td>
         <td>
           <button type="button" onClick={() => handleStatusToggle(user.id)}>
-            {user.status === 'ACTIVE' ? '활성' : '휴면'}
+            {statusTextMap[user.status]}
           </button>
         </td>
       </tr>
     ),
-    [handleStatusToggle],
+    [handleStatusToggle, statusTextMap],
   );
 
   return (

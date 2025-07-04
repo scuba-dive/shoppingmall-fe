@@ -21,8 +21,20 @@ function StatsChart() {
     const getChartData = async () => {
       try {
         const stats = await fetchRecentStats();
+        const today = new Date();
+        const getDateString = (daysAgo = 0) => {
+          const date = new Date(today);
+          date.setDate(date.getDate() - daysAgo);
+          return date.toISOString().split('T')[0]; // YYYY-MM-DD 형식
+        };
 
-        const formatted = stats.map((item) => ({
+        const targetDates = [getDateString(0), getDateString(1), getDateString(2)];
+
+        const recentThreeDays = stats
+          .filter((item) => targetDates.includes(item.date))
+          .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        const formatted = recentThreeDays.map((item) => ({
           name: item.date.slice(5),
           sales: item.sales,
           orders: item.orders,
@@ -55,7 +67,15 @@ function StatsChart() {
             <YAxis
               yAxisId="left"
               orientation="left"
-              tickFormatter={(value) => `${(value / 10000).toLocaleString()}만 원`}
+              tickFormatter={(value) => {
+                if (value >= 100000000) {
+                  return `${(value / 100000000).toLocaleString()}억`;
+                }
+                if (value >= 10000) {
+                  return `${(value / 10000).toLocaleString()}만`;
+                }
+                return value.toLocaleString();
+              }}
             />
 
             {/* 오른쪽 Y축: 주문 건수 */}
