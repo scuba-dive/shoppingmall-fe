@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import Pagination from '@/components/Pagination/Pagination';
-import AdminProductSoldoutModal from '@/modals/AdminProductSoldoutModal/AdminProductSoldoutModal';
-import { fetchAdminProducts, updateProductState } from '@/services/adminProductApi';
+import AdminProductSoldOutModal from '@/modals/AdminProductSoldOutModal/AdminProductSoldOutModal';
+import { fetchAdminProducts } from '@/services/adminProductApi';
 
 import Table from '../../components/Table/Table';
+import styles from './AdminProduct.module.css';
 
 const columns = [
   { key: 'name', label: '상품명' },
@@ -69,7 +70,7 @@ function AdminProduct() {
         <td>{row.category.name}</td>
         <td>{row.price.toLocaleString()}</td>
         <td>{row.stock}</td>
-        <td>{row.status === 'SOLD_OUT' ? '○' : 'X'}</td>
+        <td className={styles.status}>{row.status === 'SOLD_OUT' ? 'sold out' : 'sell'}</td>
         <td>
           <button type="button">↑↓</button>
         </td>
@@ -91,7 +92,7 @@ function AdminProduct() {
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
 
       {isModalOpen && selectedProductId && (
-        <AdminProductSoldoutModal
+        <AdminProductSoldOutModal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           productId={selectedProductId}
