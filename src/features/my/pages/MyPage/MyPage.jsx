@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import OrderInfoModal from '@/modals/OrderInfoModal/OrderInfoModal';
 import { fetchCart } from '@/services/cartService';
 import { fetchOrders } from '@/services/orderService';
 import { fetchUserInfo } from '@/services/userService';
@@ -13,6 +14,8 @@ function MyPage() {
   const [user, setUser] = useState(null);
   const [cartItems, setCartItems] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -33,6 +36,16 @@ function MyPage() {
     loadData();
   }, []);
 
+  const handleViewOrder = (orderId) => {
+    setSelectedOrderId(orderId);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedOrderId(null);
+  };
+
   if (!user) return <div>로딩 중...</div>;
 
   return (
@@ -45,7 +58,11 @@ function MyPage() {
         imagePath={user.imagePath}
       />
       <CartSection cartItems={cartItems} />
-      <OrderSection orders={orders} isPreview />
+      <OrderSection orders={orders} isPreview onViewOrder={handleViewOrder} />
+
+      {isModalOpen && selectedOrderId && (
+        <OrderInfoModal isOpen={isModalOpen} onClose={handleCloseModal} orderId={selectedOrderId} />
+      )}
     </div>
   );
 }

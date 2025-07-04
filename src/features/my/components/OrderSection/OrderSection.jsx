@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Pagination from '@/components/Pagination/Pagination';
+import OrderInfoModal from '@/modals/OrderInfoModal/OrderInfoModal';
 
 import styles from './OrderSection.module.css';
 
@@ -21,14 +23,26 @@ export default function OrderSection({
   onPageChange,
 }) {
   const navigate = useNavigate();
-  let displayedOrders = [];
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
 
+  let displayedOrders = [];
   if (Array.isArray(orders)) {
     displayedOrders = isPreview ? orders.slice(0, 2) : orders;
   }
 
   const handlePreviewAll = () => {
     navigate('/order');
+  };
+
+  const handleViewClick = (orderId) => {
+    setSelectedOrderId(orderId);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedOrderId(null);
   };
 
   return (
@@ -55,7 +69,6 @@ export default function OrderSection({
                 <th>결제금액</th>
                 <th>상태</th>
                 <th>조회</th>
-                <th />
               </tr>
             </thead>
             <tbody>
@@ -67,7 +80,11 @@ export default function OrderSection({
                   <td>{order.totalAmount.toLocaleString()}</td>
                   <td>{ORDER_STATUS_MAP[order.orderStatus] || order.orderStatus}</td>
                   <td>
-                    <button type="button" className={styles.viewButton}>
+                    <button
+                      type="button"
+                      className={styles.viewButton}
+                      onClick={() => handleViewClick(order.orderId)}
+                    >
                       조회
                     </button>
                   </td>
@@ -84,6 +101,10 @@ export default function OrderSection({
             />
           )}
         </>
+      )}
+
+      {isModalOpen && selectedOrderId && (
+        <OrderInfoModal isOpen={isModalOpen} onClose={handleCloseModal} orderId={selectedOrderId} />
       )}
     </section>
   );

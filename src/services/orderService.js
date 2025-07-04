@@ -7,7 +7,7 @@ export const fetchOrders = async (page = 0, size = 10) => {
   return res.data.data;
 };
 
-export const clearCart = async () => {
-  const res = await axiosInstance.delete('/api/users/cart');
-  return res.data;
+export const fetchOrderById = async (orderId) => {
+  const res = await axiosInstance.get(`/api/users/orders/${orderId}`);
+  return res.data.data;
 };
