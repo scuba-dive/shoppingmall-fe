@@ -1,0 +1,21 @@
+.content {
+  background-color: white;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+h2 {
+  margin-bottom: 1rem;
+  font-size: 17px;
+}
+
+.box {
+  display: grid;
+}
+
+.button {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  color: white;
+  background-color: #ffa948;
+}
