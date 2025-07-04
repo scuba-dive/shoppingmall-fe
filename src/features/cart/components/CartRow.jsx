@@ -5,7 +5,6 @@ import styles from './CartRow.module.css';
 
 function CartRow({
   item, //
-  index, //
   onUpdate, //
   onDelete, //
 }) {
@@ -14,7 +13,7 @@ function CartRow({
   const handleChange = (newQty) => {
     if (newQty < 1) return;
     setQuantity(newQty);
-    onUpdate(index, newQty);
+    onUpdate(item.cartItemId, newQty);
   };
 
   return (
@@ -22,7 +21,7 @@ function CartRow({
       <td>
         <input type="checkbox" defaultChecked />
       </td>
-      <td>{item.name}</td>
+      <td>{item.productName}</td>
       <td>{item.price.toLocaleString()}</td>
       <td>{item.color}</td>
       <td>
@@ -43,8 +42,12 @@ function CartRow({
         </button>
       </td>
       <td>
-        <button type="button" onClick={() => onDelete(index)} className={styles.deleteButton}>
-          제거(피그마에서 추출)
+        <button
+          type="button"
+          onClick={() => onDelete(item.cartItemId)}
+          className={styles.deleteButton}
+        >
+          제거
         </button>
       </td>
     </tr>
@@ -53,12 +56,12 @@ function CartRow({
 
 CartRow.propTypes = {
   item: PropTypes.shape({
-    name: PropTypes.string.isRequired,
+    cartItemId: PropTypes.number.isRequired,
+    productName: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     color: PropTypes.string.isRequired,
     quantity: PropTypes.number.isRequired,
   }).isRequired,
-  index: PropTypes.number.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
 };

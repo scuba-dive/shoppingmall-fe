@@ -1,23 +1,37 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import mockCartItems from '@/data/cart';
+import CartTable from '@/features/cart/components/CartTable';
+import fetchCart from '@/services/cartService';
 
-import CartTable from '../components/CartTable';
 import styles from './CartPage.module.css';
 
 function CartPage() {
-  const [cartItems, setCartItems] = useState(mockCartItems);
+  const [cartItems, setCartItems] = useState([]);
 
-  const updateQuantity = (index, newQty) => {
-    setCartItems((prev) => {
-      const next = [...prev];
-      next[index] = { ...next[index], quantity: newQty };
-      return next;
-    });
+  useEffect(() => {
+    const loadCart = async () => {
+      try {
+        const cartData = await fetchCart();
+        setCartItems(cartData.items);
+      } catch (error) {
+        // console.error('장바구니 불러오기 실패:', error);
+      }
+    };
+
+    loadCart();
+  }, []);
+  const updateQuantity = (cartItemId, newQty) => {
+    // eslint-disable-next-line max-len
+    setCartItems(
+      (prev) =>
+        // eslint-disable-next-line implicit-arrow-linebreak
+        prev.map((item) => (item.cartItemId === cartItemId ? { ...item, quantity: newQty } : item)),
+      // eslint-disable-next-line function-paren-newline
+    );
   };
 
-  const deleteItem = (index) => {
-    setCartItems((prev) => prev.filter((_, i) => i !== index));
+  const deleteItem = (cartItemId) => {
+    setCartItems((prev) => prev.filter((item) => item.cartItemId !== cartItemId));
   };
 
   const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
