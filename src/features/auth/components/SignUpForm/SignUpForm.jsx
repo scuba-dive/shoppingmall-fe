@@ -36,8 +36,13 @@ function SignUpForm({ onSubmit }) {
 
   // 인증번호 발송
   const handleSendAuth = () => {
-    if (!watch('phone')) {
+    const phone = watch('phone');
+    if (!phone) {
       setError('phone', { message: '휴대폰 번호를 입력해 주세요.' });
+      return;
+    }
+    if (!/^010\d{8}$/.test(phone)) {
+      setError('phone', { message: '휴대폰 번호는 010으로 시작하는 11자리 숫자여야 합니다.' });
       return;
     }
     setIsAuthSent(true);
