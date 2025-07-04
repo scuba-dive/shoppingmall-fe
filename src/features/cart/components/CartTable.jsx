@@ -1,7 +1,7 @@
-// components/Cart/CartTable.jsx
 import PropTypes from 'prop-types';
 
-import CartRow from './CartRow';
+import CartRow from '@/features/cart/components/CartRow';
+
 import styles from './CartTable.module.css';
 
 function CartTable({ cartItems, onUpdate, onDelete }) {
@@ -20,8 +20,8 @@ function CartTable({ cartItems, onUpdate, onDelete }) {
         </tr>
       </thead>
       <tbody>
-        {cartItems.map((item, idx) => (
-          <CartRow key={idx} item={item} index={idx} onUpdate={onUpdate} onDelete={onDelete} />
+        {cartItems.map((item) => (
+          <CartRow key={item.cartItemId} item={item} onUpdate={onUpdate} onDelete={onDelete} />
         ))}
       </tbody>
     </table>
@@ -31,6 +31,7 @@ function CartTable({ cartItems, onUpdate, onDelete }) {
 CartTable.propTypes = {
   cartItems: PropTypes.arrayOf(
     PropTypes.shape({
+      cartItemId: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       price: PropTypes.number.isRequired,
       color: PropTypes.string.isRequired,

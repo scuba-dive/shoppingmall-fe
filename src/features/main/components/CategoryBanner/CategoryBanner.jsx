@@ -1,31 +1,35 @@
+import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
 import bannerData from '@/data/banner';
-import products from '@/data/products';
+import { fetchProductById } from '@/services/mainService';
 
 import styles from './CategoryBanner.module.css';
 
 function CategoryBanner() {
   const { category, id } = useParams();
   const location = useLocation();
-
   const { pathname } = location;
 
-  // 현재 경로 기반으로 페이지 유형 판단
-  const isCategoryPage = pathname === '/category' || pathname.startsWith('/category/');
-  const isProductPage = pathname.startsWith('/product/');
+  const [bannerName, setBannerName] = useState('카테고리');
 
-  // 배너 이름 결정
-  let bannerName = '카테고리';
+  useEffect(() => {
+    const loadBannerName = async () => {
+      if (pathname === '/category' || pathname.startsWith('/category/')) {
+        setBannerName(category ?? '카테고리');
+      } else if (pathname.startsWith('/product/') && id) {
+        try {
+          const product = await fetchProductById(id);
+          setBannerName(product?.category?.name ?? '카테고리');
+        } catch (e) {
+          // console.error('상품 정보를 불러오지 못했습니다:', e);
+          setBannerName('카테고리');
+        }
+      }
+    };
 
-  if (isCategoryPage) {
-    bannerName = category ?? '카테고리';
-  } else if (isProductPage && id) {
-    const product = products.find((p) => String(p.id) === id);
-    if (product) {
-      bannerName = product.category;
-    }
-  }
+    loadBannerName();
+  }, [pathname, category, id]);
 
   const currentBanner = bannerData.find((b) => b.name === bannerName);
   if (!currentBanner) return null;
