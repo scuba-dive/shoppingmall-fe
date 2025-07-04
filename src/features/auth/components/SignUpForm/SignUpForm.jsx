@@ -58,28 +58,42 @@ function SignUpForm({ onSubmit }) {
   const handleCheckEmail = async () => {
     const email = watch('email');
 
-    if (errors.email) {
-      setEmailChecked(false);
-      setEmailCheckMsg('');
-      return;
-    }
-
-    if (!email) {
+    // 이메일이 입력되지 않은 경우
+    if (!email || !email.trim()) {
       setError('email', { message: '이메일을 입력해 주세요.' });
       setEmailChecked(false);
       setEmailCheckMsg('');
       return;
     }
 
+    // 이메일 형식 검증 오류가 있는 경우
+    if (errors.email) {
+      setEmailChecked(false);
+      setEmailCheckMsg('');
+      return;
+    }
+
+    // API 요청 전 상태 초기화
+    setEmailChecked(false);
+    setEmailCheckMsg('');
+    setError('email', {});
+
     // API 요청
     try {
-      await checkEmailDuplicate(email); // 중복 아니면 200 응답
+      const result = await checkEmailDuplicate(email.trim());
+      // checkEmailDuplicate가 true/false를 반환하는 경우도 방어
+      if (result === false) {
+        setEmailChecked(false);
+        setEmailCheckMsg('이미 사용 중인 이메일입니다.');
+        return;
+      }
       setEmailChecked(true);
       setEmailCheckMsg('사용 가능한 이메일입니다.');
     } catch (errMsg) {
       setEmailChecked(false);
-      setEmailCheckMsg(errMsg);
-      setError('email', { message: errMsg });
+      setEmailCheckMsg(
+        typeof errMsg === 'string' && errMsg ? errMsg : '이미 사용 중인 이메일입니다.',
+      );
     }
   };
 
@@ -132,9 +146,15 @@ function SignUpForm({ onSubmit }) {
             {...register('email')} // eslint-disable-line react/jsx-props-no-spreading
             required
             style={{ flex: 1 }}
+            disabled={emailChecked}
             onChange={() => {
+              // 이메일이 변경되면 중복 확인 상태 초기화
               setEmailChecked(false);
               setEmailCheckMsg('');
+              // 기존 API 에러 메시지도 클리어
+              if (emailCheckMsg && !emailChecked) {
+                setError('email', {});
+              }
             }}
           />
           <button
