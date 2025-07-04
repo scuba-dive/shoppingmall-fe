@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import Pagination from '@/components/Pagination/Pagination';
+import AdminProductQuantityModal from '@/modals/AdminProductQuantityModal/AdminProductQuantityModal';
 import AdminProductSoldOutModal from '@/modals/AdminProductSoldOutModal/AdminProductSoldOutModal';
 import { fetchAdminProducts } from '@/services/adminProductApi';
 
@@ -25,16 +26,25 @@ function AdminProduct() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState(null);
+  const [modalType, setModalType] = useState(null);
 
-  const handleOpenModal = useCallback((productId, status) => {
+  const handleOpenSoldOutModal = useCallback((productId, status) => {
     setSelectedProductId(productId);
     setSelectedStatus(status);
+    setModalType('soldOut');
+    setIsModalOpen(true);
+  }, []);
+
+  const handleOpenQuantityModal = useCallback((productId) => {
+    setSelectedProductId(productId);
+    setModalType('quantity');
     setIsModalOpen(true);
   }, []);
 
   const handleCloseModal = useCallback(() => {
     setIsModalOpen(false);
     setSelectedProductId(null);
+    setModalType(null);
   }, []);
 
   const handleStatusChanged = useCallback(async () => {
@@ -78,16 +88,18 @@ function AdminProduct() {
           </span>
         </td>
         <td>
-          <button type="button">↑↓</button>
+          <button type="button" onClick={() => handleOpenQuantityModal(row.optionId)}>
+            ↑↓
+          </button>
         </td>
         <td>
-          <button type="button" onClick={() => handleOpenModal(row.optionId, row.status)}>
+          <button type="button" onClick={() => handleOpenSoldOutModal(row.optionId, row.status)}>
             {row.status === 'SOLD_OUT' ? '⊕' : '⊖'}
           </button>
         </td>
       </tr>
     ),
-    [handleOpenModal],
+    [handleOpenSoldOutModal, handleOpenQuantityModal],
   );
 
   return (
@@ -97,8 +109,18 @@ function AdminProduct() {
 
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
 
-      {isModalOpen && selectedProductId && (
+      {isModalOpen && selectedProductId && modalType === 'soldOut' && (
         <AdminProductSoldOutModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          productId={selectedProductId}
+          currentStatus={selectedStatus}
+          onStatusChanged={handleStatusChanged}
+        />
+      )}
+
+      {isModalOpen && selectedProductId && modalType === 'quantity' && (
+        <AdminProductQuantityModal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           productId={selectedProductId}
