@@ -11,3 +11,11 @@ export const updateProductState = async (optionId) => {
   const res = await axiosInstance.patch(`/api/admin/products/${optionId}/status`);
   return res.data;
 };
+
+// 각 상품 수량 변경
+export const updateProductStock = async (optionId, newStock) => {
+  const res = await axiosInstance.patch(`/api/admin/products/${optionId}/stock`, {
+    stock: newStock,
+  });
+  return res.data;
+};
