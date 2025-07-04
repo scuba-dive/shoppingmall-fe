@@ -22,7 +22,11 @@ function Header() {
         </Link>
       </div>
       <div className={style.headerRight}>
-        {user && user.role === 'ADMIN' && <span className={style.adminBadge}>관리자 모드</span>}
+        {user && user.role === 'ADMIN' && (
+          <Link to="/admin" className={style.adminBadge}>
+            관리자 모드
+          </Link>
+        )}
         {user ? (
           <div className={style.userDropdown}>
             <div className={style.userProfile}>
@@ -38,16 +42,12 @@ function Header() {
                 <div className={style.userName}>{user.username}</div>
                 <div className={style.userEmail}>{user.email}</div>
               </div>
-              {user.role === 'USER' && (
-                <>
-                  <Link to="/cart" className={style.dropdownItem}>
-                    장바구니
-                  </Link>
-                  <Link to="/mypage" className={style.dropdownItem}>
-                    마이페이지
-                  </Link>
-                </>
-              )}
+              <Link to="/cart" className={style.dropdownItem}>
+                장바구니
+              </Link>
+              <Link to="/mypage" className={style.dropdownItem}>
+                마이페이지
+              </Link>
               <LogoutButton />
             </div>
           </div>

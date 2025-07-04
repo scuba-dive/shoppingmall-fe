@@ -36,7 +36,8 @@
 .loginBtn,
 .signupBtn,
 .cartBtn,
-.myPageBtn {
+.myPageBtn,
+.adminBadge {
   cursor: pointer;
   text-decoration: none;
   color: #000;
