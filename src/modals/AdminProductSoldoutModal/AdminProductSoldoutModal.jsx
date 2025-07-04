@@ -90,7 +90,7 @@ function AdminProductQuantityModal({
           </div>
 
           <div id="admin-product-quantity-modal-desc" className={styles.description}>
-            {isCurrentlySoldOut ? '' : '남은 수량이 0으로 변경됩니다.'}
+            수량은 자동으로 변경되지 않습니다.
           </div>
 
           <div className={styles.buttonContainer}>
