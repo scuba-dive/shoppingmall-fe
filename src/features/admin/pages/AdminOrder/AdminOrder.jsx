@@ -52,8 +52,6 @@ function AdminOrder() {
       // eslint-disable-next-line no-console
       console.error('주문 목록 불러오기 실패:', err);
     }
-
-    fetchOrders();
   }, [currentPage]);
 
   const handleOpenModal = useCallback((orderId) => {
@@ -105,6 +103,7 @@ function AdminOrder() {
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           orderId={selectedOrderId}
+          onOrderStatusChange={fetchOrders}
         />
       )}
     </>

@@ -22,7 +22,8 @@ function getOrderStatusText(status) {
 
 const STATUS_SEQUENCE = ['PAYMENT_COMPLETED', 'CREATED', 'SHIPPING', 'COMPLETED'];
 
-function AdminOrderInfoModal({ isOpen, onClose, orderId }) {
+/* eslint-disable-next-line */
+function AdminOrderInfoModal({ isOpen, onClose, orderId, onOrderStatusChange }) {
   const [orderData, setOrderData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -92,6 +93,7 @@ function AdminOrderInfoModal({ isOpen, onClose, orderId }) {
         });
         setOrderData((prev) => ({ ...prev, orderStatus: 'CANCELED' }));
         toast.success('주문이 성공적으로 취소되었습니다.');
+        if (onOrderStatusChange) onOrderStatusChange(); // 주문 상태 변경 콜백 호출
       } catch (err) {
         const errorMessage = err.response?.data?.message || '주문 취소에 실패했습니다.';
         setError(errorMessage);
@@ -125,6 +127,7 @@ function AdminOrderInfoModal({ isOpen, onClose, orderId }) {
         });
         setOrderData((prev) => ({ ...prev, orderStatus: nextStatus }));
         toast.success('배송 상태가 성공적으로 변경되었습니다.');
+        if (onOrderStatusChange) onOrderStatusChange(); // 주문 상태 변경 콜백 호출
       } catch (err) {
         const errorMessage = err.response?.data?.message || '배송 상태 변경에 실패했습니다.';
         setError(errorMessage);
@@ -146,6 +149,7 @@ function AdminOrderInfoModal({ isOpen, onClose, orderId }) {
         });
         setOrderData((prev) => ({ ...prev, orderStatus: manualStatus }));
         toast.success(`주문 상태가 ${ORDER_STATUS_MAP[manualStatus]}(으)로 변경되었습니다.`);
+        if (onOrderStatusChange) onOrderStatusChange(); // 주문 상태 변경 콜백 호출
       } catch (err) {
         const errorMessage = err.response?.data?.message || '상태 변경에 실패했습니다.';
         setError(errorMessage);
@@ -329,6 +333,11 @@ AdminOrderInfoModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   orderId: PropTypes.number.isRequired,
+  onOrderStatusChange: PropTypes.func,
+};
+
+AdminOrderInfoModal.defaultProps = {
+  onOrderStatusChange: undefined,
 };
 
 export default AdminOrderInfoModal;
