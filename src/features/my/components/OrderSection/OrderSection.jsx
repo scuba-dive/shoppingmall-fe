@@ -36,13 +36,13 @@ export default function OrderSection({ orders, isPreview = true }) {
             </tr>
           </thead>
           <tbody>
-            {displayedOrders.map((order, idx) => (
-              <tr key={`${order.date}/${order.orderNumber}`}>
-                <td>{order.date}</td>
+            {displayedOrders.map((order) => (
+              <tr key={order.orderNumber}>
+                <td>{order.orderedAt.split('T')[0]}</td>
                 <td>{order.orderNumber}</td>
-                <td>{order.quantity}</td>
-                <td>{order.amount.toLocaleString()}</td>
-                <td>{order.status}</td>
+                <td>{order.totalQuantity}</td>
+                <td>{order.totalAmount.toLocaleString()}원</td>
+                <td>{order.orderStatus}</td>
                 <td>
                   <button type="button" className={styles.viewButton}>
                     조회
@@ -53,30 +53,24 @@ export default function OrderSection({ orders, isPreview = true }) {
           </tbody>
         </table>
       )}
-      {!isPreview && (
-        <div className={styles.pagination}>
-          <button type="button" className={styles.page}>
-            1
-          </button>
-          <button type="button" className={styles.page}>
-            2
-          </button>
-          <button type="button" className={styles.page}>
-            3
-          </button>
-          <button type="button" className={styles.page}>
-            4
-          </button>
-          <button type="button" className={styles.page}>
-            5
-          </button>
-        </div>
-      )}
     </section>
   );
 }
 
 OrderSection.propTypes = {
-  orders: PropTypes.arrayOf(PropTypes.string).isRequired,
-  isPreview: PropTypes.bool.isRequired,
+  orders: PropTypes.arrayOf(
+    PropTypes.shape({
+      orderId: PropTypes.number.isRequired,
+      orderNumber: PropTypes.string.isRequired,
+      orderedAt: PropTypes.string.isRequired,
+      totalQuantity: PropTypes.number.isRequired,
+      totalAmount: PropTypes.number.isRequired,
+      orderStatus: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  isPreview: PropTypes.bool,
+};
+
+OrderSection.defaultProps = {
+  isPreview: true,
 };

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { fetchCart } from '@/services/cartService';
+import { fetchOrders } from '@/services/orderService';
 import { fetchUserInfo } from '@/services/userService';
 
 import CartSection from '../../components/CartSection/CartSection';
@@ -11,13 +12,19 @@ import styles from './MyPage.module.css';
 function MyPage() {
   const [user, setUser] = useState(null);
   const [cartItems, setCartItems] = useState([]);
+  const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     const loadData = async () => {
       try {
-        const [userData, cartData] = await Promise.all([fetchUserInfo(), fetchCart()]);
+        const [userData, cartData, orderData] = await Promise.all([
+          fetchUserInfo(),
+          fetchCart(),
+          fetchOrders(0, 2),
+        ]);
         setUser(userData);
-        setCartItems(cartData.items); // ✅ 여기를 수정!
+        setCartItems(cartData.items.slice(0, 2));
+        setOrders(orderData);
       } catch (err) {
         // console.error('데이터 불러오기 실패', err);
       }
@@ -38,7 +45,7 @@ function MyPage() {
         imagePath={user.imagePath}
       />
       <CartSection cartItems={cartItems} />
-      <OrderSection orders={[]} />
+      <OrderSection orders={orders} isPreview />
     </div>
   );
 }
