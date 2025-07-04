@@ -1,4 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
+import {
+  useCallback, //
+  useEffect, //
+  useMemo, //
+  useState, //
+} from 'react';
 
 import Pagination from '@/components/Pagination/Pagination';
 import { fetchAdminUsers, updateUserStatus } from '@/services/adminUserApi';
@@ -27,6 +32,15 @@ function AdminUser() {
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+
+  const statusTextMap = useMemo(
+    () => ({
+      ACTIVE: '활성',
+      DORMANT_AUTO: '자동 휴면',
+      DORMANT_MANUAL: '수동 휴면',
+    }),
+    [],
+  );
 
   const handleStatusToggle = useCallback(
     async (id) => {
@@ -76,12 +90,12 @@ function AdminUser() {
         </td>
         <td>
           <button type="button" onClick={() => handleStatusToggle(user.id)}>
-            {user.status === 'ACTIVE' ? '활성' : '휴면'}
+            {statusTextMap[user.status]}
           </button>
         </td>
       </tr>
     ),
-    [handleStatusToggle],
+    [handleStatusToggle, statusTextMap],
   );
 
   return (
