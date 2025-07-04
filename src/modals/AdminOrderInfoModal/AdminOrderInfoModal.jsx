@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 
 import { fetchOrderDetail } from '@/services/adminOrderApi';
+import axiosInstance from '@/services/axiosInstance';
 
 import styles from './AdminOrderInfoModal.module.css';
 
@@ -17,10 +18,13 @@ function getOrderStatusText(status) {
   return ORDER_STATUS_MAP[status] || status;
 }
 
+const STATUS_SEQUENCE = ['PAYMENT_COMPLETED', 'CREATED', 'SHIPPING', 'COMPLETED'];
+
 function AdminOrderInfoModal({ isOpen, onClose, orderId }) {
   const [orderData, setOrderData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [manualStatus, setManualStatus] = useState('PAYMENT_COMPLETED');
 
   useEffect(() => {
     const handleEscape = (e) => {
@@ -46,7 +50,7 @@ function AdminOrderInfoModal({ isOpen, onClose, orderId }) {
           const data = await fetchOrderDetail(orderId);
           setOrderData(data);
         } catch (err) {
-          setError(err.message);
+          setError(err.response?.data?.message || '주문 정보를 불러오는데 실패했습니다.');
         } finally {
           setLoading(false);
         }
@@ -64,8 +68,48 @@ function AdminOrderInfoModal({ isOpen, onClose, orderId }) {
     }
   };
 
-  const handleOrderCancel = () => {
-    // 주문 취소
+  const handleOrderCancel = async () => {
+    if (!orderData || orderData.orderStatus === 'CANCELED' || orderData.orderStatus === 'COMPLETED')
+      return;
+    // eslint-disable-next-line no-restricted-globals, no-alert
+    const confirmed = confirm('정말로 주문을 취소하시겠습니까?');
+    if (!confirmed) return;
+    try {
+      setLoading(true);
+      await axiosInstance.patch(`/api/admin/orders/${orderId}/status`, { status: 'CANCELED' });
+      setOrderData((prev) => ({ ...prev, orderStatus: 'CANCELED' }));
+    } catch (err) {
+      setError(err.response?.data?.message || '주문 취소에 실패했습니다.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleStatusChange = async () => {
+    if (!orderData) return;
+    let message = '정말로 배송 상태를 변경하시겠습니까?';
+    if (orderData.orderStatus === 'PAYMENT_COMPLETED') {
+      message = '배송 준비 중 상태로 변경하시겠습니까?';
+    } else if (orderData.orderStatus === 'CREATED') {
+      message = '배송 중 상태로 변경하시겠습니까?';
+    } else if (orderData.orderStatus === 'SHIPPING') {
+      message = '배송 완료 상태로 변경하시겠습니까?';
+    }
+    // eslint-disable-next-line no-restricted-globals, no-alert
+    const confirmed = confirm(message);
+    if (!confirmed) return;
+    const currentIdx = STATUS_SEQUENCE.indexOf(orderData.orderStatus);
+    if (currentIdx === -1 || currentIdx === STATUS_SEQUENCE.length - 1) return;
+    const nextStatus = STATUS_SEQUENCE[currentIdx + 1];
+    try {
+      setLoading(true);
+      await axiosInstance.patch(`/api/admin/orders/${orderId}/status`, { status: nextStatus });
+      setOrderData((prev) => ({ ...prev, orderStatus: nextStatus }));
+    } catch (err) {
+      setError(err.response?.data?.message || '배송 상태 변경에 실패했습니다.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -160,14 +204,92 @@ function AdminOrderInfoModal({ isOpen, onClose, orderId }) {
                 </div>
               </div>
 
+              {/* 상태 수동 변경하는 테스트용 드롭다운 입니당 추후 삭제 예정 */}
+              <div className={`${styles.testButtonContainer} ${styles.buttonContainer}`}>
+                <select
+                  value={manualStatus}
+                  onChange={(e) => setManualStatus(e.target.value)}
+                  style={{ marginRight: 8, padding: '4px 8px', borderRadius: 4 }}
+                  disabled={loading}
+                >
+                  {Object.keys(ORDER_STATUS_MAP).map((status) => (
+                    <option key={status} value={status}>
+                      {ORDER_STATUS_MAP[status]}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  type="button"
+                  style={{
+                    fontSize: '12px',
+                    padding: '4px 8px',
+                    borderRadius: 4,
+                    backgroundColor: '#cfcfcf',
+                  }}
+                  onClick={async () => {
+                    if (!orderData) return;
+                    // eslint-disable-next-line no-restricted-globals, no-alert
+                    const confirmed = confirm(
+                      `${ORDER_STATUS_MAP[manualStatus]} 상태로 직접 변경하시겠습니까?`,
+                    );
+                    if (!confirmed) return;
+                    try {
+                      setLoading(true);
+                      await axiosInstance.patch(`/api/admin/orders/${orderId}/status`, {
+                        status: manualStatus,
+                      });
+                      setOrderData((prev) => ({ ...prev, orderStatus: manualStatus }));
+                    } catch (err) {
+                      setError(err.response?.data?.message || '상태 변경에 실패했습니다.');
+                    } finally {
+                      setLoading(false);
+                    }
+                  }}
+                  disabled={loading}
+                >
+                  상태 직접 변경
+                </button>
+              </div>
+              {/* 테스트 드롭다운 끝! */}
+
               {/* 주문 수정 버튼 */}
               <div className={styles.buttonContainer}>
-                <button type="button" className={styles.updateButton}>
-                  배송 상태 변경
-                </button>
-                <button type="button" className={styles.cancelButton} onClick={handleOrderCancel}>
-                  주문 취소
-                </button>
+                {orderData.orderStatus !== 'CANCELED' && orderData.orderStatus !== 'COMPLETED' && (
+                  <button
+                    type="button"
+                    className={styles.updateButton}
+                    onClick={handleStatusChange}
+                  >
+                    배송 상태 변경
+                  </button>
+                )}
+                {(() => {
+                  let cancelBtnText = '주문 취소';
+                  let cancelBtnDisabled = false;
+                  let cancelBtnOnClick = handleOrderCancel;
+                  if (orderData.orderStatus === 'CANCELED') {
+                    cancelBtnText = '주문 취소 완료';
+                    cancelBtnDisabled = true;
+                    cancelBtnOnClick = undefined;
+                  } else if (
+                    orderData.orderStatus === 'COMPLETED' ||
+                    orderData.orderStatus === 'SHIPPING'
+                  ) {
+                    cancelBtnText = '주문 취소 불가';
+                    cancelBtnDisabled = true;
+                    cancelBtnOnClick = undefined;
+                  }
+                  return (
+                    <button
+                      type="button"
+                      className={styles.cancelButton}
+                      onClick={cancelBtnOnClick}
+                      disabled={cancelBtnDisabled}
+                    >
+                      {cancelBtnText}
+                    </button>
+                  );
+                })()}
               </div>
             </>
           )}
