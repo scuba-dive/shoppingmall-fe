@@ -29,6 +29,17 @@ const useAuthStore = create(
         }
       },
 
+      checkEmailDuplicate: async (email) => {
+        try {
+          const response = await axiosInstance.get('/api/users/check-email', {
+            params: { email },
+          });
+          return response.data;
+        } catch (e) {
+          return false;
+        }
+      },
+
       logout: () => {
         // localStorage에서 토큰 삭제
         localStorage.removeItem('accessToken');
