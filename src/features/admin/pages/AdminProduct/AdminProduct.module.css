@@ -1,0 +1,16 @@
+.status {
+  font-weight: bold;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  border-radius: 5px;
+}
+
+.soldOut {
+  color: white;
+  background-color: #ff6e69;
+}
+
+.sell {
+  color: white;
+  background-color: #488daa;
+}

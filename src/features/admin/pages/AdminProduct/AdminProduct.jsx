@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import Pagination from '@/components/Pagination/Pagination';
+import AdminProductQuantityModal from '@/modals/AdminProductQuantityModal/AdminProductQuantityModal';
+import AdminProductSoldOutModal from '@/modals/AdminProductSoldOutModal/AdminProductSoldOutModal';
+import { fetchAdminProducts } from '@/services/adminProductApi';
 
 import Table from '../../components/Table/Table';
+import styles from './AdminProduct.module.css';
 
 const columns = [
   { key: 'name', label: '상품명' },
@@ -14,107 +18,118 @@ const columns = [
   { key: 'quantity', label: '수량 변경' },
   { key: 'status', label: '상태 변경' },
 ];
-const sampleData = [
-  {
-    product_id: 1,
-    product_name: '머찐의자',
-    category: {
-      id: 1,
-      name: '의자',
-    },
-    option_id: 1001,
-    color: '빨간색',
-    sku: 'CHAIR-101-RED',
-    price: 29000,
-    stock: 12,
-    status: 'ACTIVE',
-  },
-  {
-    product_id: 1,
-    product_name: '머찐의자',
-    category: {
-      id: 1,
-      name: '의자',
-    },
-    option_id: 1002,
-    color: '노란색',
-    sku: 'CHAIR-101-YEL',
-    price: 29000,
-    stock: 3,
-    status: 'ACTIVE',
-  },
-  {
-    product_id: 1,
-    product_name: '머찐의자',
-    category: {
-      id: 1,
-      name: '의자',
-    },
-    option_id: 1003,
-    color: '파란색',
-    sku: 'CHAIR-101-BLU',
-    price: 29000,
-    stock: 0,
-    status: 'SOLD_OUT',
-  },
-  {
-    product_id: 2,
-    product_name: '센스있는 쇼파',
-    category: {
-      id: 1,
-      name: '의자',
-    },
-    option_id: 2001,
-    color: '빨간색',
-    sku: 'CHAIR-102-RED',
-    price: 84000,
-    stock: 5,
-    status: 'ACTIVE',
-  },
-  {
-    product_id: 2,
-    product_name: '센스있는 쇼파',
-    category: {
-      id: 1,
-      name: '의자',
-    },
-    option_id: 2002,
-    color: '노란색',
-    sku: 'CHAIR-102-YEL',
-    price: 84000,
-    stock: 9,
-    status: 'ACTIVE',
-  },
-];
-
-function renderProductRow(row) {
-  return (
-    <tr key={row.option_id}>
-      <td>{row.product_name}</td>
-      <td>{row.color}</td>
-      <td>{row.category.name}</td>
-      <td>{row.price.toLocaleString()}</td>
-      <td>{row.stock}</td>
-      <td>{row.status === 'SOLD_OUT' ? '○' : 'X'}</td>
-      <td>
-        <button type="button">↑↓</button>
-      </td>
-      <td>
-        <button type="button">{row.stock === 0 ? '⊕' : '⊖'}</button>
-      </td>
-    </tr>
-  );
-}
 
 function AdminProduct() {
+  const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 10; // 임시 설정
+  const [totalPages, setTotalPages] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState(null);
+  const [selectedStatus, setSelectedStatus] = useState(null);
+  const [modalType, setModalType] = useState(null);
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
+
+  const handleOpenSoldOutModal = useCallback((productId, status) => {
+    setSelectedProductId(productId);
+    setSelectedStatus(status);
+    setModalType('soldOut');
+    setIsModalOpen(true);
+  }, []);
+
+  const handleOpenQuantityModal = useCallback((productId, stock) => {
+    setSelectedProductId(productId);
+    setSelectedQuantity(stock);
+    setModalType('quantity');
+    setIsModalOpen(true);
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setIsModalOpen(false);
+    setSelectedProductId(null);
+    setModalType(null);
+  }, []);
+
+  const handleStatusChanged = useCallback(async () => {
+    try {
+      // 목록 새로고침
+      const updated = await fetchAdminProducts(currentPage - 1, 10);
+      setProducts(updated.products);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('상품 상태 변경 실패:', err);
+    }
+  }, [currentPage]);
+
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const data = await fetchAdminProducts(currentPage - 1, 10);
+        setProducts(data.products);
+        setTotalPages(data.totalPages);
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error('상품 목록 불러오기 실패:', err);
+      }
+    };
+    getProducts();
+  }, [currentPage]);
+
+  const renderProductRow = useCallback(
+    (row) => (
+      <tr key={row.optionId}>
+        <td>{row.productName}</td>
+        <td>{row.color}</td>
+        <td>{row.category.name}</td>
+        <td>{row.price.toLocaleString()}</td>
+        <td>{row.stock}</td>
+        <td>
+          <span
+            className={`${styles.status} ${row.status === 'SOLD_OUT' ? styles.soldOut : styles.sell}`}
+          >
+            {row.status === 'SOLD_OUT' ? 'sold out' : 'sell'}
+          </span>
+        </td>
+        <td>
+          <button type="button" onClick={() => handleOpenQuantityModal(row.optionId, row.stock)}>
+            ↑↓
+          </button>
+        </td>
+        <td>
+          <button type="button" onClick={() => handleOpenSoldOutModal(row.optionId, row.status)}>
+            {row.status === 'SOLD_OUT' ? '⊕' : '⊖'}
+          </button>
+        </td>
+      </tr>
+    ),
+    [handleOpenSoldOutModal, handleOpenQuantityModal],
+  );
+
   return (
     <>
       <h1> 상품 관리 </h1>
-      <Table columns={columns} data={sampleData} renderRow={renderProductRow} />
+      <Table columns={columns} data={products} renderRow={renderProductRow} />
 
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+
+      {isModalOpen && selectedProductId && modalType === 'soldOut' && (
+        <AdminProductSoldOutModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          productId={selectedProductId}
+          currentStatus={selectedStatus}
+          onStatusChanged={handleStatusChanged}
+        />
+      )}
+
+      {isModalOpen && selectedProductId && modalType === 'quantity' && (
+        <AdminProductQuantityModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          productId={selectedProductId}
+          currQuantity={selectedQuantity}
+          onStatusChanged={handleStatusChanged}
+        />
+      )}
     </>
   );
 }

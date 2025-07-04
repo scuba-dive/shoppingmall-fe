@@ -103,10 +103,10 @@
   transition: all 0.2s ease;
 }
 
-.confirmButton:hover {
-  background-color: #fe9253;
-}
-
 .confirmButton:active {
   background-color: #f87c35;
+}
+
+.confirmButton:hover {
+  background-color: #fe9253;
 }

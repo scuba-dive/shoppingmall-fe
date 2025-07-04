@@ -1,14 +1,21 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 
-import styles from './AdminProductQuantityModal.module.css';
+import { updateProductStock } from '@/services/adminProductApi';
 
+import styles from './AdminProductQuantityModal.module.css';
 // eslint-disable-next-line object-curly-newline
-function AdminProductQuantityModal({ isOpen, onClose, onConfirm, currQuantity }) {
-  const [newQuantity, setNewQuantity] = useState(currQuantity);
+function AdminProductQuantityModal({
+  isOpen, //
+  onClose, //
+  productId, //
+  currQuantity, //
+  onStatusChanged, //
+}) {
+  const [newQuantity, setNewQuantity] = useState(1);
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && typeof currQuantity === 'number') {
       setNewQuantity(currQuantity);
     }
   }, [isOpen, currQuantity]);
@@ -36,9 +43,23 @@ function AdminProductQuantityModal({ isOpen, onClose, onConfirm, currQuantity })
     }
   };
 
-  const handleConfirm = () => {
-    onConfirm(newQuantity);
-    onClose();
+  const handleConfirm = async () => {
+    try {
+      await updateProductStock(productId, newQuantity);
+      // eslint-disable-next-line no-alert
+      alert('상품 수량이 변경되었습니다.');
+
+      if (onStatusChanged) {
+        await onStatusChanged();
+      }
+
+      onClose();
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('상품 수량 변경 실패:', err);
+      // eslint-disable-next-line no-alert
+      alert('상품 수량 변경에 실패했습니다.');
+    }
   };
 
   const handleDecrease = () => {
@@ -130,8 +151,9 @@ function AdminProductQuantityModal({ isOpen, onClose, onConfirm, currQuantity })
 AdminProductQuantityModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func.isRequired,
+  productId: PropTypes.number.isRequired,
   currQuantity: PropTypes.number.isRequired,
+  onStatusChanged: PropTypes.func.isRequired,
 };
 
 export default AdminProductQuantityModal;
