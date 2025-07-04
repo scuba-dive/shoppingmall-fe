@@ -6,8 +6,10 @@ import styles from './CartRow.module.css';
 
 function CartRow({
   item, //
-  onUpdate, //
-  onDelete, //
+  onUpdate,
+  onDelete,
+  isChecked,
+  onCheck,
 }) {
   const [quantity, setQuantity] = useState(item.quantity);
 
@@ -20,7 +22,7 @@ function CartRow({
   return (
     <tr>
       <td>
-        <input type="checkbox" defaultChecked />
+        <input type="checkbox" checked={isChecked} onChange={() => onCheck(item.cartItemId)} />
       </td>
       <td>{item.productName}</td>
       <td>{item.price.toLocaleString()}</td>
@@ -66,6 +68,8 @@ CartRow.propTypes = {
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  isChecked: PropTypes.bool.isRequired,
+  onCheck: PropTypes.func.isRequired,
 };
 
 export default CartRow;
