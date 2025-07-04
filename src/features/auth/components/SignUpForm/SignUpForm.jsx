@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { signUpSchema } from '@/features/auth/schemas/signUpSchema';
+import useAuthStore from '@/states/authStore';
 
 import styles from './SignUpForm.module.css';
 
@@ -53,15 +54,33 @@ function SignUpForm({ onSubmit }) {
   };
 
   // 이메일 중복 확인
+  const checkEmailDuplicate = useAuthStore((state) => state.checkEmailDuplicate);
   const handleCheckEmail = async () => {
-    if (!watch('email')) {
+    const email = watch('email');
+
+    if (errors.email) {
+      setEmailChecked(false);
+      setEmailCheckMsg('');
+      return;
+    }
+
+    if (!email) {
       setError('email', { message: '이메일을 입력해 주세요.' });
       setEmailChecked(false);
       setEmailCheckMsg('');
       return;
     }
-    setEmailChecked(true);
-    setEmailCheckMsg('사용 가능한 이메일입니다.');
+
+    // API 요청
+    try {
+      await checkEmailDuplicate(email); // 중복 아니면 200 응답
+      setEmailChecked(true);
+      setEmailCheckMsg('사용 가능한 이메일입니다.');
+    } catch (errMsg) {
+      setEmailChecked(false);
+      setEmailCheckMsg(errMsg);
+      setError('email', { message: errMsg });
+    }
   };
 
   const handleFormSubmit = async (data) => {
@@ -113,6 +132,10 @@ function SignUpForm({ onSubmit }) {
             {...register('email')} // eslint-disable-line react/jsx-props-no-spreading
             required
             style={{ flex: 1 }}
+            onChange={() => {
+              setEmailChecked(false);
+              setEmailCheckMsg('');
+            }}
           />
           <button
             type="button"
