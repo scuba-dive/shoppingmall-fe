@@ -6,6 +6,8 @@ import Breadcrumb from '@/features/main/components/Breadcrumb/Breadcrumb';
 import CategoryNavBar from '@/features/main/components/CategoryNavBar/CategoryNavBar';
 import QuantitySelector from '@/features/main/components/QuantitySelector/QuantitySelector';
 import StarRating from '@/features/main/components/StarRating/StarRating';
+import CartModal from '@/modals/CartModal/CartModal';
+import SignInModal from '@/modals/SignInModal/SignInModal';
 import { addToCart } from '@/services/cartService';
 import { fetchProductById } from '@/services/mainService';
 
@@ -16,6 +18,8 @@ function ProductDetailPage() {
   const [product, setProduct] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+  const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
 
   useEffect(() => {
     const loadProduct = async () => {
@@ -26,7 +30,7 @@ function ProductDetailPage() {
           setSelectedOption(data.options[0]);
         }
       } catch (err) {
-        // console.error('상품 불러오기 실패:', err);
+        // 상품 불러오기 실패 처리 (선택 사항)
       }
     };
 
@@ -49,14 +53,18 @@ function ProductDetailPage() {
   const handleAddToCart = async () => {
     try {
       const optionId = selectedOption?.productOptionId || selectedOption?.id;
-
       if (!optionId) return;
 
       await addToCart({ productOptionId: optionId, quantity });
 
-      // TODO: 장바구니 성공 모달 표시
+      setIsCartModalOpen(true);
     } catch (error) {
-      // TODO: 장바구니 실패 모달 표시
+      const status = error.response?.status;
+      if (status === 401 || status === 403) {
+        setIsSignInModalOpen(true);
+      } else {
+        // TODO: 기타 오류 처리 (예: 재고 없음 등)
+      }
     }
   };
 
@@ -120,6 +128,8 @@ function ProductDetailPage() {
           </div>
         </div>
       </div>
+      <CartModal isOpen={isCartModalOpen} onClose={() => setIsCartModalOpen(false)} />
+      <SignInModal isOpen={isSignInModalOpen} onClose={() => setIsSignInModalOpen(false)} />
     </div>
   );
 }
