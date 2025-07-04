@@ -88,7 +88,7 @@ function CartPage() {
                 className={styles.deleteSelectedButton}
                 onClick={handleClearCart}
               >
-                삭제하기
+                장바구니 비우기
               </button>
             </div>
           </div>
