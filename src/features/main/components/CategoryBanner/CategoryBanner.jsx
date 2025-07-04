@@ -22,7 +22,7 @@ function CategoryBanner() {
           const product = await fetchProductById(id);
           setBannerName(product?.category?.name ?? '카테고리');
         } catch (e) {
-          console.error('상품 정보를 불러오지 못했습니다:', e);
+          // console.error('상품 정보를 불러오지 못했습니다:', e);
           setBannerName('카테고리');
         }
       }
