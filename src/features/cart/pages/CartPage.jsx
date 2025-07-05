@@ -1,6 +1,7 @@
 /* eslint-disable function-paren-newline */
 /* eslint-disable implicit-arrow-linebreak */
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import CartTable from '@/features/cart/components/CartTable';
 import {
@@ -14,6 +15,12 @@ import styles from './CartPage.module.css';
 
 function CartPage() {
   const [cartItems, setCartItems] = useState([]);
+
+  const navigate = useNavigate();
+
+  const handlePayment = () => {
+    navigate('/payment');
+  };
 
   useEffect(() => {
     const loadCart = async () => {
@@ -51,8 +58,8 @@ function CartPage() {
 
   const handleClearCart = async () => {
     try {
-      await clearCart(); // 서버 요청
-      setCartItems([]); // 프론트 상태 비움
+      await clearCart();
+      setCartItems([]);
     } catch (error) {
       // console.error('장바구니 비우기 실패:', error);
     }
@@ -80,7 +87,7 @@ function CartPage() {
               <strong>{totalPrice.toLocaleString()}원</strong>
             </div>
             <div className={styles.buttonBox}>
-              <button type="button" className={styles.payButton}>
+              <button type="button" className={styles.payButton} onClick={handlePayment}>
                 결제하기
               </button>
               <button
