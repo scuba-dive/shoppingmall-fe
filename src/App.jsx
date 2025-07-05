@@ -13,12 +13,22 @@ import MyPage from './pages/MyPage';
 import OrderPage from './pages/OrderPage';
 import PaymentPage from './pages/PaymentPage';
 import ProtectedAdminRoute from './routes/ProtectedAdminRouter';
+import ProtectedUserRoute from './routes/ProtectedUserRouter';
 
 // 원래는 라우터 안에 작성하고 싶었으나.. 우리의 린트가 허용해 주질 않앗어오..ㅜ
 const adminElement = (
   <ProtectedAdminRoute allowedRoles={['ADMIN']}>
     <AdminPage />
   </ProtectedAdminRoute>
+);
+
+const userElement = (
+  <ProtectedUserRoute allowedRoles={['USER', 'ADMIN']}>
+    <MyPage />
+    <OrderPage />
+    <CartPage />
+    <PaymentPage />
+  </ProtectedUserRoute>
 );
 
 function App() {
@@ -29,10 +39,10 @@ function App() {
           <Route path="/*" element={<MainPage />} />
           <Route path="auth/*" element={<AuthPage />} />
           <Route path="admin/*" element={adminElement} />
-          <Route path="mypage/*" element={<MyPage />} />
-          <Route path="order/*" element={<OrderPage />} />
-          <Route path="cart/*" element={<CartPage />} />
-          <Route path="payment/*" element={<PaymentPage />} />
+          <Route path="mypage/*" element={userElement} />
+          <Route path="order/*" element={userElement} />
+          <Route path="cart/*" element={userElement} />
+          <Route path="payment/*" element={userElement} />
         </Routes>
       </Router>
       <ToastContainer
