@@ -18,6 +18,7 @@ const ORDER_STATUS_MAP = {
 export default function OrderSection({
   orders, //
   isPreview,
+  showTitle = true,
   currentPage,
   totalPages,
   onPageChange,
@@ -48,7 +49,7 @@ export default function OrderSection({
   return (
     <section className={styles.orderSection}>
       <div className={styles.header}>
-        <h2>내 주문 내역</h2>
+        {showTitle && <h2>내 주문 내역</h2>}{' '}
         {isPreview && (
           <button type="button" className={styles.viewAll} onClick={handlePreviewAll}>
             전체 보기
@@ -122,13 +123,14 @@ OrderSection.propTypes = {
     }),
   ).isRequired,
   isPreview: PropTypes.bool,
+  showTitle: PropTypes.bool,
   currentPage: PropTypes.number,
   totalPages: PropTypes.number,
   onPageChange: PropTypes.func,
 };
-
 OrderSection.defaultProps = {
   isPreview: true,
+  showTitle: true,
   currentPage: 1,
   totalPages: 1,
   onPageChange: () => {},

@@ -30,6 +30,7 @@ function OrderPage() {
       <OrderSection
         orders={orders}
         isPreview={false}
+        showTitle={false}
         currentPage={page + 1}
         totalPages={totalPages}
         onPageChange={(p) => setPage(p - 1)}
