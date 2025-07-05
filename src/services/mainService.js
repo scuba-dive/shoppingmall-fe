@@ -46,3 +46,8 @@ export const fetchProductById = async (id) => {
   const res = await axiosInstance.get(`/api/users/products/${id}`);
   return res.data.data;
 };
+
+export const fetchOptionImage = async (optionId) => {
+  const res = await axiosInstance.get(`/api/users/products/option/image/${optionId}`);
+  return res.data?.data?.imageUrl;
+};
