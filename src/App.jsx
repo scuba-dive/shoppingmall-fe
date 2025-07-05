@@ -22,14 +22,14 @@ const adminElement = (
   </ProtectedAdminRoute>
 );
 
-const userElement = (
-  <ProtectedUserRoute allowedRoles={['USER', 'ADMIN']}>
-    <MyPage />
-    <OrderPage />
-    <CartPage />
-    <PaymentPage />
-  </ProtectedUserRoute>
-);
+// const userElement = (
+//   <ProtectedUserRoute allowedRoles={['USER', 'ADMIN']}>
+//     <MyPage />
+//     <OrderPage />
+//     <CartPage />
+//     <PaymentPage />
+//   </ProtectedUserRoute>
+// );
 
 function App() {
   return (
@@ -39,10 +39,12 @@ function App() {
           <Route path="/*" element={<MainPage />} />
           <Route path="auth/*" element={<AuthPage />} />
           <Route path="admin/*" element={adminElement} />
-          <Route path="mypage/*" element={userElement} />
-          <Route path="order/*" element={userElement} />
-          <Route path="cart/*" element={userElement} />
-          <Route path="payment/*" element={userElement} />
+          <Route element={<ProtectedUserRoute />}>
+            <Route path="mypage/*" element={<MyPage />} />
+            <Route path="order/*" element={<OrderPage />} />
+            <Route path="cart/*" element={<CartPage />} />
+            <Route path="payment/*" element={<PaymentPage />} />
+          </Route>
         </Routes>
       </Router>
       <ToastContainer
