@@ -22,12 +22,11 @@ function getOrderStatusText(status) {
 
 const STATUS_SEQUENCE = ['PAYMENT_COMPLETED', 'CREATED', 'SHIPPING', 'COMPLETED'];
 
-/* eslint-disable-next-line */
+// eslint-disable-next-line object-curly-newline
 function AdminOrderInfoModal({ isOpen, onClose, orderId, onOrderStatusChange }) {
   const [orderData, setOrderData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [manualStatus, setManualStatus] = useState('PAYMENT_COMPLETED');
 
   const confirm = useConfirm();
 
@@ -138,28 +137,6 @@ function AdminOrderInfoModal({ isOpen, onClose, orderId, onOrderStatusChange }) 
     });
   };
 
-  const handleManualStatusChange = async () => {
-    if (!orderData) return;
-
-    confirm(`${ORDER_STATUS_MAP[manualStatus]} 상태로 직접 변경하시겠습니까?`, async () => {
-      try {
-        setLoading(true);
-        await axiosInstance.patch(`/api/admin/orders/${orderId}/status`, {
-          status: manualStatus,
-        });
-        setOrderData((prev) => ({ ...prev, orderStatus: manualStatus }));
-        toast.success(`주문 상태가 ${ORDER_STATUS_MAP[manualStatus]}(으)로 변경되었습니다.`);
-        if (onOrderStatusChange) onOrderStatusChange(); // 주문 상태 변경 콜백 호출
-      } catch (err) {
-        const errorMessage = err.response?.data?.message || '상태 변경에 실패했습니다.';
-        setError(errorMessage);
-        toast.error(errorMessage);
-      } finally {
-        setLoading(false);
-      }
-    });
-  };
-
   return (
     <div className={styles.overlay} onClick={handleOverlayClick} role="presentation">
       <div
@@ -251,36 +228,6 @@ function AdminOrderInfoModal({ isOpen, onClose, orderId, onOrderStatusChange }) 
                   <span className={styles.value}>{getOrderStatusText(orderData.orderStatus)}</span>
                 </div>
               </div>
-
-              {/* 상태 수동 변경하는 테스트용 드롭다운 입니당 추후 삭제 예정 */}
-              <div className={`${styles.testButtonContainer} ${styles.buttonContainer}`}>
-                <select
-                  value={manualStatus}
-                  onChange={(e) => setManualStatus(e.target.value)}
-                  style={{ marginRight: 8, padding: '4px 8px', borderRadius: 4 }}
-                  disabled={loading}
-                >
-                  {Object.keys(ORDER_STATUS_MAP).map((status) => (
-                    <option key={status} value={status}>
-                      {ORDER_STATUS_MAP[status]}
-                    </option>
-                  ))}
-                </select>
-                <button
-                  type="button"
-                  style={{
-                    fontSize: '12px',
-                    padding: '4px 8px',
-                    borderRadius: 4,
-                    backgroundColor: '#cfcfcf',
-                  }}
-                  onClick={handleManualStatusChange}
-                  disabled={loading}
-                >
-                  상태 직접 변경
-                </button>
-              </div>
-              {/* 테스트 드롭다운 끝! */}
 
               {/* 주문 수정 버튼 */}
               <div className={styles.buttonContainer}>

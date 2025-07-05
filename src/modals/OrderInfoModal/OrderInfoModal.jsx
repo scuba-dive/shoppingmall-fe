@@ -1,50 +1,31 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+
+import axiosInstance from '@/services/axiosInstance';
+import useConfirm from '@/utils/useConfirm';
 
 import styles from './OrderInfoModal.module.css';
 
-const response = {
-  status: 200,
-  message: '주문 상세 조회 성공',
-  data: {
-    orderId: 4,
-    orderNumber: '20250625-000004',
-    orderedAt: '2025-06-25T15:00:00',
-    userName: '홍길동',
-    shippingAddress: {
-      recipient: '홍길동',
-      phone: '010-1234-5678',
-      zipcode: '06236',
-      address1: '서울 강남구 테헤란로 123',
-      address2: '101동 1001호',
-    },
-    orderStatus: 'COMPLETED',
-    paymentMethod: 'CHEETOS',
-    totalAmount: 1097000,
-    orderItems: [
-      {
-        productName: '머찐의자',
-        option: '빨간색',
-        quantity: 2,
-        price: 399000,
-        totalPrice: 798000,
-      },
-      {
-        productName: '귀여운책상',
-        option: '파란색',
-        quantity: 1,
-        price: 299000,
-        totalPrice: 299000,
-      },
-    ],
-    totalCount: 3,
-  },
+const ORDER_STATUS_MAP = {
+  PAYMENT_COMPLETED: '결제 완료',
+  CANCELED: '결제 취소',
+  CREATED: '배송 준비 중',
+  SHIPPING: '배송 중',
+  COMPLETED: '배송 완료',
 };
 
-function OrderInfoModal({ isOpen, onClose, orderId }) {
+function getOrderStatusText(status) {
+  return ORDER_STATUS_MAP[status] || status;
+}
+
+// eslint-disable-next-line object-curly-newline
+function OrderInfoModal({ isOpen, onClose, orderId, onOrderStatusChange }) {
   const [orderData, setOrderData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const confirm = useConfirm();
 
   useEffect(() => {
     const handleEscape = (e) => {
@@ -67,16 +48,10 @@ function OrderInfoModal({ isOpen, onClose, orderId }) {
         setLoading(true);
         setError(null);
         try {
-          // const response = await fetch(`/api/users/me/orders/${orderId}`);
-          // if (!response.ok) {
-          //   throw new Error('주문 정보를 불러오는데 실패했습니다.');
-          // }
-          // const data = await response.json();
-
-          // 실제 API 호출 대신 하드코딩된 response 사용
-          setOrderData(response.data);
+          const response = await axiosInstance.get(`/api/users/orders/${orderId}`);
+          setOrderData(response.data.data);
         } catch (err) {
-          setError(err.message);
+          setError(err.response?.data?.message || '주문 정보를 불러오는데 실패했습니다.');
         } finally {
           setLoading(false);
         }
@@ -94,8 +69,33 @@ function OrderInfoModal({ isOpen, onClose, orderId }) {
     }
   };
 
-  const handleOrderCancel = () => {
-    // 주문 취소
+  const handleOrderCancel = async () => {
+    /* eslint-disable operator-linebreak */
+    if (
+      !orderData ||
+      orderData.orderStatus === 'CANCELED' ||
+      orderData.orderStatus === 'COMPLETED' ||
+      orderData.orderStatus === 'SHIPPING'
+    ) {
+      return;
+    }
+    /* eslint-enable operator-linebreak */
+
+    confirm('정말로 결제를 취소하시겠습니까?', async () => {
+      try {
+        setLoading(true);
+        await axiosInstance.patch(`/api/users/orders/${orderId}/cancel`);
+        setOrderData((prev) => ({ ...prev, orderStatus: 'CANCELED' }));
+        toast.success('결제가 성공적으로 취소되었습니다.');
+        if (onOrderStatusChange) onOrderStatusChange(); // 주문 상태 변경 콜백 호출
+      } catch (err) {
+        const errorMessage = err.response?.data?.message || '결제 취소에 실패했습니다.';
+        setError(errorMessage);
+        toast.error(errorMessage);
+      } finally {
+        setLoading(false);
+      }
+    });
   };
 
   return (
@@ -160,9 +160,7 @@ function OrderInfoModal({ isOpen, onClose, orderId }) {
 
                 <div className={styles.infoRow}>
                   <span className={styles.label}>배송지</span>
-                  <span className={styles.value}>
-                    {`${orderData.shippingAddress.address1} ${orderData.shippingAddress.address2 || ''}`.trim()}
-                  </span>
+                  <span className={styles.value}>{orderData.address}</span>
                 </div>
 
                 <div className={styles.infoRow}>
@@ -183,20 +181,49 @@ function OrderInfoModal({ isOpen, onClose, orderId }) {
 
                 <div className={styles.infoRow}>
                   <span className={styles.label}>결제 수단</span>
-                  <span className={styles.value}>{orderData.paymentMethod}</span>
+                  <span className={styles.value}>
+                    {orderData.paymentMethod ? orderData.paymentMethod : '토스'}
+                  </span>
                 </div>
 
                 <div className={styles.infoRow}>
                   <span className={styles.label}>주문 상태</span>
-                  <span className={styles.value}>{orderData.orderStatus}</span>
+                  <span className={styles.value}>{getOrderStatusText(orderData.orderStatus)}</span>
                 </div>
               </div>
 
               {/* 주문 취소 버튼 */}
               <div className={styles.buttonContainer}>
-                <button type="button" className={styles.cancelButton} onClick={handleOrderCancel}>
-                  주문 취소
-                </button>
+                {(() => {
+                  let cancelBtnText = '결제 취소';
+                  let cancelBtnDisabled = false;
+                  let cancelBtnOnClick = handleOrderCancel;
+
+                  if (orderData.orderStatus === 'CANCELED') {
+                    cancelBtnText = '결제 취소 완료';
+                    cancelBtnDisabled = true;
+                    cancelBtnOnClick = undefined;
+                  } else if (
+                    /* eslint-disable-next-line */
+                    orderData.orderStatus === 'COMPLETED' ||
+                    orderData.orderStatus === 'SHIPPING'
+                  ) {
+                    cancelBtnText = '결제 취소 불가';
+                    cancelBtnDisabled = true;
+                    cancelBtnOnClick = undefined;
+                  }
+
+                  return (
+                    <button
+                      type="button"
+                      className={styles.cancelButton}
+                      onClick={cancelBtnOnClick}
+                      disabled={cancelBtnDisabled}
+                    >
+                      {cancelBtnText}
+                    </button>
+                  );
+                })()}
               </div>
             </>
           )}
@@ -210,6 +237,9 @@ OrderInfoModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   orderId: PropTypes.number.isRequired,
+  onOrderStatusChange: PropTypes.func,
 };
+
+OrderInfoModal.defaultProps = { onOrderStatusChange: undefined };
 
 export default OrderInfoModal;
