@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
-import PaymentPage from '@/features/payment/pages/PaymentPage';
+import PaymentPage from '@/features/pay/pages/PayPage';
 import DefaultLayout from '@/layouts/DefaultLayouts/DefaultLayout';
 
 function PaymentRouter() {

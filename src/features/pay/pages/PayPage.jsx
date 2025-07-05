@@ -1,7 +1,7 @@
 import OrderProductSection from '../components/OrderProductSection/OrderProductSection';
 import PaymentAmountSection from '../components/PaymentAmountSection/PaymentAmountSection';
 import PaymentButton from '../components/PaymentButton/PaymentButton';
-import styles from './PaymentPage.module.css';
+import styles from './PayPage.module.css';
 
 function PayMentPage() {
   return (
