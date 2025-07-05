@@ -48,6 +48,7 @@ export default function OrderSection({
   return (
     <section className={styles.orderSection}>
       <div className={styles.header}>
+        <h2>내 주문 내역</h2>
         {isPreview && (
           <button type="button" className={styles.viewAll} onClick={handlePreviewAll}>
             전체 보기
