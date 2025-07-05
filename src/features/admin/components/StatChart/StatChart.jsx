@@ -21,13 +21,12 @@ function StatsChart() {
     const getChartData = async () => {
       try {
         const stats = await fetchRecentStats();
-        const today = new Date();
+        // const today = new Date();
         const getDateString = (daysAgo = 0) => {
-          const date = new Date(today);
+          const date = new Date();
           date.setDate(date.getDate() - daysAgo);
-          return date.toISOString().split('T')[0]; // YYYY-MM-DD 형식
+          return date.toLocaleDateString('sv-SE'); // "2025-07-06" 형식
         };
-
         const targetDates = [getDateString(0), getDateString(1), getDateString(2)];
 
         const recentThreeDays = stats
