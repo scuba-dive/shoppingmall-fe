@@ -41,7 +41,7 @@ function SuccessPage() {
   };
 
   const handleCheckOrder = () => {
-    navigate('/mypage');
+    navigate('/order');
   };
 
   if (loading) return <div style={{ padding: 40 }}>결제 승인 중...</div>;
