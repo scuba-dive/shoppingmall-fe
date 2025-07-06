@@ -25,7 +25,7 @@ function CartRow({
         <input type="checkbox" checked={isChecked} onChange={() => onCheck(item.cartItemId)} />
       </td>
       <td>{item.productName}</td>
-      <td>{item.price.toLocaleString()}</td>
+      <td>{item.price.toLocaleString()}원</td>
       <td>{item.color}</td>
       <td>
         <button
@@ -60,10 +60,10 @@ function CartRow({
 
 CartRow.propTypes = {
   item: PropTypes.shape({
-    cartItemId: PropTypes.number.isRequired,
+    cartItemId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     productName: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    color: PropTypes.string.isRequired,
+    color: PropTypes.string,
     quantity: PropTypes.number.isRequired,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,

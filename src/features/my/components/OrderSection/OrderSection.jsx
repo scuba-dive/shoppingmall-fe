@@ -18,9 +18,11 @@ const ORDER_STATUS_MAP = {
 export default function OrderSection({
   orders, //
   isPreview,
+  showTitle = true,
   currentPage,
   totalPages,
   onPageChange,
+  onOrderStatusChange,
 }) {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -48,7 +50,7 @@ export default function OrderSection({
   return (
     <section className={styles.orderSection}>
       <div className={styles.header}>
-        <h2>내 주문 내역</h2>
+        {showTitle && <h2>내 주문 내역</h2>}{' '}
         {isPreview && (
           <button type="button" className={styles.viewAll} onClick={handlePreviewAll}>
             전체 보기
@@ -104,7 +106,12 @@ export default function OrderSection({
       )}
 
       {isModalOpen && selectedOrderId && (
-        <OrderInfoModal isOpen={isModalOpen} onClose={handleCloseModal} orderId={selectedOrderId} />
+        <OrderInfoModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          orderId={selectedOrderId}
+          onOrderStatusChange={onOrderStatusChange}
+        />
       )}
     </section>
   );
@@ -122,14 +129,17 @@ OrderSection.propTypes = {
     }),
   ).isRequired,
   isPreview: PropTypes.bool,
+  showTitle: PropTypes.bool,
   currentPage: PropTypes.number,
   totalPages: PropTypes.number,
   onPageChange: PropTypes.func,
+  onOrderStatusChange: PropTypes.func,
 };
-
 OrderSection.defaultProps = {
   isPreview: true,
+  showTitle: true,
   currentPage: 1,
   totalPages: 1,
   onPageChange: () => {},
+  onOrderStatusChange: () => {},
 };

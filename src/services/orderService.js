@@ -11,3 +11,21 @@ export const fetchOrderById = async (orderId) => {
   const res = await axiosInstance.get(`/api/users/orders/${orderId}`);
   return res.data.data;
 };
+
+export const requestTossPayment = async ({ cartId, cartItemIds }) => {
+  const response = await axiosInstance.post('/api/users/payments/toss', {
+    cartId,
+    cartItemIds,
+  });
+
+  return response.data.data;
+};
+
+export const cancelTossPayment = async ({ paymentKey, cancelReason, cancelAmount }) => {
+  const res = await axiosInstance.post('/api/users/payments/toss/cancel', {
+    paymentKey,
+    cancelReason,
+    cancelAmount, // 전체취소면 null
+  });
+  return res.data;
+};
