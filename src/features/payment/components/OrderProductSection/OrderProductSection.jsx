@@ -1,79 +1,109 @@
+/* eslint-disable function-paren-newline */
+/* eslint-disable implicit-arrow-linebreak */
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+
+import { fetchOptionImage } from '@/services/mainService';
+import { fetchUserInfo } from '@/services/userService';
+
 import styles from './OrderProductSection.module.css';
 
-function OrderProductSection() {
-  const productData = [
-    {
-      products: [
-        {
-          productId: 10,
-          name: '머찐 의자',
-          imageUrl: '이미지url1',
-          quantity: 2,
-          price: 64000,
-        },
-        {
-          productId: 15,
-          name: '언제 잤니 침대',
-          imageUrl: '이미지url2',
-          quantity: 1,
-          price: 82000,
-        },
-      ],
-      id: 1,
-      username: '김구름',
-      phonenumber: '01012341234',
-      email: 'user@user.com',
-      receive: {
-        name: '김구름',
-        phonenumber: '01012341234',
-        address: '경기도 구름시...',
-      },
-    },
-  ];
+function OrderProductSection({ cartItems }) {
+  const [userInfo, setUserInfo] = useState(null);
+  const [imageMap, setImageMap] = useState({});
 
-  const {
-    products, //
-    username, //
-    phonenumber, //
-    email, //
-    receive, //
-  } = productData[0];
+  // 사용자 정보 불러오기
+  useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const data = await fetchUserInfo();
+        setUserInfo(data);
+      } catch (err) {
+        // console.error('사용자 정보 로딩 실패:', err);
+      }
+    };
+    loadUser();
+  }, []);
+
+  // 옵션 이미지 불러오기
+  useEffect(() => {
+    const loadImages = async () => {
+      const newImageMap = {};
+      const results = await Promise.all(
+        cartItems.map((item) =>
+          fetchOptionImage(item.productOptionId)
+            .then((url) => ({ optionId: item.productOptionId, url }))
+            .catch(() => ({ optionId: item.productOptionId, url: null })),
+        ),
+      );
+      results.forEach(({ optionId, url }) => {
+        newImageMap[optionId] = url;
+      });
+      setImageMap(newImageMap);
+    };
+
+    if (cartItems.length > 0) loadImages();
+  }, [cartItems]);
+
+  if (!userInfo) return <p>사용자 정보를 불러오는 중...</p>;
 
   return (
     <section className={styles.section}>
       <div className={styles.content}>
         <h2>주문 상품 정보</h2>
         <ul className={styles.productList}>
-          {products.map((item) => (
-            <li key={item.productId} className={styles.product}>
+          {cartItems.map((item) => (
+            <li key={item.cartItemId} className={styles.product}>
               <div className={styles.img}>
-                <div className={styles.imgP}> </div>
+                {imageMap[item.productOptionId] ? (
+                  <img
+                    src={imageMap[item.productOptionId]}
+                    alt={item.productName}
+                    className={styles.imgP}
+                  />
+                ) : (
+                  <div className={styles.imgP}>이미지 없음</div>
+                )}
               </div>
               <div>
-                <h3 className={styles.name}>{item.name}</h3>
+                <h3 className={styles.name}>{item.productName}</h3>
                 <span className={styles.number}>{item.quantity}개</span>
-                <p className={styles.money}>{item.price.toLocaleString()}원</p>
+                <p className={styles.money}>{(item.price * item.quantity).toLocaleString()}원</p>
               </div>
             </li>
           ))}
         </ul>
       </div>
+
       <div className={styles.content}>
         <h2>주문자 정보</h2>
-        <p className={styles.name}>{username}</p>
-        <p className={styles.info}>{phonenumber}</p>
-        <p className={styles.info}>{email}</p>
+        <p className={styles.name}>{userInfo.username}</p>
+        <p className={styles.info}>{userInfo.phoneNumber}</p>
+        <p className={styles.info}>{userInfo.email}</p>
       </div>
+
       <div className={styles.content}>
         <h2>배송 정보</h2>
         <div className={styles.boxS}>
-          <p className={`${styles.name} ${styles.box}`}>{receive.name}</p>
-          <p className={styles.box}>{receive.phonenumber}</p>
+          <p className={`${styles.name} ${styles.box}`}>{userInfo.username}</p>
+          <p className={styles.box}>{userInfo.phoneNumber}</p>
         </div>
-        <p className={styles.box}>{receive.address}</p>
+        <p className={styles.box}>{userInfo.address}</p>
       </div>
     </section>
   );
 }
+
+OrderProductSection.propTypes = {
+  cartItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      cartItemId: PropTypes.number.isRequired,
+      productOptionId: PropTypes.number.isRequired,
+      productName: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      quantity: PropTypes.number.isRequired,
+    }),
+  ).isRequired,
+};
 
 export default OrderProductSection;
