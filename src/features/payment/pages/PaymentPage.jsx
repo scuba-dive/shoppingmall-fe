@@ -10,16 +10,17 @@ import styles from './PaymentPage.module.css';
 function PaymentPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { cartItems } = location.state || { cartItems: [] };
+  const { cartId, cartItems } = location.state || { cartId: null, cartItems: [] };
 
   const cartItemIds = cartItems.map((item) => item.cartItemId);
 
   useEffect(() => {
-    if (!cartItems || cartItems.length === 0) {
+    console.log('[PaymentPage] cartId:', cartId, 'cartItems:', cartItems); // 🔍 디버깅용
+    if (cartId === null || !Array.isArray(cartItems) || cartItems.length === 0) {
       toast.warning('결제할 상품 정보가 없습니다.');
       navigate('/cart');
     }
-  }, [cartItems, navigate]);
+  }, [cartId, cartItems, navigate]);
 
   return (
     <div className={styles.container}>
@@ -36,7 +37,7 @@ function PaymentPage() {
         </div>
         <div className={styles.paymentSection}>
           <PaymentAmountSection cartItems={cartItems} />
-          <PaymentButton cartItemIds={cartItemIds} />
+          <PaymentButton cartId={cartId} cartItemIds={cartItemIds} />
         </div>
       </div>
     </div>

@@ -18,5 +18,5 @@ export const requestTossPayment = async ({ cartId, cartItemIds }) => {
     cartItemIds,
   });
 
-  return response.data.data.paymentUrl;
+  return response.data.data;
 };

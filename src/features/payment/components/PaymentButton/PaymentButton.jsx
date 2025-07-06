@@ -1,3 +1,4 @@
+import { loadTossPayments } from '@tosspayments/payment-sdk';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -6,7 +7,9 @@ import { requestTossPayment } from '@/services/orderService';
 
 import styles from './PaymentButton.module.css';
 
-function PaymentButton({ cartItemIds }) {
+const TOSS_CLIENT_KEY = 'test_ck_GePWvyJnrKjOn7aqRbG7VgLzN97E';
+
+function PaymentButton({ cartId, cartItemIds }) {
   const [loading, setLoading] = useState(false);
 
   const handlePayment = async () => {
@@ -17,12 +20,25 @@ function PaymentButton({ cartItemIds }) {
 
     try {
       setLoading(true);
-      const paymentUrl = await requestTossPayment({ cartItemIds });
-      toast.success('결제 페이지로 이동합니다.');
-      setTimeout(() => {
-        window.location.href = paymentUrl;
-      }, 1000);
+
+      const { orderId, amount, orderName, customerName } = await requestTossPayment({
+        cartId,
+        cartItemIds,
+      });
+
+      // Toss SDK 로드 후 결제창 띄우기
+      const tossPayments = await loadTossPayments(TOSS_CLIENT_KEY);
+
+      tossPayments.requestPayment('카드', {
+        amount,
+        orderId,
+        orderName,
+        customerName,
+        successUrl: `${window.location.origin}/payment/success`,
+        failUrl: `${window.location.origin}/payment/fail`,
+      });
     } catch (error) {
+      console.error('결제 요청 에러:', error.response?.data || error);
       toast.error('결제 요청 중 오류가 발생했습니다.');
     } finally {
       setLoading(false);
@@ -42,6 +58,7 @@ function PaymentButton({ cartItemIds }) {
 }
 
 PaymentButton.propTypes = {
+  cartId: PropTypes.number.isRequired,
   cartItemIds: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 

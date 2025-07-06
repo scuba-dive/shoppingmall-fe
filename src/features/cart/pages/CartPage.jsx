@@ -7,12 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 
 import CartTable from '@/features/cart/components/CartTable';
-import {
-  clearCart, //
-  deleteCartItem,
-  fetchCart,
-  updateCartItem,
-} from '@/services/cartService';
+import { clearCart, deleteCartItem, fetchCart, updateCartItem } from '@/services/cartService';
 
 import styles from './CartPage.module.css';
 
@@ -44,6 +39,8 @@ function CartPage() {
       toast.warning('결제할 상품을 선택해주세요.');
       return;
     }
+
+    console.log('[navigate] cartId:', cartId, 'selectedItems:', selectedItems); // 🔍 디버깅용
 
     navigate('/payment', {
       state: {
