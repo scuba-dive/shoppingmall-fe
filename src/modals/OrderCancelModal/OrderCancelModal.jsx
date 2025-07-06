@@ -67,7 +67,7 @@ function OrderCancelModal({ isOpen, onClose }) {
           <button type="button" className={styles.continueButton} onClick={onClose}>
             계속 결제하기
           </button>
-          <Link to="/" className={styles.cancelButton} onClick={onClose}>
+          <Link to="/cart" className={styles.cancelButton} onClick={onClose}>
             결제 취소하기
           </Link>
         </div>
