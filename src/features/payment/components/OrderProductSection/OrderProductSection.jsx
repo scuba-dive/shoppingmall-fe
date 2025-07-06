@@ -67,7 +67,10 @@ function OrderProductSection({ cartItems }) {
               </div>
               <div>
                 <h3 className={styles.name}>{item.productName}</h3>
-                <span className={styles.number}>{item.quantity}개</span>
+                <span className={styles.number}>
+                  {' '}
+                  {item.quantity}개 {item.color}
+                </span>
                 <p className={styles.money}>{(item.price * item.quantity).toLocaleString()}원</p>
               </div>
             </li>
