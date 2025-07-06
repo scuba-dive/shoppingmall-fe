@@ -21,6 +21,7 @@ export const signUpSchema = z.object({
       '비밀번호는 영어 소문자, 숫자, 특수문자를 모두 포함해야 합니다.',
     ),
   phone: z.string().regex(/^010\d{8}$/, '휴대폰 번호는 010으로 시작하는 11자리 숫자여야 합니다.'),
+  address: z.string().min(1, '주소를 입력해 주세요.'),
   agreeTerms: z.literal(true, { errorMap: () => ({ message: '이용약관에 동의해 주세요.' }) }),
 });
 
