@@ -19,6 +19,7 @@ import styles from './CartPage.module.css';
 function CartPage() {
   const [cartItems, setCartItems] = useState([]);
   const [checkedItems, setCheckedItems] = useState([]);
+  const [cartId, setCartId] = useState(null);
   const navigate = useNavigate();
 
   const handleItemCheck = (id) => {
@@ -44,7 +45,12 @@ function CartPage() {
       return;
     }
 
-    navigate('/payment', { state: { cartItems: selectedItems } });
+    navigate('/payment', {
+      state: {
+        cartId,
+        cartItems: selectedItems,
+      },
+    });
   };
 
   useEffect(() => {
@@ -52,9 +58,10 @@ function CartPage() {
       try {
         const cartData = await fetchCart();
         setCartItems(cartData.items);
+        setCartId(cartData.cartId);
         setCheckedItems(cartData.items.map((item) => item.cartItemId));
       } catch (error) {
-        // handle error
+        toast.error('장바구니 정보를 불러오지 못했습니다.');
       }
     };
     loadCart();
@@ -66,8 +73,8 @@ function CartPage() {
       setCartItems((prev) =>
         prev.map((item) => (item.cartItemId === cartItemId ? { ...item, quantity: newQty } : item)),
       );
-    } catch (error) {
-      // console.error(error);
+    } catch {
+      toast.error('수량 변경에 실패했습니다.');
     }
   };
 
@@ -75,8 +82,9 @@ function CartPage() {
     try {
       await deleteCartItem(cartItemId);
       setCartItems((prev) => prev.filter((item) => item.cartItemId !== cartItemId));
-    } catch (error) {
-      // console.error(error);
+      setCheckedItems((prev) => prev.filter((id) => id !== cartItemId));
+    } catch {
+      toast.error('상품 삭제에 실패했습니다.');
     }
   };
 
@@ -85,8 +93,8 @@ function CartPage() {
       await clearCart();
       setCartItems([]);
       setCheckedItems([]);
-    } catch (error) {
-      // console.error(error);
+    } catch {
+      toast.error('장바구니를 비우는 데 실패했습니다.');
     }
   };
 
@@ -94,6 +102,7 @@ function CartPage() {
     <section className={styles.cartPage}>
       <ToastContainer position="top-center" autoClose={2000} />
       <h1>장바구니</h1>
+
       {cartItems.length === 0 ? (
         <p className={styles.emptyText}>장바구니가 비었습니다.</p>
       ) : (
