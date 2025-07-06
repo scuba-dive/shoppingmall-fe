@@ -13,7 +13,7 @@ const useAuthStore = create(
           const response = await axiosInstance.post('/api/users/login', { email, password });
           const { accessToken, user } = response.data.data;
           localStorage.setItem('accessToken', accessToken);
-          set({ user });
+          set({ user, loginAt: Date.now() });
           return true;
         } catch (e) {
           return false;
@@ -44,17 +44,29 @@ const useAuthStore = create(
         // localStorage에서 토큰 삭제
         localStorage.removeItem('accessToken');
 
-        // 쿠키 삭제 (과거 날짜로 만료시간 설정하여 삭제)
+        // zustand persist 삭제
+        localStorage.removeItem('auth-storage');
+
+        // 쿠키에서 refreshToken 삭제
         document.cookie = 'refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 
-        // 사용자 상태 초기화
-        set({ user: null });
+        // user state 초기화
+        set({ user: null, loginAt: null });
       },
 
       setUser: (user) => set({ user }),
     }),
     {
       name: 'auth-storage',
+      onRehydrateStorage: (state) => (restoredState) => {
+        if (!restoredState) return;
+        const { loginAt } = restoredState;
+        const now = Date.now();
+        const maxAge = 1000 * 60 * 60 * 24; // 1일
+        if (loginAt && now - loginAt > maxAge) {
+          state.logout();
+        }
+      },
     },
   ),
 );
