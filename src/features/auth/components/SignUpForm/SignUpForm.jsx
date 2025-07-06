@@ -30,6 +30,7 @@ function SignUpForm({ onSubmit }) {
       password: '',
       passwordCheck: '',
       phone: '',
+      address: '',
       agreeTerms: false,
     },
   });
@@ -184,7 +185,7 @@ function SignUpForm({ onSubmit }) {
         <input
           id="signup-password"
           type="password"
-          placeholder="****"
+          placeholder="********"
           className={styles.signupInput}
           {...register('password')} // eslint-disable-line react/jsx-props-no-spreading
           required
@@ -199,13 +200,28 @@ function SignUpForm({ onSubmit }) {
         <input
           id="signup-password-check"
           type="password"
-          placeholder="****"
+          placeholder="********"
           className={styles.signupInput}
           {...register('passwordCheck')} // eslint-disable-line react/jsx-props-no-spreading
           required
         />
         {errors.passwordCheck && (
           <div style={{ color: 'red', fontSize: 14 }}>{errors.passwordCheck.message}</div>
+        )}
+      </label>
+      {/* 주소 */}
+      <label htmlFor="signup-address" className={styles.signupLabel}>
+        주소
+        <input
+          id="signup-address"
+          type="text"
+          placeholder="주소를 입력해 주세요"
+          className={styles.signupInput}
+          {...register('address')} // eslint-disable-line react/jsx-props-no-spreading
+          required
+        />
+        {errors.address && (
+          <div style={{ color: 'red', fontSize: 14 }}>{errors.address.message}</div>
         )}
       </label>
       {/* 휴대폰 번호 입력 및 인증 */}

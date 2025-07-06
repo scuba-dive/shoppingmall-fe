@@ -45,7 +45,7 @@ function SignInForm({ onSubmit }) {
           <input
             id="signin-password"
             type="password"
-            placeholder="****"
+            placeholder="********"
             className={styles.signinInput}
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...register('password', { required: true })}
