@@ -7,7 +7,12 @@ import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 
 import CartTable from '@/features/cart/components/CartTable';
-import { clearCart, deleteCartItem, fetchCart, updateCartItem } from '@/services/cartService';
+import {
+  clearCart, //
+  deleteCartItem,
+  fetchCart,
+  updateCartItem,
+} from '@/services/cartService';
 
 import styles from './CartPage.module.css';
 
@@ -40,7 +45,7 @@ function CartPage() {
       return;
     }
 
-    console.log('[navigate] cartId:', cartId, 'selectedItems:', selectedItems); // 🔍 디버깅용
+    // console.log('[navigate] cartId:', cartId, 'selectedItems:', selectedItems); // 🔍 디버깅용
 
     navigate('/payment', {
       state: {
