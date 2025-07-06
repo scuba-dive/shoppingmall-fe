@@ -21,7 +21,12 @@ function PaymentButton({ cartId, cartItemIds }) {
     try {
       setLoading(true);
 
-      const { orderId, amount, orderName, customerName } = await requestTossPayment({
+      const {
+        orderId, //
+        amount,
+        orderName,
+        customerName,
+      } = await requestTossPayment({
         cartId,
         cartItemIds,
       });
@@ -38,7 +43,7 @@ function PaymentButton({ cartId, cartItemIds }) {
         failUrl: `${window.location.origin}/payment/fail`,
       });
     } catch (error) {
-      console.error('결제 요청 에러:', error.response?.data || error);
+      // console.error('결제 요청 에러:', error.response?.data || error);
       toast.error('결제 요청 중 오류가 발생했습니다.');
     } finally {
       setLoading(false);
