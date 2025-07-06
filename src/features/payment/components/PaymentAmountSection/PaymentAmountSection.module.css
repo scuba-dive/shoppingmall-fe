@@ -24,3 +24,15 @@ h2 {
   color: #ffa948;
   font-weight: bold;
 }
+
+.paymentOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.paymentLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

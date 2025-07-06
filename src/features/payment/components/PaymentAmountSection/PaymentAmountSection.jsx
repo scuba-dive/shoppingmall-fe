@@ -1,12 +1,26 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 
 import styles from './PaymentAmountSection.module.css';
 
-function PaymentAmountSection({ cartItems }) {
-  const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+function PaymentAmountSection({ cartItems, onPaymentMethodChange }) {
+  const [selectedMethod, setSelectedMethod] = useState('CARD');
 
+  const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const deliveryFee = 0;
   const finalAmount = totalPrice + deliveryFee;
+
+  const handleChange = (e) => {
+    const method = e.target.value;
+    setSelectedMethod(method);
+    onPaymentMethodChange(method);
+  };
+
+  const paymentOptions = [
+    { id: 'paymentMethod-card', value: 'CARD', label: '토스' },
+    { id: 'paymentMethod-account-transfer', value: 'ACCOUNT_TRANSFER', label: '치토스' },
+    { id: 'paymentMethod-mobile-phone', value: 'MOBILE_PHONE', label: '토오스' },
+  ];
 
   return (
     <section>
@@ -27,8 +41,24 @@ function PaymentAmountSection({ cartItems }) {
           </div>
         </div>
       </div>
+
       <div className={styles.content}>
-        <h2>결제 방법 </h2>
+        <h2>결제 방법</h2>
+        <div className={styles.paymentOptions}>
+          {paymentOptions.map((option) => (
+            <label key={option.id} htmlFor={option.id} className={styles.paymentLabel}>
+              <input
+                id={option.id}
+                type="radio"
+                name="paymentMethod"
+                value={option.value}
+                checked={selectedMethod === option.value}
+                onChange={handleChange}
+              />
+              {option.label}
+            </label>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -43,6 +73,7 @@ PaymentAmountSection.propTypes = {
       price: PropTypes.number.isRequired,
     }),
   ).isRequired,
+  onPaymentMethodChange: PropTypes.func.isRequired,
 };
 
 export default PaymentAmountSection;

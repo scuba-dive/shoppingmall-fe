@@ -12,6 +12,8 @@ function PaymentPage() {
   const navigate = useNavigate();
   const { cartItems } = location.state || { cartItems: [] };
 
+  const cartItemIds = cartItems.map((item) => item.cartItemId);
+
   useEffect(() => {
     if (!cartItems || cartItems.length === 0) {
       toast.warning('결제할 상품 정보가 없습니다.');
@@ -23,7 +25,7 @@ function PaymentPage() {
     <div className={styles.container}>
       <ToastContainer position="top-center" autoClose={2000} />
       <div className={styles.header}>
-        <h1> 결제하기 </h1>
+        <h1>결제하기</h1>
         <button type="button" onClick={() => navigate(-1)}>
           &lt; 뒤로 가기
         </button>
@@ -34,7 +36,7 @@ function PaymentPage() {
         </div>
         <div className={styles.paymentSection}>
           <PaymentAmountSection cartItems={cartItems} />
-          <PaymentButton />
+          <PaymentButton cartItemIds={cartItemIds} />
         </div>
       </div>
     </div>
