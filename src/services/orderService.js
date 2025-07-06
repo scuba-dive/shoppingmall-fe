@@ -11,3 +11,12 @@ export const fetchOrderById = async (orderId) => {
   const res = await axiosInstance.get(`/api/users/orders/${orderId}`);
   return res.data.data;
 };
+
+export const requestTossPayment = async ({ cartId, cartItemIds }) => {
+  const response = await axiosInstance.post('/api/users/payments/toss', {
+    cartId,
+    cartItemIds,
+  });
+
+  return response.data.data.paymentUrl;
+};
