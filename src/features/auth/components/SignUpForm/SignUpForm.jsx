@@ -184,7 +184,7 @@ function SignUpForm({ onSubmit }) {
         <input
           id="signup-password"
           type="password"
-          placeholder="****"
+          placeholder="********"
           className={styles.signupInput}
           {...register('password')} // eslint-disable-line react/jsx-props-no-spreading
           required
@@ -199,7 +199,7 @@ function SignUpForm({ onSubmit }) {
         <input
           id="signup-password-check"
           type="password"
-          placeholder="****"
+          placeholder="********"
           className={styles.signupInput}
           {...register('passwordCheck')} // eslint-disable-line react/jsx-props-no-spreading
           required
