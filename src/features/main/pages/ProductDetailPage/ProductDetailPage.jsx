@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import AddToCartButton from '@/features/main/components/AddToCartButton/AddToCartButton';
 import Breadcrumb from '@/features/main/components/Breadcrumb/Breadcrumb';
@@ -26,23 +27,22 @@ function ProductDetailPage() {
       try {
         const data = await fetchProductById(id);
         setProduct(data);
-        if (data.options.length > 0) {
-          setSelectedOption(data.options[0]);
-        }
+        const firstAvailableOption = data.options.find(
+          (opt) => opt.stock > 0 && opt.status === 'ACTIVE',
+        );
+        setSelectedOption(firstAvailableOption || data.options[0]);
       } catch (err) {
-        // 상품 불러오기 실패 처리 (선택 사항)
+        // 실패 처리
       }
     };
-
     loadProduct();
   }, [id]);
 
   const handleDecrease = () => {
     if (quantity > 1) setQuantity((prev) => prev - 1);
   };
-
   const handleIncrease = () => {
-    setQuantity((prev) => prev + 1);
+    if (quantity < selectedOption.stock) setQuantity((prev) => prev + 1);
   };
 
   const handleColorSelect = (color) => {
@@ -55,15 +55,19 @@ function ProductDetailPage() {
       const optionId = selectedOption?.productOptionId || selectedOption?.id;
       if (!optionId) return;
 
-      await addToCart({ productOptionId: optionId, quantity });
+      if (quantity > selectedOption.stock) {
+        toast.error('재고가 부족합니다.');
+        return;
+      }
 
+      await addToCart({ productOptionId: optionId, quantity });
       setIsCartModalOpen(true);
     } catch (error) {
       const status = error.response?.status;
       if (status === 401 || status === 403) {
         setIsSignInModalOpen(true);
       } else {
-        // TODO: 기타 오류 처리 (예: 재고 없음 등)
+        toast.error(error.response?.data?.message || '장바구니 추가에 실패했습니다.');
       }
     }
   };
@@ -98,17 +102,27 @@ function ProductDetailPage() {
           <fieldset className={styles.option}>
             <legend>Color</legend>
             <div className={styles.colorOptions}>
-              {product.options.map((opt) => (
-                <button
-                  key={opt.color}
-                  type="button"
-                  className={`${styles.colorCircle} ${styles[opt.color.toLowerCase()]} ${
-                    selectedOption.color === opt.color ? styles.selected : ''
-                  }`}
-                  onClick={() => handleColorSelect(opt.color)}
-                  aria-label={`${opt.color} color`}
-                />
-              ))}
+              {product.options.map((opt) => {
+                const isSoldOut = opt.stock === 0 || opt.status !== 'ACTIVE';
+
+                return (
+                  <button
+                    key={opt.color}
+                    type="button"
+                    className={`${styles.colorCircle} ${styles[opt.color.toLowerCase()]} ${
+                      selectedOption.color === opt.color ? styles.selected : ''
+                    }`}
+                    onClick={() => !isSoldOut && handleColorSelect(opt.color)}
+                    aria-label={`${opt.color} color`}
+                    disabled={isSoldOut}
+                    title={isSoldOut ? '품절' : `${opt.stock}개 남음`}
+                    style={{
+                      cursor: isSoldOut ? 'not-allowed' : 'pointer',
+                      opacity: isSoldOut ? 0.4 : 1,
+                    }}
+                  />
+                );
+              })}
             </div>
           </fieldset>
 
