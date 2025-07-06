@@ -7,7 +7,7 @@ import { requestTossPayment } from '@/services/orderService';
 
 import styles from './PaymentButton.module.css';
 
-const TOSS_CLIENT_KEY = 'test_ck_GePWvyJnrKjOn7aqRbG7VgLzN97E';
+const TOSS_CLIENT_KEY = import.meta.env.VITE_TOSS_CLIENT_KEY;
 
 function PaymentButton({ cartId, cartItemIds }) {
   const [loading, setLoading] = useState(false);
