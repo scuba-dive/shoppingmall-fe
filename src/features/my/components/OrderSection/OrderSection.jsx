@@ -22,6 +22,7 @@ export default function OrderSection({
   currentPage,
   totalPages,
   onPageChange,
+  onOrderStatusChange,
 }) {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -105,7 +106,12 @@ export default function OrderSection({
       )}
 
       {isModalOpen && selectedOrderId && (
-        <OrderInfoModal isOpen={isModalOpen} onClose={handleCloseModal} orderId={selectedOrderId} />
+        <OrderInfoModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          orderId={selectedOrderId}
+          onOrderStatusChange={onOrderStatusChange}
+        />
       )}
     </section>
   );
@@ -127,6 +133,7 @@ OrderSection.propTypes = {
   currentPage: PropTypes.number,
   totalPages: PropTypes.number,
   onPageChange: PropTypes.func,
+  onOrderStatusChange: PropTypes.func,
 };
 OrderSection.defaultProps = {
   isPreview: true,
@@ -134,4 +141,5 @@ OrderSection.defaultProps = {
   currentPage: 1,
   totalPages: 1,
   onPageChange: () => {},
+  onOrderStatusChange: () => {},
 };

@@ -34,6 +34,7 @@ function OrderPage() {
         currentPage={page + 1}
         totalPages={totalPages}
         onPageChange={(p) => setPage(p - 1)}
+        onOrderStatusChange={loadOrders}
       />
     </section>
   );
