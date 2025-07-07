@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 import { updateProductState } from '@/services/adminProductApi';
 
-import styles from './AdminProductSoldOutModal.module.css';
+import styles from './AdminProductSoldoutModal.module.css';
 // 린트가 너무 울어대서 대문자로만 바꿨는데 변경사항 없다고 저장이 안되어 추가하는 주석 멘트
 function AdminProductQuantityModal({
   isOpen, //
