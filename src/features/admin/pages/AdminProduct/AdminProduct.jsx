@@ -106,7 +106,12 @@ function AdminProduct() {
 
   return (
     <>
-      <h1> 상품 관리 </h1>
+      <div className={styles.header}>
+        <h1> 상품 관리 </h1>
+        <button type="button" className={styles.button}>
+          상품 등록
+        </button>
+      </div>
       <Table columns={columns} data={products} renderRow={renderProductRow} />
 
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />

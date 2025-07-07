@@ -14,3 +14,17 @@
   color: white;
   background-color: #488daa;
 }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button {
+  background-color: #ffa948;
+  border-radius: 5px;
+  color: white;
+  height: 1.8rem;
+  margin-right: 1rem;
+}
