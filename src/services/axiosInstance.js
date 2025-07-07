@@ -5,7 +5,8 @@ const axiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true, // 원래대로 복원
+
+  withCredentials: true,
 });
 
 axiosInstance.interceptors.request.use(
@@ -16,6 +17,11 @@ axiosInstance.interceptors.request.use(
     if (token) {
       newConfig.headers.Authorization = `Bearer ${token}`;
     }
+
+    if (newConfig.data instanceof FormData) {
+      newConfig.headers['Content-Type'] = undefined;
+    }
+
     return newConfig;
   },
   (error) => Promise.reject(error),

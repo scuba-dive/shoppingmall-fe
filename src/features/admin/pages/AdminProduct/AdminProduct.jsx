@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import Pagination from '@/components/Pagination/Pagination';
 import AdminProductQuantityModal from '@/modals/AdminProductQuantityModal/AdminProductQuantityModal';
+import AdminProductRegistrationModal from '@/modals/AdminProductRegistrationModal/AdminProductRegistrationModal';
 import AdminProductSoldOutModal from '@/modals/AdminProductSoldOutModal/AdminProductSoldOutModal';
 import { fetchAdminProducts } from '@/services/adminProductApi';
 
@@ -43,6 +44,14 @@ function AdminProduct() {
     setIsModalOpen(true);
   }, []);
 
+  const handleOpenRegistrationModal = useCallback(() => {
+    // eslint-disable-next-line no-console
+    console.log('상품 등록 모달 열기');
+    setModalType('registration');
+    setIsModalOpen(true);
+    setSelectedProductId(null);
+  }, []);
+
   const handleCloseModal = useCallback(() => {
     setIsModalOpen(false);
     setSelectedProductId(null);
@@ -52,13 +61,16 @@ function AdminProduct() {
   const handleStatusChanged = useCallback(async () => {
     try {
       // 목록 새로고침
-      const updated = await fetchAdminProducts(currentPage - 1, 10);
+      const pageToFetch = modalType === 'registration' ? 0 : currentPage - 1;
+
+      const updated = await fetchAdminProducts(pageToFetch, 10);
       setProducts(updated.products);
+      setTotalPages(updated.totalPages);
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.error('상품 상태 변경 실패:', err);
+      console.error('상품 목록 새로고침 실패:', err);
     }
-  }, [currentPage]);
+  }, [currentPage, modalType]);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -106,7 +118,16 @@ function AdminProduct() {
 
   return (
     <>
-      <h1> 상품 관리 </h1>
+      <div className={styles.header}>
+        <h1> 상품 관리 </h1>
+        <button
+          type="button"
+          className={styles.button}
+          onClick={() => handleOpenRegistrationModal()}
+        >
+          상품 등록
+        </button>
+      </div>
       <Table columns={columns} data={products} renderRow={renderProductRow} />
 
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
@@ -127,6 +148,14 @@ function AdminProduct() {
           onClose={handleCloseModal}
           productId={selectedProductId}
           currQuantity={selectedQuantity}
+          onStatusChanged={handleStatusChanged}
+        />
+      )}
+
+      {isModalOpen && modalType === 'registration' && (
+        <AdminProductRegistrationModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
           onStatusChanged={handleStatusChanged}
         />
       )}
