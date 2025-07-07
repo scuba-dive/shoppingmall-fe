@@ -18,9 +18,9 @@ function SignInForm({ onSubmit }) {
   });
 
   const handleFormSubmit = async (data) => {
-    const success = await onSubmit(data);
-    if (!success) {
-      setError('root', { message: '이메일 또는 비밀번호가 올바르지 않습니다.' });
+    const result = await onSubmit(data);
+    if (!result.success) {
+      setError('root', { message: result.errorMessage });
     }
   };
 
@@ -59,8 +59,8 @@ function SignInForm({ onSubmit }) {
           로그인
         </button>
       </form>
-      {(errors.root || errors?.root?.message) && (
-        <div style={{ color: 'red', marginTop: '10px' }}>{errors.root?.message}</div>
+      {errors.root?.message && (
+        <div style={{ color: 'red', marginTop: '10px' }}>{errors.root.message}</div>
       )}
     </>
   );

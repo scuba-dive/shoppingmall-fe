@@ -11,12 +11,15 @@ function SignIn() {
   const navigate = useNavigate();
 
   const handleSignIn = async (data) => {
-    const success = await login(data);
-    if (success) {
+    const result = await login(data);
+    if (result.success) {
       navigate('/');
-      return true;
     }
-    return false;
+    return {
+      success: result.success,
+      errorCode: result.errorCode,
+      errorMessage: result.errorMessage,
+    };
   };
 
   return (
