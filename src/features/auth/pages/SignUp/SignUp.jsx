@@ -24,7 +24,7 @@ function SignUp() {
     try {
       const success = await signup(signupBody);
       if (success) {
-        toast.success('회원가입에 성공했습니다. 로그인해주세요.');
+        toast.success('이메일이 발송되었습니다. 이메일 인증 후 로그인해주세요.');
         navigate('/auth/signin', { replace: true });
         return true;
       }
