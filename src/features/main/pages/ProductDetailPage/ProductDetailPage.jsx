@@ -156,9 +156,8 @@ function ProductDetailPage() {
                     className={`${styles.colorCircle} ${styles[opt.color.toLowerCase()]} ${
                       selectedOption.color === opt.color ? styles.selected : ''
                     }`}
-                    onClick={() => !isSoldOut && handleColorSelect(opt.color)}
+                    onClick={() => handleColorSelect(opt.color)}
                     aria-label={`${opt.color} color`}
-                    disabled={isSoldOut}
                     title={isSoldOut ? '품절' : `${opt.stock}개 남음`}
                     style={{
                       cursor: isSoldOut ? 'not-allowed' : 'pointer',
