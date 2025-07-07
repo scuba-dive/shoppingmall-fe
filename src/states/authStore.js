@@ -21,9 +21,13 @@ const useAuthStore = create(
           const { accessToken, user } = response.data.data;
           localStorage.setItem('accessToken', accessToken);
           set({ user, loginAt: Date.now() });
-          return true;
+          return { success: true };
         } catch (e) {
-          return false;
+          return {
+            success: false,
+            errorCode: e.response?.data?.code,
+            errorMessage: e.response?.data?.message || '로그인에 실패했습니다.',
+          };
         }
       },
 
