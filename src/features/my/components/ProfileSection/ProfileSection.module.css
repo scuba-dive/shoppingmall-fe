@@ -25,12 +25,27 @@
 
 .badge {
   display: inline-block;
-  margin-top: 4px;
-  padding: 2px 8px;
-  background-color: #cd7f32; /* bronze color */
-  color: #fff;
-  font-size: 12px;
+  padding: 4px 7px;
   border-radius: 4px;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.gold {
+  background-color: gold;
+}
+
+.vip {
+  background-color: purple;
+}
+
+.silver {
+  background-color: gray;
+}
+
+.bronze {
+  background-color: #cd7f32;
 }
 
 .amount {
