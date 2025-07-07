@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import Pagination from '@/components/Pagination/Pagination';
 import AdminProductQuantityModal from '@/modals/AdminProductQuantityModal/AdminProductQuantityModal';
 import AdminProductRegistrationModal from '@/modals/AdminProductRegistrationModal/AdminProductRegistrationModal';
-import AdminProductSoldOutModal from '@/modals/AdminProductSoldOutModal/AdminProductSoldOutModal';
+import AdminProductSoldoutModal from '@/modals/AdminProductSoldoutModal/AdminProductSoldoutModal';
 import { fetchAdminProducts } from '@/services/adminProductApi';
 
 import Table from '../../components/Table/Table';
@@ -133,7 +133,7 @@ function AdminProduct() {
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
 
       {isModalOpen && selectedProductId && modalType === 'soldOut' && (
-        <AdminProductSoldOutModal
+        <AdminProductSoldoutModal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           productId={selectedProductId}
