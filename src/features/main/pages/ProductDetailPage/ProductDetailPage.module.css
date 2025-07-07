@@ -69,7 +69,10 @@
   border-radius: 50%;
   border: 2px solid transparent;
   cursor: pointer;
-  transition: border 0.2s ease;
+  transition:
+    border 0.2s ease,
+    opacity 0.2s;
+  opacity: 1;
 }
 
 .colorCircle:hover {
@@ -91,6 +94,11 @@
 .selected {
   border: 2px solid #000;
   box-shadow: 0 0 0 2px #fff inset;
+}
+
+.soldOut {
+  opacity: 0.3;
+  cursor: not-allowed;
 }
 
 .meta {

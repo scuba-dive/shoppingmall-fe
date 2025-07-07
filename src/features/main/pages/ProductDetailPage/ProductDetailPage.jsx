@@ -153,16 +153,10 @@ function ProductDetailPage() {
                   <button
                     key={opt.color}
                     type="button"
-                    className={`${styles.colorCircle} ${styles[opt.color.toLowerCase()]} ${
-                      selectedOption.color === opt.color ? styles.selected : ''
-                    }`}
+                    className={`${styles.colorCircle} ${styles[opt.color.toLowerCase()]} ${isSoldOut ? styles.soldOut : ''} ${selectedOption.color === opt.color ? styles.selected : ''}`}
                     onClick={() => handleColorSelect(opt.color)}
                     aria-label={`${opt.color} color`}
                     title={isSoldOut ? '품절' : `${opt.stock}개 남음`}
-                    style={{
-                      cursor: isSoldOut ? 'not-allowed' : 'pointer',
-                      opacity: isSoldOut ? 0.4 : 1,
-                    }}
                   />
                 );
               })}
