@@ -45,7 +45,7 @@ function CartPage() {
       return;
     }
 
-    // console.log('[navigate] cartId:', cartId, 'selectedItems:', selectedItems); // 🔍 디버깅용
+    // console.log('[navigate] cartId:', cartId, 'selectedItems:', selectedItems);
 
     navigate('/payment', {
       state: {
@@ -72,11 +72,12 @@ function CartPage() {
   const updateQuantity = async (cartItemId, newQty) => {
     try {
       await updateCartItem({ cartItemId, quantity: newQty });
-      setCartItems((prev) =>
-        prev.map((item) => (item.cartItemId === cartItemId ? { ...item, quantity: newQty } : item)),
-      );
+      // 성공 후, 전체 카트 데이터를 다시 불러옴
+      const freshCart = await fetchCart();
+      setCartItems(freshCart.items);
     } catch {
-      toast.error('수량 변경에 실패했습니다.');
+      toast.error('재고가 부족합니다. 수량을 다시 확인해주세요.');
+      // 실패 시 아무것도 안 바뀜
     }
   };
 
