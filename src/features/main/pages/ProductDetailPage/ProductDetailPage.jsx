@@ -42,7 +42,6 @@ function ProductDetailPage() {
   const isSoldOut =
     !selectedOption || selectedOption.status !== 'ACTIVE' || Number(selectedOption.stock) === 0;
 
-  // 옵션이 바뀌면 재고 체크 및 수량 보정
   useEffect(() => {
     if (selectedOption) {
       if (isSoldOut) {
@@ -70,7 +69,6 @@ function ProductDetailPage() {
     }
   };
 
-  // 입력 변경(수동 타이핑)
   const handleQuantityChange = (val) => {
     if (!selectedOption) return;
     if (isSoldOut) {
@@ -87,13 +85,11 @@ function ProductDetailPage() {
     }
   };
 
-  // 색상(옵션) 선택
   const handleColorSelect = (color) => {
     const matched = product.options.find((opt) => opt.color === color);
     if (matched) setSelectedOption(matched);
   };
 
-  // 장바구니
   const handleAddToCart = async () => {
     if (!selectedOption || isSoldOut || quantity <= 0) {
       toast.error('수량을 1개 이상 선택하세요.');
