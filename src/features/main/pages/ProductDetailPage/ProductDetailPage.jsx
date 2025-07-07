@@ -147,13 +147,18 @@ function ProductDetailPage() {
             <legend>Color</legend>
             <div className={styles.colorOptions}>
               {product.options.map((opt) => {
-                const isSoldOut = opt.stock === 0 || opt.status !== 'ACTIVE';
+                const isSoldOut = opt.status !== 'ACTIVE' || Number(opt.stock) === 0;
 
                 return (
                   <button
                     key={opt.color}
                     type="button"
-                    className={`${styles.colorCircle} ${styles[opt.color.toLowerCase()]} ${isSoldOut ? styles.soldOut : ''} ${selectedOption.color === opt.color ? styles.selected : ''}`}
+                    className={[
+                      styles.colorCircle,
+                      styles[opt.color.toLowerCase()],
+                      isSoldOut ? styles.soldOut : '',
+                      selectedOption.color === opt.color ? styles.selected : '',
+                    ].join(' ')}
                     onClick={() => handleColorSelect(opt.color)}
                     aria-label={`${opt.color} color`}
                     title={isSoldOut ? '품절' : `${opt.stock}개 남음`}
