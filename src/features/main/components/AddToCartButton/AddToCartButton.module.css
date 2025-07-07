@@ -16,3 +16,8 @@
 .addToCart:hover {
   background: #222;
 }
+
+.addToCart:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}

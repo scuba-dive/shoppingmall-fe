@@ -1,6 +1,5 @@
 import { Trash2 } from 'lucide-react';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
 
 import styles from './CartRow.module.css';
 
@@ -11,11 +10,8 @@ function CartRow({
   isChecked,
   onCheck,
 }) {
-  const [quantity, setQuantity] = useState(item.quantity);
-
   const handleChange = (newQty) => {
     if (newQty < 1) return;
-    setQuantity(newQty);
     onUpdate(item.cartItemId, newQty);
   };
 
@@ -30,15 +26,15 @@ function CartRow({
       <td>
         <button
           type="button"
-          onClick={() => handleChange(quantity - 1)}
+          onClick={() => handleChange(item.quantity - 1)}
           className={styles.qtyButton}
         >
           -
         </button>
-        <span className={styles.qty}>{quantity}</span>
+        <span className={styles.qty}>{item.quantity}</span>
         <button
           type="button"
-          onClick={() => handleChange(quantity + 1)}
+          onClick={() => handleChange(item.quantity + 1)}
           className={styles.qtyButton}
         >
           +
