@@ -7,9 +7,10 @@ import styles from './ProductGrid.module.css';
 function ProductGrid({
   title,
   showSort = false,
+  sort = 'latest',
   onSortChange,
   products = [],
-  lastElementRef, //
+  lastElementRef,
 }) {
   return (
     <section className={styles.productSection}>
@@ -18,7 +19,7 @@ function ProductGrid({
           {title && <h2 className={styles.title}>{title}</h2>}
           {showSort && (
             <div className={styles.sortWrapper}>
-              <select className={styles.sortSelect} defaultValue="latest" onChange={onSortChange}>
+              <select className={styles.sortSelect} value={sort} onChange={onSortChange}>
                 <option value="latest">최신 순</option>
                 <option value="price-low">낮은 가격 순</option>
                 <option value="price-high">높은 가격 순</option>
@@ -49,6 +50,7 @@ function ProductGrid({
 ProductGrid.propTypes = {
   title: PropTypes.string,
   showSort: PropTypes.bool,
+  sort: PropTypes.string,
   onSortChange: PropTypes.func,
   products: PropTypes.arrayOf(
     PropTypes.shape({
@@ -67,6 +69,7 @@ ProductGrid.propTypes = {
 ProductGrid.defaultProps = {
   title: '',
   showSort: false,
+  sort: 'latest',
   onSortChange: () => {},
   products: [],
   lastElementRef: null,
