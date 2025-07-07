@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { signUpSchema } from '@/features/auth/schemas/signUpSchema';
+import { sendPhoneAuthCode, verifyPhoneAuthCode } from '@/services/phoneService';
 import useAuthStore from '@/states/authStore';
 
 import styles from './SignUpForm.module.css';
@@ -14,6 +15,9 @@ function SignUpForm({ onSubmit }) {
   const [isAuthVerified, setIsAuthVerified] = useState(false);
   const [emailChecked, setEmailChecked] = useState(false);
   const [emailCheckMsg, setEmailCheckMsg] = useState('');
+  const [authMsg, setAuthMsg] = useState('');
+  const [isSending, setIsSending] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
 
   const {
     register,
@@ -36,7 +40,8 @@ function SignUpForm({ onSubmit }) {
   });
 
   // 인증번호 발송
-  const handleSendAuth = () => {
+  const handleSendAuth = async () => {
+    setAuthMsg('');
     const phone = watch('phone');
     if (!phone) {
       setError('phone', { message: '휴대폰 번호를 입력해 주세요.' });
@@ -46,16 +51,45 @@ function SignUpForm({ onSubmit }) {
       setError('phone', { message: '휴대폰 번호는 010으로 시작하는 11자리 숫자여야 합니다.' });
       return;
     }
-    setIsAuthSent(true);
+    setIsSending(true);
+    try {
+      const res = await sendPhoneAuthCode(phone);
+      if (res.status === 200) {
+        setIsAuthSent(true);
+        setAuthMsg('인증번호가 발송되었습니다.');
+      } else {
+        setError('phone', { message: res.message || '인증번호 발송 실패' });
+      }
+    } catch (e) {
+      setError('phone', { message: e.response?.data?.message || '인증번호 발송 실패' });
+    } finally {
+      setIsSending(false);
+    }
   };
 
   // 인증번호 확인
-  const handleVerifyAuth = () => {
-    // 임시로 인증번호를 123456으로 설정했습니다!
-    if (authCode === '123456') {
-      setIsAuthVerified(true);
-    } else {
-      setError('root', { message: '인증번호가 올바르지 않습니다.' });
+  const handleVerifyAuth = async () => {
+    setAuthMsg('');
+    const phone = watch('phone');
+    if (!authCode || !/^\d{6}$/.test(authCode)) {
+      setAuthMsg('인증번호 6자리를 입력하세요.');
+      return;
+    }
+    setIsVerifying(true);
+    try {
+      const res = await verifyPhoneAuthCode(phone, authCode);
+      if (res.status === 200) {
+        setIsAuthVerified(true);
+        setAuthMsg('휴대폰 인증이 완료되었습니다.');
+      } else {
+        setIsAuthVerified(false);
+        setAuthMsg(res.message || '인증번호가 일치하지 않습니다.');
+      }
+    } catch (e) {
+      setIsAuthVerified(false);
+      setAuthMsg(e.response?.data?.message || '인증번호 확인 실패');
+    } finally {
+      setIsVerifying(false);
     }
   };
 
@@ -233,7 +267,10 @@ function SignUpForm({ onSubmit }) {
             type="tel"
             placeholder="01012345678"
             className={styles.signupInput}
-            {...register('phone')} // eslint-disable-line react/jsx-props-no-spreading
+            ref={register('phone').ref}
+            name={register('phone').name}
+            onChange={register('phone').onChange}
+            onBlur={register('phone').onBlur}
             required
             style={{ flex: 1 }}
             disabled={isAuthVerified}
@@ -241,12 +278,15 @@ function SignUpForm({ onSubmit }) {
           <button
             type="button"
             onClick={handleSendAuth}
-            disabled={isAuthSent || isAuthVerified}
+            disabled={isAuthSent || isAuthVerified || isSending}
             className={styles.signupTestBtn}
           >
-            {isAuthVerified && '인증 완료'}
-            {!isAuthVerified && isAuthSent && '인증 대기중'}
-            {!isAuthVerified && !isAuthSent && '인증번호 발송'}
+            {(() => {
+              if (isAuthVerified) return '인증 완료';
+              if (isSending) return '발송중...';
+              if (isAuthSent) return '인증 대기중';
+              return '인증번호 발송';
+            })()}
           </button>
         </div>
         {errors.phone && <div style={{ color: 'red', fontSize: 14 }}>{errors.phone.message}</div>}
@@ -262,14 +302,25 @@ function SignUpForm({ onSubmit }) {
               placeholder="인증번호 6자리"
               className={styles.signupInput}
               value={authCode}
-              onChange={(e) => setAuthCode(e.target.value)}
+              onChange={(e) => setAuthCode(e.target.value.replace(/[^0-9]/g, '').slice(0, 6))}
               required
               style={{ flex: 1 }}
+              disabled={isVerifying}
             />
-            <button type="button" className={styles.signupTestBtn} onClick={handleVerifyAuth}>
-              인증 확인
+            <button
+              type="button"
+              className={styles.signupTestBtn}
+              onClick={handleVerifyAuth}
+              disabled={isVerifying}
+            >
+              {isVerifying ? '확인중...' : '인증 확인'}
             </button>
           </div>
+          {authMsg && (
+            <div style={{ color: isAuthVerified ? 'green' : 'red', fontSize: 14, marginTop: 4 }}>
+              {authMsg}
+            </div>
+          )}
         </label>
       )}
       {/* 이용약관 동의 체크박스 */}
