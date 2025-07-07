@@ -38,19 +38,63 @@ function ProductDetailPage() {
     loadProduct();
   }, [id]);
 
+  // 옵션이 바뀌면 재고 체크 및 수량 보정
+  useEffect(() => {
+    if (selectedOption) {
+      if (selectedOption.stock === 0) {
+        setQuantity(0);
+      } else if (quantity > selectedOption.stock) {
+        setQuantity(selectedOption.stock);
+        toast.error('재고를 초과한 수량입니다.');
+      } else if (quantity < 1) {
+        setQuantity(1);
+      }
+    }
+    // eslint-disable-next-line
+  }, [selectedOption]);
+
   const handleDecrease = () => {
     if (quantity > 1) setQuantity((prev) => prev - 1);
   };
   const handleIncrease = () => {
-    if (quantity < selectedOption.stock) setQuantity((prev) => prev + 1);
+    if (!selectedOption) return;
+    if (selectedOption.stock === 0) return;
+    if (quantity < selectedOption.stock) {
+      setQuantity((prev) => prev + 1);
+    } else {
+      toast.error('최대 구매 가능 수량입니다.');
+    }
   };
 
+  // 입력 변경(수동 타이핑)
+  const handleQuantityChange = (val) => {
+    if (!selectedOption) return;
+    if (selectedOption.stock === 0) {
+      setQuantity(0);
+      return;
+    }
+    if (val > selectedOption.stock) {
+      setQuantity(selectedOption.stock);
+      toast.error('재고를 초과한 수량입니다.');
+    } else if (val < 1) {
+      setQuantity(1);
+    } else {
+      setQuantity(val);
+    }
+  };
+
+  // 색상(옵션) 선택
   const handleColorSelect = (color) => {
     const matched = product.options.find((opt) => opt.color === color);
     if (matched) setSelectedOption(matched);
   };
 
+  // 장바구니
   const handleAddToCart = async () => {
+    if (!selectedOption || quantity <= 0) {
+      toast.error('수량을 1개 이상 선택하세요.');
+      return;
+    }
     try {
       const optionId = selectedOption?.productOptionId || selectedOption?.id;
       if (!optionId) return;
@@ -125,16 +169,17 @@ function ProductDetailPage() {
               })}
             </div>
           </fieldset>
-
           <QuantitySelector
             value={quantity}
+            stock={selectedOption.stock}
             onIncrease={handleIncrease}
             onDecrease={handleDecrease}
-            onChange={setQuantity}
+            onChange={handleQuantityChange}
           />
-
-          <AddToCartButton onClick={handleAddToCart} />
-
+          <AddToCartButton
+            onClick={handleAddToCart}
+            disabled={quantity === 0 || selectedOption.stock === 0}
+          />
           <hr className={styles.divider} />
           <div className={styles.meta}>
             <p>SKU : {selectedOption.sku}</p>

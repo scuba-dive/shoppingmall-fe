@@ -5,9 +5,10 @@ import styles from './QuantitySelector.module.css';
 
 function QuantitySelector({
   value, //
-  onIncrease, //
-  onDecrease, //
-  onChange, //
+  stock,
+  onIncrease,
+  onDecrease,
+  onChange,
 }) {
   const [inputValue, setInputValue] = useState(value);
 
@@ -23,18 +24,26 @@ function QuantitySelector({
   };
 
   const handleBlur = () => {
-    const numericValue = parseInt(inputValue, 10);
+    let numericValue = parseInt(inputValue, 10);
     if (Number.isNaN(numericValue) || numericValue < 1) {
-      setInputValue(1);
-      onChange(1);
-    } else {
-      onChange(numericValue);
+      numericValue = 1;
     }
+    if (stock === 0) {
+      numericValue = 0;
+    } else if (numericValue > stock) {
+      numericValue = stock;
+    }
+    setInputValue(numericValue);
+    onChange(numericValue);
   };
+
+  const isDecreaseDisabled = value <= 1 || stock === 0;
+  const isIncreaseDisabled = value >= stock || stock === 0;
+  const isInputDisabled = stock === 0;
 
   return (
     <div className={styles.quantityWrapper}>
-      <button type="button" onClick={onDecrease} disabled={value <= 1}>
+      <button type="button" onClick={onDecrease} disabled={isDecreaseDisabled}>
         −
       </button>
       <input
@@ -44,8 +53,9 @@ function QuantitySelector({
         onBlur={handleBlur}
         inputMode="numeric"
         pattern="\d*"
+        disabled={isInputDisabled}
       />
-      <button type="button" onClick={onIncrease}>
+      <button type="button" onClick={onIncrease} disabled={isIncreaseDisabled}>
         +
       </button>
     </div>
@@ -54,6 +64,7 @@ function QuantitySelector({
 
 QuantitySelector.propTypes = {
   value: PropTypes.number.isRequired,
+  stock: PropTypes.number.isRequired,
   onIncrease: PropTypes.func.isRequired,
   onDecrease: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
