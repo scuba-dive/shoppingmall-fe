@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { registerProduct } from '@/services/adminProductApi';
-import { validateProductForm } from '@/utils/productValidation';
+import validateProductForm from '@/utils/productValidation';
 
 import ImageUpload from '../ImageUpload/ImageUpload';
 import styles from './AdminProductRegistrationModal.module.css';
