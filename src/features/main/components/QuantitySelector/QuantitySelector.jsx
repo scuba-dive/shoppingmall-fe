@@ -5,9 +5,11 @@ import styles from './QuantitySelector.module.css';
 
 function QuantitySelector({
   value, //
-  onIncrease, //
-  onDecrease, //
-  onChange, //
+  stock,
+  onIncrease,
+  onDecrease,
+  onChange,
+  disabled,
 }) {
   const [inputValue, setInputValue] = useState(value);
 
@@ -23,18 +25,27 @@ function QuantitySelector({
   };
 
   const handleBlur = () => {
-    const numericValue = parseInt(inputValue, 10);
+    let numericValue = parseInt(inputValue, 10);
     if (Number.isNaN(numericValue) || numericValue < 1) {
-      setInputValue(1);
-      onChange(1);
-    } else {
-      onChange(numericValue);
+      numericValue = 1;
     }
+    if (stock === 0) {
+      numericValue = 0;
+    } else if (numericValue > stock) {
+      numericValue = stock;
+      import('react-toastify').then(({ toast }) => toast.error('재고를 초과한 수량입니다.'));
+    }
+    setInputValue(numericValue);
+    onChange(numericValue);
   };
+
+  const isDecreaseDisabled = disabled || value <= 1 || stock === 0;
+  const isIncreaseDisabled = disabled || stock === 0;
+  const isInputDisabled = disabled || stock === 0;
 
   return (
     <div className={styles.quantityWrapper}>
-      <button type="button" onClick={onDecrease} disabled={value <= 1}>
+      <button type="button" onClick={onDecrease} disabled={isDecreaseDisabled}>
         −
       </button>
       <input
@@ -44,8 +55,9 @@ function QuantitySelector({
         onBlur={handleBlur}
         inputMode="numeric"
         pattern="\d*"
+        disabled={isInputDisabled}
       />
-      <button type="button" onClick={onIncrease}>
+      <button type="button" onClick={onIncrease} disabled={isIncreaseDisabled}>
         +
       </button>
     </div>
@@ -54,9 +66,15 @@ function QuantitySelector({
 
 QuantitySelector.propTypes = {
   value: PropTypes.number.isRequired,
+  stock: PropTypes.number.isRequired,
   onIncrease: PropTypes.func.isRequired,
   onDecrease: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+};
+
+QuantitySelector.defaultProps = {
+  disabled: false,
 };
 
 export default QuantitySelector;

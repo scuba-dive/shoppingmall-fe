@@ -28,7 +28,7 @@ function ProductDetailPage() {
         const data = await fetchProductById(id);
         setProduct(data);
         const firstAvailableOption = data.options.find(
-          (opt) => opt.stock > 0 && opt.status === 'ACTIVE',
+          (opt) => Number(opt.stock) > 0 && opt.status === 'ACTIVE',
         );
         setSelectedOption(firstAvailableOption || data.options[0]);
       } catch (err) {
@@ -38,11 +38,51 @@ function ProductDetailPage() {
     loadProduct();
   }, [id]);
 
+  // eslint-disable-next-line operator-linebreak
+  const isSoldOut =
+    !selectedOption || selectedOption.status !== 'ACTIVE' || Number(selectedOption.stock) === 0;
+
+  useEffect(() => {
+    if (selectedOption) {
+      if (isSoldOut) {
+        setQuantity(0);
+      } else if (quantity > Number(selectedOption.stock)) {
+        setQuantity(Number(selectedOption.stock));
+        toast.error('재고를 초과한 수량입니다.');
+      } else if (quantity < 1) {
+        setQuantity(1);
+      }
+    }
+    // eslint-disable-next-line
+  }, [selectedOption]);
+
   const handleDecrease = () => {
     if (quantity > 1) setQuantity((prev) => prev - 1);
   };
   const handleIncrease = () => {
-    if (quantity < selectedOption.stock) setQuantity((prev) => prev + 1);
+    if (!selectedOption) return;
+    if (isSoldOut) return;
+    if (quantity < Number(selectedOption.stock)) {
+      setQuantity((prev) => prev + 1);
+    } else {
+      toast.error('최대 구매 가능 수량입니다.');
+    }
+  };
+
+  const handleQuantityChange = (val) => {
+    if (!selectedOption) return;
+    if (isSoldOut) {
+      setQuantity(0);
+      return;
+    }
+    if (val > Number(selectedOption.stock)) {
+      setQuantity(Number(selectedOption.stock));
+      toast.error('재고를 초과한 수량입니다.');
+    } else if (val < 1) {
+      setQuantity(1);
+    } else {
+      setQuantity(val);
+    }
   };
 
   const handleColorSelect = (color) => {
@@ -51,11 +91,15 @@ function ProductDetailPage() {
   };
 
   const handleAddToCart = async () => {
+    if (!selectedOption || isSoldOut || quantity <= 0) {
+      toast.error('수량을 1개 이상 선택하세요.');
+      return;
+    }
     try {
       const optionId = selectedOption?.productOptionId || selectedOption?.id;
       if (!optionId) return;
 
-      if (quantity > selectedOption.stock) {
+      if (quantity > Number(selectedOption.stock)) {
         toast.error('재고가 부족합니다.');
         return;
       }
@@ -73,7 +117,7 @@ function ProductDetailPage() {
   };
 
   if (!product || !selectedOption) {
-    return <div>상품을 불러오는 중입니다...</div>;
+    return <div />;
   }
 
   return (
@@ -103,38 +147,36 @@ function ProductDetailPage() {
             <legend>Color</legend>
             <div className={styles.colorOptions}>
               {product.options.map((opt) => {
-                const isSoldOut = opt.stock === 0 || opt.status !== 'ACTIVE';
-
+                const optSoldOut = opt.status !== 'ACTIVE' || Number(opt.stock) === 0;
                 return (
                   <button
                     key={opt.color}
                     type="button"
-                    className={`${styles.colorCircle} ${styles[opt.color.toLowerCase()]} ${
-                      selectedOption.color === opt.color ? styles.selected : ''
-                    }`}
-                    onClick={() => !isSoldOut && handleColorSelect(opt.color)}
+                    className={[
+                      styles.colorCircle,
+                      styles[opt.color.toLowerCase()],
+                      optSoldOut ? styles.soldOut : '',
+                      selectedOption.color === opt.color ? styles.selected : '',
+                    ].join(' ')}
+                    onClick={() => handleColorSelect(opt.color)}
                     aria-label={`${opt.color} color`}
-                    disabled={isSoldOut}
-                    title={isSoldOut ? '품절' : `${opt.stock}개 남음`}
-                    style={{
-                      cursor: isSoldOut ? 'not-allowed' : 'pointer',
-                      opacity: isSoldOut ? 0.4 : 1,
-                    }}
+                    title={optSoldOut ? '품절' : `${opt.stock}개 남음`}
                   />
                 );
               })}
             </div>
           </fieldset>
-
           <QuantitySelector
-            value={quantity}
+            value={isSoldOut ? 0 : quantity}
+            stock={selectedOption.stock}
             onIncrease={handleIncrease}
             onDecrease={handleDecrease}
-            onChange={setQuantity}
+            onChange={handleQuantityChange}
+            disabled={isSoldOut}
           />
-
-          <AddToCartButton onClick={handleAddToCart} />
-
+          <AddToCartButton onClick={handleAddToCart} disabled={isSoldOut || quantity === 0}>
+            {isSoldOut ? '품절' : '장바구니 담기'}
+          </AddToCartButton>
           <hr className={styles.divider} />
           <div className={styles.meta}>
             <p>SKU : {selectedOption.sku}</p>
