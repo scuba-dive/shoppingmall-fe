@@ -21,7 +21,7 @@ function ProfileSection({
             <strong>{nickname}</strong>님 안녕하세요.
           </p>
           <div>
-            <span className={styles.badge}>{grade}</span>
+            <span className={`${styles.badge} ${styles[grade.toLowerCase()]}`}>{grade}</span>
             <span className={styles.amount}>누적 구매금액 : {formattedAmount}원</span>
           </div>
         </div>
