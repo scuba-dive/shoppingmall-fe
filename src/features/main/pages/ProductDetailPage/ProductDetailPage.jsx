@@ -179,7 +179,9 @@ function ProductDetailPage() {
           <AddToCartButton
             onClick={handleAddToCart}
             disabled={quantity === 0 || selectedOption.stock === 0}
-          />
+          >
+            {selectedOption.stock === 0 ? '품절' : '장바구니 담기'}
+          </AddToCartButton>
           <hr className={styles.divider} />
           <div className={styles.meta}>
             <p>SKU : {selectedOption.sku}</p>
