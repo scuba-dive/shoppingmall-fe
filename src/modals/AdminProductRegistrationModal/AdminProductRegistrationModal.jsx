@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { registerProduct } from '@/services/adminProductApi';
+import { validateProductForm } from '@/utils/productValidation';
 
 import ImageUpload from '../ImageUpload/ImageUpload';
 import styles from './AdminProductRegistrationModal.module.css';
@@ -106,31 +107,10 @@ function AdminProductRegistrationModal({ isOpen, onClose, onStatusChanged }) {
   };
 
   const handleConfirm = async () => {
-    // 필수 필드 검증
-    if (!formData.name.trim()) {
-      toast.error('상품명을 입력해주세요.');
-      return;
-    }
+    const errors = validateProductForm(formData);
 
-    if (!formData.description.trim()) {
-      toast.error('상품 설명을 입력해주세요.');
-      return;
-    }
-
-    if (!formData.price || formData.price <= 0) {
-      toast.error('상품 가격을 입력해주세요.');
-      return;
-    }
-
-    if (!formData.category) {
-      toast.error('카테고리를 선택해주세요.');
-      return;
-    }
-
-    const colors = ['파랑', '빨강', '검정'];
-    const missingImages = colors.filter((color) => !formData.images[color]);
-    if (missingImages.length > 0) {
-      toast.error(`다음 색상의 이미지를 업로드해주세요: ${missingImages.join(', ')}`);
+    if (errors.length > 0) {
+      errors.forEach((error) => toast.error(error));
       return;
     }
 
