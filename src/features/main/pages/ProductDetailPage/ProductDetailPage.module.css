@@ -64,12 +64,21 @@
 }
 
 .colorCircle {
+  position: relative;
   width: 24px;
   height: 24px;
   border-radius: 50%;
   border: 2px solid transparent;
   cursor: pointer;
-  transition: border 0.2s ease;
+  transition:
+    border 0.2s ease,
+    opacity 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  background-clip: padding-box;
+  overflow: hidden;
 }
 
 .colorCircle:hover {
@@ -79,11 +88,9 @@
 .blue {
   background-color: #6a5acd;
 }
-
 .red {
   background-color: #ff3b30;
 }
-
 .black {
   background-color: #000;
 }
@@ -93,15 +100,39 @@
   box-shadow: 0 0 0 2px #fff inset;
 }
 
+.soldOut {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.soldOut::before,
+.soldOut::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 16px;
+  height: 2.5px;
+  background: #fff;
+  border-radius: 2px;
+  transform-origin: center;
+  pointer-events: none;
+  z-index: 2;
+}
+.soldOut::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.soldOut::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
 .meta {
   font-size: 0.9rem;
   color: #777;
 }
-
 .meta p {
   margin: 4px 0;
 }
-
 .divider {
   margin: 1rem 0 1rem;
   border-top: 1px solid #ccc;
