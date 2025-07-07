@@ -72,6 +72,12 @@ function AdminProductRegistrationModal({ isOpen, onClose, onStatusChanged }) {
     }
   };
 
+  const handlePriceFocus = (e) => {
+    if (formData.price === 0) {
+      e.target.select();
+    }
+  };
+
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
       ...prev,
@@ -196,6 +202,7 @@ function AdminProductRegistrationModal({ isOpen, onClose, onStatusChanged }) {
                 placeholder="상품 가격을 입력하세요"
                 value={formData.price}
                 onChange={(e) => handleInputChange('price', parseInt(e.target.value, 10) || 0)}
+                onFocus={handlePriceFocus}
                 min="0"
               />
             </div>
