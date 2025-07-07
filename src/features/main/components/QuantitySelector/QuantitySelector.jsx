@@ -9,6 +9,7 @@ function QuantitySelector({
   onIncrease,
   onDecrease,
   onChange,
+  disabled,
 }) {
   const [inputValue, setInputValue] = useState(value);
 
@@ -37,9 +38,9 @@ function QuantitySelector({
     onChange(numericValue);
   };
 
-  const isDecreaseDisabled = value <= 1 || stock === 0;
-  const isIncreaseDisabled = value >= stock || stock === 0;
-  const isInputDisabled = stock === 0;
+  const isDecreaseDisabled = disabled || value <= 1 || stock === 0;
+  const isIncreaseDisabled = disabled || value >= stock || stock === 0;
+  const isInputDisabled = disabled || stock === 0;
 
   return (
     <div className={styles.quantityWrapper}>
@@ -68,6 +69,11 @@ QuantitySelector.propTypes = {
   onIncrease: PropTypes.func.isRequired,
   onDecrease: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
+  disabled: PropTypes.bool, // 추가
+};
+
+QuantitySelector.defaultProps = {
+  disabled: false,
 };
 
 export default QuantitySelector;
