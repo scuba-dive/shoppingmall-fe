@@ -137,6 +137,8 @@ function SignUpForm({ onSubmit }) {
     }
   };
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleFormSubmit = async (data) => {
     if (!emailChecked) {
       setError('email', { message: '이메일 중복 확인을 해주세요.' });
@@ -151,7 +153,10 @@ function SignUpForm({ onSubmit }) {
       return;
     }
 
+    setIsSubmitting(true);
     const success = await onSubmit(data);
+    setIsSubmitting(false);
+
     if (!success) {
       setError('root', { message: '회원가입에 실패했습니다.' });
     }
@@ -340,8 +345,8 @@ function SignUpForm({ onSubmit }) {
         )}
       </div>
       {errors.root && <div className={styles.signupError}>{errors.root.message}</div>}
-      <button type="submit" className={styles.signupBtn}>
-        회원가입
+      <button type="submit" className={styles.signupBtn} disabled={isSubmitting}>
+        {isSubmitting ? '이메일 발송 중...' : '회원가입'}
       </button>
     </form>
   );
