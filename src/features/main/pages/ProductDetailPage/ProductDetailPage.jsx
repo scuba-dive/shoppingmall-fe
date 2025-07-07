@@ -117,7 +117,7 @@ function ProductDetailPage() {
   };
 
   if (!product || !selectedOption) {
-    return <div>상품을 불러오는 중입니다...</div>;
+    return <div />;
   }
 
   return (
