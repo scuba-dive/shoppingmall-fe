@@ -33,13 +33,14 @@ function QuantitySelector({
       numericValue = 0;
     } else if (numericValue > stock) {
       numericValue = stock;
+      import('react-toastify').then(({ toast }) => toast.error('재고를 초과한 수량입니다.'));
     }
     setInputValue(numericValue);
     onChange(numericValue);
   };
 
   const isDecreaseDisabled = disabled || value <= 1 || stock === 0;
-  const isIncreaseDisabled = disabled || value >= stock || stock === 0;
+  const isIncreaseDisabled = disabled || stock === 0;
   const isInputDisabled = disabled || stock === 0;
 
   return (
@@ -69,7 +70,7 @@ QuantitySelector.propTypes = {
   onIncrease: PropTypes.func.isRequired,
   onDecrease: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  disabled: PropTypes.bool, // 추가
+  disabled: PropTypes.bool,
 };
 
 QuantitySelector.defaultProps = {

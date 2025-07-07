@@ -38,7 +38,7 @@ function ProductDetailPage() {
     loadProduct();
   }, [id]);
 
-  // 현재 선택된 옵션의 품절 여부
+  // eslint-disable-next-line operator-linebreak
   const isSoldOut =
     !selectedOption || selectedOption.status !== 'ACTIVE' || Number(selectedOption.stock) === 0;
 
